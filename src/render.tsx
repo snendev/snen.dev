@@ -1,7 +1,7 @@
 /** @jsx createElement */
 import { readerFromStreamReader } from "https://deno.land/std@0.119.0/streams/mod.ts";
-import { createElement, ReactElement } from 'https://esm.sh/react@rc';
-import ReactDOMServer from 'https://esm.sh/react-dom@rc/server'
+import { createElement, ReactElement, ReactNode } from "react";
+import ReactDOMServer from "react-dom/server";
 
 declare global {
   namespace ReactDOMServer {
@@ -15,16 +15,17 @@ const defaultBufferSize = 8 * 1024;
 const defaultChunkSize = 8 * 1024;
 
 interface RenderOptions {
-  bufferSize: number
-  chunkSize: number
+  bufferSize: number;
+  chunkSize: number;
 }
 
 export default function render(
   node: React.ReactNode,
   {
+    // TODO
     bufferSize = defaultBufferSize,
     chunkSize = defaultChunkSize,
-  }: Partial<RenderOptions> = {}
+  }: Partial<RenderOptions> = {},
 ): Deno.Reader {
   // render the tree as a readable stream
   const stream = ReactDOMServer.renderToReadableStream(node);

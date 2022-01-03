@@ -436,62 +436,104 @@ var x = I((ce, B)=>{
     B.exports = z();
 });
 var H = P(x()), W = P(x()), { Fragment: fe , StrictMode: le , Profiler: ae , Suspense: pe , Children: ye , Component: de , PureComponent: _e , __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: me , cloneElement: ve , createContext: he , createElement: Ee , createFactory: Se , createRef: Re , forwardRef: ke , isValidElement: Ce , lazy: $e , memo: xe , startTransition: Ie , unstable_act: Pe , unstable_createMutableSource: be , useCallback: ge , useContext: Oe , useDebugValue: je , useDeferredValue: we , useEffect: Te , useId: Ve , useImperativeHandle: De , useInsertionEffect: Fe , useLayoutEffect: Le , useMemo: Me , useReducer: qe , useRef: Ne , useState: Ae , useSyncExternalStore: Ue , useTransition: ze , version: Be  } = W, He = H.default || W;
-const RESET_STYLE = `
-  html, body {
-    padding: 0;
-    margin: 0;
-  }
-`;
-function Html({ children , entrypoint  }) {
-    return He.createElement("html", {
-        lang: "en"
-    }, He.createElement("head", null, He.createElement("meta", {
-        charSet: "utf-8"
-    }), He.createElement("meta", {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1"
-    }), He.createElement("link", {
-        rel: "shortcut icon",
-        href: "favicon.ico"
-    }), He.createElement("title", null, "Deno React18 Test"), entrypoint, He.createElement("style", {
-        dangerouslySetInnerHTML: {
-            __html: RESET_STYLE
+function createPromiseRef(promise) {
+    const promiseRef = {
+        current: {
+            status: "pending",
+            value: promise
         }
-    })), He.createElement("body", null, He.createElement("noscript", {
-        dangerouslySetInnerHTML: {
-            __html: `<b>Enable JavaScript to run this app.</b>`
+    };
+    promise.then((value)=>{
+        if (promiseRef.current.status === "pending") {
+            const newValue = {
+                status: "resolved",
+                value
+            };
+            promiseRef.current = newValue;
         }
-    }), children));
+    }, (error)=>{
+        if (promiseRef.current.status === "pending") {
+            const newValue = {
+                status: "resolved",
+                value: error
+            };
+            promiseRef.current = newValue;
+        }
+    });
+    return promiseRef;
 }
-function Page({ children  }) {
-    return He.createElement("main", null, He.createElement("h3", null, "React 18 on Deno Deploy - Experimental"), children);
+function readPromiseRef(ref) {
+    if (ref.current.status === "resolved") return ref.current.value;
+    else throw ref.current.value;
 }
-const Comments = $e(()=>import("./content/Posts.tsx")
-);
-const HYDRATION_SCRIPT = `
-  import React from \"https://esm.sh/react@rc?target=deno&pin=v59\";
-  import { hydrateRoot } from \"https://esm.sh/react-dom@rc?no-check&deps=react@rc&pin=v59\";
-
-  import App from "./App.tsx";
-
-  const root = hydrateRoot(
-    document.body,
-    React.createElement(App, { url: new URL(window.location.href) })
-  );
-`;
-function App({ url  }) {
-    return Ee(Html, {
-        entrypoint: Ee(fe, null, Ee("link", {
-            rel: "prefetch",
-            href: "App.tsx"
-        }), ";", Ee("script", {
-            type: "module",
-            dangerouslySetInnerHTML: {
-                __html: HYDRATION_SCRIPT
-            }
-        }))
-    }, Ee(Page, null, Ee(pe, {
-        fallback: Ee("div", null, "Loading...")
-    }, Ee(Comments, null))));
+class CachedResponse {
+    headers;
+    ok;
+    redirected;
+    status;
+    statusText;
+    type;
+    url;
+    _response;
+    _arrayBuffer;
+    _blob;
+    _json;
+    _text;
+    constructor(nativeResponse){
+        this.headers = nativeResponse.headers;
+        this.ok = nativeResponse.ok;
+        this.redirected = nativeResponse.redirected;
+        this.status = nativeResponse.status;
+        this.statusText = nativeResponse.statusText;
+        this.type = nativeResponse.type;
+        this.url = nativeResponse.url;
+        this._response = nativeResponse;
+        this._arrayBuffer = null;
+        this._blob = null;
+        this._json = null;
+        this._text = null;
+    }
+    arrayBuffer() {
+        if (this._arrayBuffer) return readPromiseRef(this._arrayBuffer);
+        this._arrayBuffer = createPromiseRef(this._response.arrayBuffer());
+        return readPromiseRef(this._arrayBuffer);
+    }
+    blob() {
+        if (this._blob) return readPromiseRef(this._blob);
+        this._blob = createPromiseRef(this._response.blob());
+        return readPromiseRef(this._blob);
+    }
+    json() {
+        if (this._json) return readPromiseRef(this._json);
+        this._json = createPromiseRef(this._response.json());
+        return readPromiseRef(this._json);
+    }
+    text() {
+        if (this._text) return readPromiseRef(this._text);
+        this._text = createPromiseRef(this._response.text());
+        return readPromiseRef(this._text);
+    }
 }
-export { App as default };
+function readFetchResult(result) {
+    if (result.response) return result.response;
+    result.response = new CachedResponse(readPromiseRef(result));
+    return result.response;
+}
+const cache = new Map();
+function useFetch(url) {
+    const cachedRef = cache.get(url);
+    if (cachedRef !== undefined) return readFetchResult(cachedRef);
+    const promise = fetch(url);
+    const ref = createPromiseRef(promise);
+    cache.set(url, ref);
+    return readFetchResult(ref);
+}
+function Posts() {
+    const response = useFetch("https://cdn.jsdelivr.net/gh/snendev/website/src/api.ts");
+    const stuff = response.text();
+    console.log({
+        response
+    });
+    return He.createElement("p", null, stuff);
+}
+export { Posts as default };
