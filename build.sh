@@ -3,6 +3,9 @@
 rm -rf dist
 mkdir dist
 
-deno bundle --import-map import_map.json ./src/App.tsx dist/App.js
+deno bundle ./src/deps.ts dist/deps.js
+deno bundle ./src/App.tsx dist/App.js
 mkdir dist/content
-deno bundle --import-map import_map.json ./src/content/Posts.tsx dist/content/Posts.js
+mkdir dist/pages
+deno bundle ./src/content/Archive.tsx dist/content/Archive.js
+deno bundle ./src/content/Posts.tsx dist/content/Posts.js

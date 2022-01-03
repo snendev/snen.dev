@@ -1,12 +1,12 @@
 /** @jsx createElement */
 import { readerFromStreamReader } from "https://deno.land/std@0.119.0/streams/mod.ts";
-import { createElement, ReactElement, ReactNode } from "react";
-import ReactDOMServer from "react-dom/server";
+
+import { React, ReactDOMServer } from "./deps.ts";
 
 declare global {
   namespace ReactDOMServer {
     export const renderToReadableStream: (
-      element: ReactElement,
+      element: React.ReactElement,
     ) => ReadableStream<string | Uint8Array>;
   }
 }

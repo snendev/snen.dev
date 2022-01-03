@@ -1,7 +1,7 @@
-import React from "react";
 import { Application, Router } from "https://deno.land/x/oak@v10.1.0/mod.ts";
 import { contentType } from "https://deno.land/x/media_types@v2.11.1/mod.ts";
 
+import { React } from "./deps.ts"; 
 import App from "./App.tsx";
 import render from "./render.tsx";
 
@@ -15,9 +15,25 @@ async function sleep(delay: number) {
 const app = new Application();
 const router = new Router();
 
+const PAGE_SIZE = 4;
+
+const FIRST_FIFTY_INTS = Array(50).fill(0).map((_, i) => i);
+
 // handle api requests
-// router.get('/api/:slug+', async (context, next) => {
-//   return await next()
+router.get('/api/archive', (context) => {
+  const { page } = context.params;
+
+  context.response.type = contentType(".json");
+  context.response.body = JSON.stringify(FIRST_FIFTY_INTS);
+})
+
+// router.get('/api/content/:page?', (context) => {
+//   const { page } = context.params;
+
+//   const startIndex = (page ? +page : 0) * PAGE_SIZE;
+
+//   context.response.type = contentType(".json");
+//   context.response.body = JSON.stringify(FIRST_FIFTY_INTS.slice(startIndex, startIndex + PAGE_SIZE));
 // })
 
 // handle ts/js requests
@@ -31,6 +47,13 @@ router.get("/:path+.(js|jsx|ts|tsx)", async (context, next) => {
   context.response.type = contentType(".js");
   context.response.body = file;
 });
+
+router.get("/styles.css", async (context, next) => {
+  const file = await Deno.readTextFile("./public/styles.css");
+
+  context.response.type = contentType(".css");
+  context.response.body = file;
+})
 
 // handle resource/media requests
 router.get("/:slug+.:ext", async (context, next) => {

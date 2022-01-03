@@ -9363,9 +9363,10 @@ function useFetch(url) {
     cache.set(url, ref);
     return readFetchResult(ref);
 }
-function Posts({ url  }) {
-    const response = useFetch("https://cdn.jsdelivr.net/gh/snendev/website/src/api.ts");
-    const stuff = response.text();
-    return He.createElement("p", null, stuff);
+function Archive({ url  }) {
+    const response = useFetch(`${url.origin}/api/archive`);
+    const archive = response.json();
+    return He.createElement(He.Fragment, null, archive.map((i)=>He.createElement("span", null, i)
+    ));
 }
-export { Posts as default };
+export { Archive as default };

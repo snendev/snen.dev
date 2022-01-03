@@ -1,5 +1,5 @@
 /** @jsx React.createElement */
-import React from "react";
+import { React } from "../deps.ts";
 
 // Reset some browser default CSS.
 const RESET_STYLE = `
@@ -27,6 +27,7 @@ export default function Html({ children, entrypoint }: HtmlProps) {
           // set dangerously to avoid HTML escapes
           dangerouslySetInnerHTML={{ __html: RESET_STYLE }}
         />
+        <link rel="stylesheet" href="styles.css" />
       </head>
       <body>
         <noscript

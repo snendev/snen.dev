@@ -1,2 +1,2 @@
 #!/bin/bash
-deno --unstable run --allow-read --allow-net --import-map import_map.json ./src/server.tsx
+deno --unstable run --allow-read --allow-net ./src/server.tsx

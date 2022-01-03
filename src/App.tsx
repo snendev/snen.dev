@@ -1,11 +1,11 @@
-/** @jsx createElement */
-/** @jsxFrag Fragment */
-import { createElement, Fragment, lazy, Suspense } from "react";
+/** @jsx React.createElement */
+/** @jsxFrag React.Fragment */
+import { React } from "./deps.ts";
 
-import Html from "./Html.tsx";
-import Page from "./page/Page.tsx";
-
-const Comments: any = lazy(() => import("./content/Posts.tsx"));
+import Home from "./app/Home.tsx";
+import Html from "./app/Html.tsx";
+import Page from "./app/Page.tsx";
+import Sidebar from "./app/Sidebar.tsx"
 
 const HYDRATION_SCRIPT = `
   import React from \"https://esm.sh/react@rc?target=deno&pin=v59\";
@@ -30,7 +30,8 @@ export default function App({ url }: AppProps) {
         // Include link as quick attempt to mimic webpack-prefetch
         // https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules
         <>
-          <link rel="prefetch" href="App.tsx" />;
+          <link rel="prefetch" href="App.tsx" />
+          <link rel="prefetch" href="deps.ts" />
           <script
             type="module"
             dangerouslySetInnerHTML={{ __html: HYDRATION_SCRIPT }}
@@ -39,9 +40,8 @@ export default function App({ url }: AppProps) {
       }
     >
       <Page>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Comments />
-        </Suspense>
+        <Sidebar url={url} />
+        <Home url={url} />
       </Page>
     </Html>
   );
