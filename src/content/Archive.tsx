@@ -1,15 +1,20 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import { React } from "../deps.ts";
-import useFetch from "../useFetch.tsx"
+import suspendForData from "../data/suspendForData.tsx"
 
 interface ArchiveProps {
   url: URL
 }
 
 export default function Archive({url}: ArchiveProps) {
-  const response = useFetch(`${url.origin}/api/archive`);
-  const archive = response.json() as number[];
+  const archive: number[] = suspendForData(
+    "archive",
+    async () => {
+      const response = await fetch(`${url.origin}/api/archive`);
+      return await response.json();
+    }
+  );
   return (
     <>
       {archive.map((i) => (

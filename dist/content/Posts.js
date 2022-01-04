@@ -9271,101 +9271,46 @@ var bt = Ae1((J3)=>{
     J3.renderToReadableStream = wr.renderToReadableStream;
 });
 var Cr = At(bt()), Er = At(bt()), { version: Rl , renderToString: Tl , renderToStaticMarkup: _l , renderToNodeStream: Il , renderToStaticNodeStream: Ml , renderToPipeableStream: Pl  } = Er, Bl = Cr.default || Er;
-function createPromiseRef(promise) {
-    const promiseRef = {
-        current: {
+class AsyncRef {
+    _current;
+    constructor(promise){
+        this._current = {
             status: "pending",
             value: promise
-        }
-    };
-    promise.then((value)=>{
-        if (promiseRef.current.status === "pending") {
-            const newValue = {
-                status: "resolved",
-                value
-            };
-            promiseRef.current = newValue;
-        }
-    }, (error)=>{
-        if (promiseRef.current.status === "pending") {
-            const newValue = {
-                status: "resolved",
-                value: error
-            };
-            promiseRef.current = newValue;
-        }
-    });
-    return promiseRef;
-}
-function readPromiseRef(ref) {
-    if (ref.current.status === "resolved") return ref.current.value;
-    else throw ref.current.value;
-}
-class CachedResponse {
-    headers;
-    ok;
-    redirected;
-    status;
-    statusText;
-    type;
-    url;
-    _response;
-    _arrayBuffer;
-    _blob;
-    _json;
-    _text;
-    constructor(nativeResponse){
-        this.headers = nativeResponse.headers;
-        this.ok = nativeResponse.ok;
-        this.redirected = nativeResponse.redirected;
-        this.status = nativeResponse.status;
-        this.statusText = nativeResponse.statusText;
-        this.type = nativeResponse.type;
-        this.url = nativeResponse.url;
-        this._response = nativeResponse;
-        this._arrayBuffer = null;
-        this._blob = null;
-        this._json = null;
-        this._text = null;
+        };
+        promise.then((value)=>{
+            if (this._current.status === "pending") {
+                this._current = {
+                    status: "resolved",
+                    value
+                };
+            }
+        }, (error)=>{
+            if (this._current.status === "pending") {
+                this._current = {
+                    status: "failure",
+                    value: error
+                };
+            }
+        });
     }
-    arrayBuffer() {
-        if (this._arrayBuffer) return readPromiseRef(this._arrayBuffer);
-        this._arrayBuffer = createPromiseRef(this._response.arrayBuffer());
-        return readPromiseRef(this._arrayBuffer);
+    read() {
+        if (this._current.status === "resolved") return this._current.value;
+        else throw this._current.value;
     }
-    blob() {
-        if (this._blob) return readPromiseRef(this._blob);
-        this._blob = createPromiseRef(this._response.blob());
-        return readPromiseRef(this._blob);
-    }
-    json() {
-        if (this._json) return readPromiseRef(this._json);
-        this._json = createPromiseRef(this._response.json());
-        return readPromiseRef(this._json);
-    }
-    text() {
-        if (this._text) return readPromiseRef(this._text);
-        this._text = createPromiseRef(this._response.text());
-        return readPromiseRef(this._text);
-    }
-}
-function readFetchResult(result) {
-    if (result.response) return result.response;
-    result.response = new CachedResponse(readPromiseRef(result));
-    return result.response;
 }
 const cache = new Map();
-function useFetch(url) {
-    const cachedRef = cache.get(url);
-    if (cachedRef !== undefined) return readFetchResult(cachedRef);
-    const promise = fetch(url);
-    const ref = createPromiseRef(promise);
-    cache.set(url, ref);
-    return readFetchResult(ref);
+function readAsyncData(key, processAsyncResult, getAsyncData, ...data) {
+    const cachedRef = cache.get(key);
+    const ref = cachedRef ?? new AsyncRef(getAsyncData(...data).then(processAsyncResult));
+    if (!cachedRef) {
+        cache.set(key, ref);
+    }
+    return ref.read();
 }
 function Posts({ url  }) {
-    const response = useFetch("https://cdn.jsdelivr.net/gh/snendev/website/src/api.ts");
-    const stuff = response.text();
-    return He.createElement("p", null, stuff);
+    const text = readAsyncData("myData", (response)=>response.text()
+    , fetch, "https://cdn.jsdelivr.net/gh/snendev/website/src/api.ts");
+    return He.createElement("p", null, text);
 }
 export { Posts as default };
