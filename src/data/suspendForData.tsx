@@ -1,10 +1,10 @@
-import AsyncRef from "./ref.ts"
+import SuspenseRef from "./SuspenseRef.ts"
 
 // do not try to mutate this cache! https://github.com/reactwg/react-18/discussions/25
 // TODO: try importing unstable_getCacheForType
 // avoided for now to avoid CDN import issues
 // (history: I spent hours trying to understand a dependency issue, and don't want to try another import right now)
-const cache = new Map<string, AsyncRef<unknown>>();
+const cache = new Map<string, SuspenseRef<unknown>>();
 
 /**
  * readAsyncData is a simple in-render reader for remote data.
@@ -24,11 +24,41 @@ const cache = new Map<string, AsyncRef<unknown>>();
 export default function suspendForData<T>(
   key: string,
   getAsyncResult: () => Promise<T>,
+  cycles: number,
 ): T {
-  const cachedRef = cache.get(key) as AsyncRef<T> | undefined;
-  const ref = cachedRef ?? new AsyncRef(getAsyncResult());
-  if (!cachedRef) {
-    cache.set(key, ref);
+  const cachedRef = cache.get(key) as SuspenseRef<T> | undefined;
+  const ref = cachedRef ?? new SuspenseRef(getAsyncResult());
+  if (!cachedRef) cache.set(key, ref);
+  const result = ref.read();
+  console.log(suspendForSimulatedWork(key, cycles));
+  return result
+}
+
+async function performCycle(value: number, cycles: number) {
+  let work = value;
+  while (work < value + 10000000 * cycles) {
+    work++;
   }
-  return ref.read();
+  return await work;
+}
+
+const workCache = new Map<string, SuspenseRef<number>>();
+// simulate async work by committing work cycles and then yielding
+function suspendForSimulatedWork(key: string, cycles: number) {
+  const cachedWorkRef = workCache.get(key);
+  const workRef = cachedWorkRef ?? new SuspenseRef(
+    new Promise<number>((resolve) => resolve(0))
+      .then((value) => performCycle(value, cycles))
+      .then((value) => performCycle(value, cycles))
+      .then((value) => performCycle(value, cycles))
+      .then((value) => performCycle(value, cycles))
+      .then((value) => performCycle(value, cycles))
+      .then((value) => performCycle(value, cycles))
+      .then((value) => performCycle(value, cycles))
+      .then((value) => performCycle(value, cycles))
+      .then((value) => performCycle(value, cycles))
+      .then((value) => performCycle(value, cycles))
+  );
+  if (!cachedWorkRef) workCache.set(key, workRef);
+  return workRef.read()
 }

@@ -9271,7 +9271,7 @@ var bt = Ae1((J3)=>{
     J3.renderToReadableStream = wr.renderToReadableStream;
 });
 var Cr = At(bt()), Er = At(bt()), { version: Rl , renderToString: Tl , renderToStaticMarkup: _l , renderToNodeStream: Il , renderToStaticNodeStream: Ml , renderToPipeableStream: Pl  } = Er, Bl = Cr.default || Er;
-class AsyncRef {
+class SuspenseRef {
     _current;
     constructor(promise){
         this._current = {
@@ -9300,17 +9300,39 @@ class AsyncRef {
     }
 }
 const cache = new Map();
-function readAsyncData(key, processAsyncResult, getAsyncData, ...data) {
+function suspendForData(key, getAsyncResult, cycles) {
     const cachedRef = cache.get(key);
-    const ref = cachedRef ?? new AsyncRef(getAsyncData(...data).then(processAsyncResult));
-    if (!cachedRef) {
-        cache.set(key, ref);
+    const ref = cachedRef ?? new SuspenseRef(getAsyncResult());
+    if (!cachedRef) cache.set(key, ref);
+    const result = ref.read();
+    console.log(suspendForSimulatedWork(key, cycles));
+    return result;
+}
+async function performCycle(value, cycles) {
+    let work = value;
+    while(work < value + 100000000 * cycles){
+        work++;
     }
-    return ref.read();
+    return await work;
+}
+const workCache = new Map();
+function suspendForSimulatedWork(key, cycles) {
+    const cachedWorkRef = workCache.get(key);
+    const workRef = cachedWorkRef ?? new SuspenseRef(new Promise((resolve)=>resolve(0)
+    ).then((value)=>performCycle(value, cycles)
+    ).then((value)=>performCycle(value, cycles)
+    ).then((value)=>performCycle(value, cycles)
+    ).then((value)=>performCycle(value, cycles)
+    ).then((value)=>performCycle(value, cycles)
+    ));
+    if (!cachedWorkRef) workCache.set(key, workRef);
+    return workRef.read();
 }
 function Posts({ url  }) {
-    const text = readAsyncData("myData", (response)=>response.text()
-    , fetch, "https://cdn.jsdelivr.net/gh/snendev/website/src/api.ts");
+    const text = suspendForData("posts", async ()=>{
+        const response = await fetch("https://cdn.jsdelivr.net/gh/snendev/website/src/api.ts");
+        return await response.text();
+    }, 0);
     return He.createElement("p", null, text);
 }
 export { Posts as default };

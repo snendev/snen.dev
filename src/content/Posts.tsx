@@ -14,6 +14,7 @@ export default function Posts({url}: PostsProps) {
       const response = await fetch("https://cdn.jsdelivr.net/gh/snendev/website/src/api.ts");
       return await response.text()
     },
+    0,
   );
   return (
     <p>

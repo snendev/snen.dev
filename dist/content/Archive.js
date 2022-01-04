@@ -9271,7 +9271,7 @@ var bt = Ae1((J3)=>{
     J3.renderToReadableStream = wr.renderToReadableStream;
 });
 var Cr = At(bt()), Er = At(bt()), { version: Rl , renderToString: Tl , renderToStaticMarkup: _l , renderToNodeStream: Il , renderToStaticNodeStream: Ml , renderToPipeableStream: Pl  } = Er, Bl = Cr.default || Er;
-class AsyncRef {
+class SuspenseRef {
     _current;
     constructor(promise){
         this._current = {
@@ -9300,18 +9300,70 @@ class AsyncRef {
     }
 }
 const cache = new Map();
-function readAsyncData(key, processAsyncResult, getAsyncData, ...data) {
+function suspendForData(key, getAsyncResult, cycles) {
     const cachedRef = cache.get(key);
-    const ref = cachedRef ?? new AsyncRef(getAsyncData(...data).then(processAsyncResult));
-    if (!cachedRef) {
-        cache.set(key, ref);
+    const ref = cachedRef ?? new SuspenseRef(getAsyncResult());
+    if (!cachedRef) cache.set(key, ref);
+    const result = ref.read();
+    console.log(suspendForSimulatedWork(key, cycles));
+    return result;
+}
+async function performCycle(value, cycles) {
+    let work = value;
+    while(work < value + 100000000 * cycles){
+        work++;
     }
-    return ref.read();
+    return await work;
+}
+const workCache = new Map();
+function suspendForSimulatedWork(key, cycles) {
+    const cachedWorkRef = workCache.get(key);
+    const workRef = cachedWorkRef ?? new SuspenseRef(new Promise((resolve)=>resolve(0)
+    ).then((value)=>performCycle(value, cycles)
+    ).then((value)=>performCycle(value, cycles)
+    ).then((value)=>performCycle(value, cycles)
+    ).then((value)=>performCycle(value, cycles)
+    ).then((value)=>performCycle(value, cycles)
+    ));
+    if (!cachedWorkRef) workCache.set(key, workRef);
+    return workRef.read();
+}
+function ArchivePage({ url , page , delay  }) {
+    const archive = suspendForData(`archive${page}`, async ()=>{
+        const response = await fetch(`${url.origin}/api/archive/${page}`);
+        return await response.json();
+    }, delay);
+    return He.createElement("div", null, archive.map((i)=>He.createElement("span", {
+            key: i,
+            onClick: ()=>console.log(i)
+        }, i)
+    ));
 }
 function Archive({ url  }) {
-    const archive = readAsyncData("myArchive", (response)=>response.json()
-    , fetch, `${url.origin}/api/archive`);
-    return He.createElement(He.Fragment, null, archive.map((i)=>He.createElement("span", null, i)
-    ));
+    return He.createElement(He.Fragment, null, He.createElement(He.Suspense, {
+        fallback: He.createElement("div", null, "...")
+    }, He.createElement(ArchivePage, {
+        url: url,
+        page: 0,
+        delay: 2
+    })), He.createElement(He.Suspense, {
+        fallback: He.createElement("div", null, "...")
+    }, He.createElement(ArchivePage, {
+        url: url,
+        page: 1,
+        delay: 2
+    })), He.createElement(He.Suspense, {
+        fallback: He.createElement("div", null, "...")
+    }, He.createElement(ArchivePage, {
+        url: url,
+        page: 2,
+        delay: 6
+    })), He.createElement(He.Suspense, {
+        fallback: He.createElement("div", null, "...")
+    }, He.createElement(ArchivePage, {
+        url: url,
+        page: 3,
+        delay: 8
+    })));
 }
 export { Archive as default };

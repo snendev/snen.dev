@@ -5,13 +5,6 @@ import { React } from "./deps.ts";
 import App from "./App.tsx";
 import render from "./render.tsx";
 
-const JS_DELAY = 100;
-const RESOURCE_DELAY = 700;
-
-async function sleep(delay: number) {
-  return await new Promise((resolve) => setTimeout(resolve, delay));
-}
-
 const app = new Application();
 const router = new Router();
 
@@ -20,11 +13,20 @@ const PAGE_SIZE = 4;
 const FIRST_FIFTY_INTS = Array(50).fill(0).map((_, i) => i);
 
 // handle api requests
-router.get('/api/archive', (context) => {
+router.get('/api/archive/:page', (context) => {
   const { page } = context.params;
 
+  const pageNumber = +(page ?? 0);
+  if (Number.isNaN(pageNumber)) {
+    context.response.status = 400;
+    context.response.body = "Bad Request";
+  }
+
+  const startValue = pageNumber * PAGE_SIZE;
+  const numbers = FIRST_FIFTY_INTS.slice(startValue, startValue + PAGE_SIZE);
+
   context.response.type = contentType(".json");
-  context.response.body = JSON.stringify(FIRST_FIFTY_INTS);
+  context.response.body = JSON.stringify(numbers);
 })
 
 // router.get('/api/content/:page?', (context) => {
@@ -43,7 +45,6 @@ router.get("/:path+.(js|jsx|ts|tsx)", async (context, next) => {
   const file = await Deno.readTextFile(`./dist/${path}.js`);
   if (!file) return await next();
 
-  await sleep(JS_DELAY);
   context.response.type = contentType(".js");
   context.response.body = file;
 });
@@ -63,7 +64,6 @@ router.get("/:slug+.:ext", async (context, next) => {
   const file = await Deno.readFile(`./assets/${path}`);
   if (!file) return await next();
 
-  await sleep(RESOURCE_DELAY);
   context.response.type = contentType(path);
   context.response.body = file;
 });
