@@ -2,7 +2,8 @@
 /** @jsxFrag React.Fragment */
 import { React } from "../deps.ts";
 
-const Archive: any = React.lazy(() => import("../content/Archive.tsx"));
+type LazyArchiveType = React.LazyExoticComponent<({url}: {url: URL}) => React.ReactElement>;
+const Archive: LazyArchiveType = React.lazy(async () => await import("../content/Archive.tsx"));
 
 interface SidebarProps {
   url: URL

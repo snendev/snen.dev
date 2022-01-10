@@ -1,7 +1,7 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import suspendForData from "../data/suspendForData.ts"
-const { React } = await import("../deps.ts");
+import { React } from "../deps.ts";
 
 interface PostsProps {
   url: URL

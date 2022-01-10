@@ -1,8 +1,9 @@
 import { Application, Router } from "https://deno.land/x/oak@v10.1.0/mod.ts";
 import { contentType } from "https://deno.land/x/media_types@v2.11.1/mod.ts";
 
-import { React } from "./deps.ts"; 
-import App from "./App.tsx";
+import { React } from "../client/deps.ts"; 
+import App from "../client/App.tsx";
+
 import render from "./render.tsx";
 
 const app = new Application();

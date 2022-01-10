@@ -1,7 +1,8 @@
 /** @jsx createElement */
 import { readerFromStreamReader } from "https://deno.land/std@0.119.0/streams/mod.ts";
+import ReactDOMServer from "https://esm.sh/react-dom@18.0.0-rc.0/server?deps=react@18.0.0-rc.0&pin=v59";
 
-import { React, ReactDOMServer } from "./deps.ts";
+import { React } from "../client/deps.ts";
 
 declare global {
   namespace ReactDOMServer {

@@ -1,7 +1,8 @@
 /** @jsx React.createElement */
 import { React } from "../deps.ts";
 
-const Posts: any = React.lazy(() => import("../content/Posts.tsx"))
+type LazyPostsType = React.LazyExoticComponent<({url}: {url: URL}) => React.ReactElement>;
+const Posts: LazyPostsType = React.lazy(async () => await import("../content/Posts.tsx"));
 
 interface HomeProps {
   url: URL
