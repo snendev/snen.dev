@@ -19,8 +19,8 @@ function getCache(): Map<string, SuspenseRef<unknown>> {
  * users away from incorrect usage, so I sympathize with the react-fetch team.
  * But I'm ignoring this problem.
  *
- * There's also no cache lock here, so keys should be unique per usage of readAsyncData -- it is
- * less concerning to consider the race between a component and its next render.
+ * There's also no cache lock here, so keys should be unique per usage of suspendData -- it is
+ * less concerning to consider only the race between a component and its next render.
  */
 export default function suspendData<T>(
   key: string,

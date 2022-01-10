@@ -6,15 +6,14 @@ import suspendData from "../data/suspendData.ts";
 
 interface ArchivePageProps {
   url: URL;
-  page: number;
 }
 
-function ArchivePage({ url, page }: ArchivePageProps) {
-  const archive: number[] = suspendData(
-    `api/archive/${page}`,
+function ArchivePage({ url }: ArchivePageProps) {
+  const archive = suspendData(
+    `api/posts`,
     async () => {
-      const response = await fetch(`${url.origin}/api/archive/${page}`);
-      return await response.json();
+      const response = await fetch(`${url.origin}/api/archive`);
+      return await response.json() as number[];
     },
   );
   return (

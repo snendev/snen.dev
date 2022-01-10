@@ -9,13 +9,12 @@ interface PostsProps {
 }
 
 export default function Posts({ url }: PostsProps) {
-  const text = suspendData(
+  // TODO suspend on each post, only get directory data from here
+  const data = suspendData(
     "api/posts",
     async () => {
-      const response = await fetch(
-        "https://cdn.jsdelivr.net/gh/snendev/website/src/api.ts",
-      );
-      return await response.text();
+      const response = await fetch(`${url.origin}/api/posts`);
+      return await response.json() as {title: number, text: string}[];
     },
   );
 
@@ -31,9 +30,12 @@ export default function Posts({ url }: PostsProps) {
         {counter}
         <button onClick={onClick}>+</button>
       </div>
-      <p>
-        {text}
-      </p>
+      {data.map(({title, text}) => (
+        <>
+          <h2>{title}</h2>
+          <p>{text}</p>
+        </>
+      ))}
     </div>
   );
 }

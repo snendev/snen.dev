@@ -17,7 +17,8 @@ staticRouter.get("/:path+.(js|jsx|ts|tsx|js)(.map)?", async (context, next) => {
   const file = await Deno.readTextFile(
     `./dist/${path}.js${isSourcemap ? ".map" : ""}`,
   );
-  await sleep(2);
+
+  // await sleep(1);
   if (!file) return await next();
 
   context.response.type = contentType(".js");
