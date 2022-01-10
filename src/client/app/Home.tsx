@@ -12,7 +12,7 @@ interface HomeProps {
   url: URL;
 }
 
-export default function HomeDirectory({ url }: HomeProps) {
+export default function Home({ url }: HomeProps) {
   return (
     <div>
       <section>

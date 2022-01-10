@@ -1,4 +1,4 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
+import { parse } from "https://deno.land/std@0.120.0/flags/mod.ts";
 import * as esbuild from "https://deno.land/x/esbuild@v0.14.11/mod.js";
 
 const { minify, sourcemap } = parse(Deno.args);
@@ -29,8 +29,7 @@ const config = {
   jsxFragment: "React.Fragment",
   outdir: "dist",
   external: [
-    "https://esm.sh/react@18.0.0-rc.0?pin=v59",
-    "https://esm.sh/react-dom@18.0.0-rc.0?deps=react@18.0.0-rc.0&pin=v59",
+    "https://*",
   ],
 };
 
