@@ -8,14 +8,20 @@ import Page from "./app/Page.tsx";
 import Sidebar from "./app/Sidebar.tsx"
 
 const HYDRATION_SCRIPT = `
-  import React from \"https://esm.sh/react@rc?target=deno&pin=v59\";
-  import { hydrateRoot } from \"https://esm.sh/react-dom@rc?no-check&deps=react@rc&pin=v59\";
+  import React from \"https://esm.sh/react@18.0.0-rc.0?pin=v59\";
+  import { hydrateRoot } from \"https://esm.sh/react-dom@18.0.0-rc.0?deps=react@18.0.0-rc.0&pin=v59\";
 
   import App from "./App.tsx";
 
+  const url = new URL(window.location.href);
+  function Wrapper() {
+    const r = React.useRef();
+    console.log(r)
+    return <App url={url} />;
+  }
   const root = hydrateRoot(
     document.body,
-    React.createElement(App, { url: new URL(window.location.href) })
+    React.createElement(Wrapper)
   );
 `;
 

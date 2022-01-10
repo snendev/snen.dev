@@ -1,7 +1,7 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import { React } from "../deps.ts";
-import suspendForData from "../data/suspendForData.tsx"
+import suspendForData from "../data/suspendForData.ts"
 
 interface ArchivePageProps {
   url: URL
@@ -16,7 +16,6 @@ function ArchivePage({url, page, delay}: ArchivePageProps) {
       const response = await fetch(`${url.origin}/api/archive/${page}`);
       return await response.json();
     },
-    delay,
   );
   return (
     <div>

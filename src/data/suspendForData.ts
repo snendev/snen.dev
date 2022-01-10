@@ -14,8 +14,8 @@ const cache = new Map<string, SuspenseRef<unknown>>();
  * a "resolved" response.
  * Since React could suspend and re-try rendering at any time, it is critical that there is no way
  * to call e.g. some Response.body.text() stream more than once.
- * This is a pretty hard API choice to make as a library maintainer, since users can easily be led
- * to the wrong choice, so I sympathize with the react-fetch team.
+ * This is a pretty hard API choice to make as a library maintainer, since it is hard to steer
+ * users away from incorrect usage, so I sympathize with the react-fetch team.
  * But I'm ignoring this problem.
  *
  * There's also no cache lock here, so keys should be unique per usage of readAsyncData -- it is
@@ -24,41 +24,10 @@ const cache = new Map<string, SuspenseRef<unknown>>();
 export default function suspendForData<T>(
   key: string,
   getAsyncResult: () => Promise<T>,
-  cycles: number,
 ): T {
   const cachedRef = cache.get(key) as SuspenseRef<T> | undefined;
   const ref = cachedRef ?? new SuspenseRef(getAsyncResult());
   if (!cachedRef) cache.set(key, ref);
   const result = ref.read();
-  console.log(suspendForSimulatedWork(key, cycles));
   return result
-}
-
-async function performCycle(value: number, cycles: number) {
-  let work = value;
-  while (work < value + 10000000 * cycles) {
-    work++;
-  }
-  return await work;
-}
-
-const workCache = new Map<string, SuspenseRef<number>>();
-// simulate async work by committing work cycles and then yielding
-function suspendForSimulatedWork(key: string, cycles: number) {
-  const cachedWorkRef = workCache.get(key);
-  const workRef = cachedWorkRef ?? new SuspenseRef(
-    new Promise<number>((resolve) => resolve(0))
-      .then((value) => performCycle(value, cycles))
-      .then((value) => performCycle(value, cycles))
-      .then((value) => performCycle(value, cycles))
-      .then((value) => performCycle(value, cycles))
-      .then((value) => performCycle(value, cycles))
-      .then((value) => performCycle(value, cycles))
-      .then((value) => performCycle(value, cycles))
-      .then((value) => performCycle(value, cycles))
-      .then((value) => performCycle(value, cycles))
-      .then((value) => performCycle(value, cycles))
-  );
-  if (!cachedWorkRef) workCache.set(key, workRef);
-  return workRef.read()
 }

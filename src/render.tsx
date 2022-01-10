@@ -7,7 +7,7 @@ declare global {
   namespace ReactDOMServer {
     export const renderToReadableStream: (
       element: React.ReactElement,
-    ) => ReadableStream<string | Uint8Array>;
+    ) => ReadableStream<Uint8Array>;
   }
 }
 
