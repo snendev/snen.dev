@@ -18,9 +18,22 @@ export default function Posts({ url }: PostsProps) {
       return await response.text();
     },
   );
+
+  const [counter, setCounter] = React.useState(0);
+
+  function onClick() {
+    setCounter((prev) => prev + 1);
+  }
+
   return (
-    <p>
-      {text}
-    </p>
+    <div>
+      <div>
+        {counter}
+        <button onClick={onClick}>+</button>
+      </div>
+      <p>
+        {text}
+      </p>
+    </div>
   );
 }

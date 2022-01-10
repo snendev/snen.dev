@@ -11,7 +11,13 @@ function Posts({ url }) {
     const response = await fetch("https://cdn.jsdelivr.net/gh/snendev/website/src/api.ts");
     return await response.text();
   });
-  return /* @__PURE__ */ react_default.createElement("p", null, text);
+  const [counter, setCounter] = react_default.useState(0);
+  function onClick() {
+    setCounter((prev) => prev + 1);
+  }
+  return /* @__PURE__ */ react_default.createElement("div", null, /* @__PURE__ */ react_default.createElement("div", null, counter, /* @__PURE__ */ react_default.createElement("button", {
+    onClick
+  }, "+")), /* @__PURE__ */ react_default.createElement("p", null, text));
 }
 export {
   Posts as default

@@ -3,17 +3,17 @@ import * as esbuild from "https://deno.land/x/esbuild@v0.14.11/mod.js";
 
 const { minify, sourcemap } = parse(Deno.args);
 
-const entrypoints = [
+const entryPoints = [
   "src/client/App.tsx",
   "src/client/index.tsx",
 ];
 for await (const entry of Deno.readDir("src/client/content")) {
-  entrypoints.push(`src/client/content/${entry.name}`);
+  entryPoints.push(`src/client/content/${entry.name}`);
 }
-console.log(`Bundling ${entrypoints.length} files...`);
+console.log(`Bundling ${entryPoints.length} files...`);
 
 const config = {
-  entryPoints: entrypoints,
+  entryPoints,
   loader: {
     ".ts": "ts",
     ".tsx": "tsx",
@@ -35,6 +35,6 @@ const config = {
 };
 
 await esbuild.build(config);
-console.log(`Succesfully bundled ${entrypoints.join(", ")}.`);
+console.log(`Succesfully bundled ${entryPoints.join(", ")}.`);
 
 esbuild.stop();

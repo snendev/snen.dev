@@ -1,5 +1,14 @@
 import { Router, contentType } from "./deps.ts";
 
+async function sleep(seconds: number) {
+  return await new Promise<void>((resolve) => {
+    setTimeout(
+      () => { resolve() },
+      seconds * 1000,
+    )
+  })
+}
+
 // handle static asset requests (ts, js, sourcemaps, css, images, etc)
 const staticRouter = new Router();
 staticRouter.get("/:path+.(js|jsx|ts|tsx|js)(.map)?", async (context, next) => {
@@ -8,6 +17,7 @@ staticRouter.get("/:path+.(js|jsx|ts|tsx|js)(.map)?", async (context, next) => {
   const file = await Deno.readTextFile(
     `./dist/${path}.js${isSourcemap ? ".map" : ""}`,
   );
+  await sleep(2);
   if (!file) return await next();
 
   context.response.type = contentType(".js");
