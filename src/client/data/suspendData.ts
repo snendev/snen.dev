@@ -1,10 +1,11 @@
-import SuspenseRef from "./SuspenseRef.ts"
+// @ts-ignore Type not exposed yet
+import SuspenseRef from "./SuspenseRef.ts";
 
-// do not try to mutate this cache! https://github.com/reactwg/react-18/discussions/25
-// TODO: try importing unstable_getCacheForType
-// avoided for now to avoid CDN import issues
-// (history: I spent hours trying to understand a dependency issue, and don't want to try another import right now)
-const cache = new Map<string, SuspenseRef<unknown>>();
+const _globalCache = new Map<string, SuspenseRef<unknown>>();
+
+function getCache(): Map<string, SuspenseRef<unknown>> {
+  return _globalCache;
+}
 
 /**
  * readAsyncData is a simple in-render reader for remote data.
@@ -21,13 +22,14 @@ const cache = new Map<string, SuspenseRef<unknown>>();
  * There's also no cache lock here, so keys should be unique per usage of readAsyncData -- it is
  * less concerning to consider the race between a component and its next render.
  */
-export default function suspendForData<T>(
+export default function suspendData<T>(
   key: string,
   getAsyncResult: () => Promise<T>,
 ): T {
+  const cache = getCache();
   const cachedRef = cache.get(key) as SuspenseRef<T> | undefined;
   const ref = cachedRef ?? new SuspenseRef(getAsyncResult());
   if (!cachedRef) cache.set(key, ref);
   const result = ref.read();
-  return result
+  return result;
 }

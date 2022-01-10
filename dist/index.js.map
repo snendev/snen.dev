@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/client/index.tsx"],
+  "sourcesContent": ["/** @jsx React.createElement */\n/** @jsxFrag React.Fragment */\n/// <reference lib=\"dom\" />\nimport ReactDOMServer from \"https://esm.sh/react-dom@18.0.0-rc.0?deps=react@18.0.0-rc.0&pin=v59\";\n\nimport React from \"./react.ts\";\nimport App from \"./App.tsx\";\n\nconst url = new URL(window.location.href);\n\n// @ts-ignore No ReactDOMServer@18 types exist yet\nconst root = ReactDOMServer.hydrateRoot(\n  document.body,\n  <App url={url} />,\n);\n"],
+  "mappings": ";;;;;;;;AAGA;AAKA,IAAM,MAAM,IAAI,IAAI,OAAO,SAAS;AAGpC,IAAM,OAAO,eAAe,YAC1B,SAAS,MACT,4CAAC,KAAD;AAAA,EAAK;AAAA;",
+  "names": []
+}

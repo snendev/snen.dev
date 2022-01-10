@@ -1,5 +1,5 @@
 /** @jsx React.createElement */
-import { React } from "../deps.ts";
+import React from "../react.ts";
 
 // Reset some browser default CSS.
 const RESET_STYLE = `
@@ -10,11 +10,10 @@ const RESET_STYLE = `
 `;
 
 interface HtmlProps {
-  entrypoint: React.ReactNode;
   children: React.ReactNode;
 }
 
-export default function Html({ children, entrypoint }: HtmlProps) {
+export default function Html({ children }: HtmlProps) {
   return (
     <html lang="en">
       <head>
@@ -22,11 +21,11 @@ export default function Html({ children, entrypoint }: HtmlProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="shortcut icon" href="favicon.ico" />
         <title>Deno React18 Test</title>
-        {entrypoint}
         <style
           // set dangerously to avoid HTML escapes
           dangerouslySetInnerHTML={{ __html: RESET_STYLE }}
         />
+        <script type="module" src="./index.js" />
         <link rel="stylesheet" href="styles.css" />
       </head>
       <body>

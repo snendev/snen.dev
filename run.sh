@@ -1,2 +1,2 @@
 #!/bin/bash
-deno --unstable run --allow-read --allow-net ./src/server/server.tsx
+deno --unstable run --allow-read --allow-net --allow-env ./src/server/server.tsx

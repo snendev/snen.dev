@@ -1,15 +1,16 @@
 import { parse } from "https://deno.land/std/flags/mod.ts";
 import * as esbuild from "https://deno.land/x/esbuild@v0.14.11/mod.js";
 
-const {minify, sourcemap} = parse(Deno.args);
+const { minify, sourcemap } = parse(Deno.args);
 
 const entrypoints = [
   "src/client/App.tsx",
+  "src/client/index.tsx",
 ];
 for await (const entry of Deno.readDir("src/client/content")) {
   entrypoints.push(`src/client/content/${entry.name}`);
 }
-console.log(`Bundling ${entrypoints.length} files...`)
+console.log(`Bundling ${entrypoints.length} files...`);
 
 const config = {
   entryPoints: entrypoints,
@@ -19,6 +20,7 @@ const config = {
   } as const,
   bundle: true,
   format: "esm" as const,
+  splitting: true,
   target: "esnext",
   minify: !!minify,
   sourcemap: !!sourcemap,

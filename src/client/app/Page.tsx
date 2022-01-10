@@ -1,5 +1,5 @@
 /** @jsx React.createElement */
-import { React } from "../deps.ts";
+import React from "../react.ts";
 
 import GithubIcon from "./GithubIcon.tsx";
 

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/client/content/Posts.tsx"],
+  "sourcesContent": ["/** @jsx React.createElement */\n/** @jsxFrag React.Fragment */\nimport React from \"../react.ts\";\n\nimport suspendData from \"../data/suspendData.ts\";\n\ninterface PostsProps {\n  url: URL;\n}\n\nexport default function Posts({ url }: PostsProps) {\n  const text = suspendData(\n    \"api/posts\",\n    async () => {\n      const response = await fetch(\n        \"https://cdn.jsdelivr.net/gh/snendev/website/src/api.ts\",\n      );\n      return await response.text();\n    },\n  );\n  return (\n    <p>\n      {text}\n    </p>\n  );\n}\n"],
+  "mappings": ";;;;;;;;AAUe,eAAe,EAAE,OAAmB;AACjD,QAAM,OAAO,YACX,aACA,YAAY;AACV,UAAM,WAAW,MAAM,MACrB;AAEF,WAAO,MAAM,SAAS;AAAA;AAG1B,SACE,4CAAC,KAAD,MACG;AAAA;",
+  "names": []
+}

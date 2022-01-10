@@ -1,18 +1,21 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
-import suspendForData from "../data/suspendForData.ts"
-import { React } from "../deps.ts";
+import React from "../react.ts";
+
+import suspendData from "../data/suspendData.ts";
 
 interface PostsProps {
-  url: URL
+  url: URL;
 }
 
-export default function Posts({url}: PostsProps) {
-  const text = suspendForData(
-    "posts",
+export default function Posts({ url }: PostsProps) {
+  const text = suspendData(
+    "api/posts",
     async () => {
-      const response = await fetch("https://cdn.jsdelivr.net/gh/snendev/website/src/api.ts");
-      return await response.text()
+      const response = await fetch(
+        "https://cdn.jsdelivr.net/gh/snendev/website/src/api.ts",
+      );
+      return await response.text();
     },
   );
   return (

@@ -1,15 +1,19 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
-import { React } from "../deps.ts";
+import React from "../react.ts";
 
-type LazyArchiveType = React.LazyExoticComponent<({url}: {url: URL}) => React.ReactElement>;
-const Archive: LazyArchiveType = React.lazy(async () => await import("../content/Archive.tsx"));
+type LazyArchiveType = React.LazyExoticComponent<
+  ({ url }: { url: URL }) => React.ReactElement
+>;
+const Archive: LazyArchiveType = React.lazy(async () =>
+  await import("../content/Archive.tsx")
+);
 
 interface SidebarProps {
-  url: URL
+  url: URL;
 }
 
-export default function Sidebar({url}: SidebarProps) {
+export default function Sidebar({ url }: SidebarProps) {
   return (
     <aside className="sidebar">
       <React.Suspense fallback={<span>...</span>}>

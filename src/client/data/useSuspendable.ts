@@ -1,22 +1,19 @@
-import { React } from "../deps.ts"
+import React from "../react.ts";
 
-type AsyncData<T> =
-  | {
-    status: "pending";
-    value: Promise<T>;
-  }
-  | {
-    status: "failure";
-    value: Error;
-  }
-  | {
-    status: "resolved";
-    value: T;
-  };
+import { AsyncData } from "./SuspenseRef.ts";
+
+/// WARNING - THIS IS INCORRECT CODE
+/// This does not work since React throws away the component when suspending; the hook has no "prior render" to reference
+/// and so it is re-mounted each time.
+
+/// unstable_getCacheForType isn't exposed yet
+// function getCache(): Map<string, AsyncData<unknown>> {
+//   return React.unstable_getCacheForType(new Map());
+// }
 
 /**
- * useSuspendablePromise helps us read the results of a request in a way that is integrated with Suspense.
- * 
+ * useSuspendable helps us read the results of a request in a way that is integrated with Suspense.
+ *
  * It uses a Ref<AsyncData> to maintain some promise result in one of three states:
  *   - the promise is still loading, aka "pending"
  *   - the promise has resolved to an error
@@ -29,12 +26,12 @@ type AsyncData<T> =
  * When failed, we throw the error, propagating it upward to the next ErrorBoundary.
  * When resolved, we return the resolved value and render.
  */
-export default function useSuspendablePromise<T>(
-  initializePromise: () => Promise<T>
+export default function useSuspendable<T>(
+  initialize: () => Promise<T>,
 ) {
   const ref = React.useRef<AsyncData<T>>();
   if (ref.current === undefined) {
-    const promise = initializePromise();
+    const promise = initialize();
     ref.current = {
       status: "pending",
       value: promise,
@@ -46,6 +43,7 @@ export default function useSuspendablePromise<T>(
             status: "resolved",
             value,
           };
+          console.log(ref);
         }
       },
       (error) => {
@@ -55,7 +53,7 @@ export default function useSuspendablePromise<T>(
             value: error,
           };
         }
-      }
+      },
     );
   }
   if (ref.current.status === "resolved") return ref.current.value;

@@ -1,17 +1,17 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
-import { React } from "../deps.ts";
-import suspendForData from "../data/suspendForData.ts"
+import React from "../react.ts";
+
+import suspendData from "../data/suspendData.ts";
 
 interface ArchivePageProps {
-  url: URL
-  page: number
-  delay: number
+  url: URL;
+  page: number;
 }
 
-function ArchivePage({url, page, delay}: ArchivePageProps) {
-  const archive: number[] = suspendForData(
-    `archive${page}`,
+function ArchivePage({ url, page }: ArchivePageProps) {
+  const archive: number[] = suspendData(
+    `api/archive/${page}`,
     async () => {
       const response = await fetch(`${url.origin}/api/archive/${page}`);
       return await response.json();
@@ -23,27 +23,27 @@ function ArchivePage({url, page, delay}: ArchivePageProps) {
         <span key={i} onClick={() => console.log(i)}>{i}</span>
       ))}
     </div>
-  )
+  );
 }
 
 interface ArchiveProps {
-  url: URL
+  url: URL;
 }
 
-export default function Archive({url}: ArchiveProps) {
+export default function Archive({ url }: ArchiveProps) {
   return (
     <>
       <React.Suspense fallback={<div>...</div>}>
-        <ArchivePage url={url} page={0} delay={2} />
+        <ArchivePage url={url} page={0} />
       </React.Suspense>
       <React.Suspense fallback={<div>...</div>}>
-        <ArchivePage url={url} page={1} delay={2} />
+        <ArchivePage url={url} page={1} />
       </React.Suspense>
       <React.Suspense fallback={<div>...</div>}>
-        <ArchivePage url={url} page={2} delay={6} />
+        <ArchivePage url={url} page={2} />
       </React.Suspense>
       <React.Suspense fallback={<div>...</div>}>
-        <ArchivePage url={url} page={3} delay={8} />
+        <ArchivePage url={url} page={3} />
       </React.Suspense>
     </>
   );

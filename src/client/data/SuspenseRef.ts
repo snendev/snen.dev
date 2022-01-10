@@ -14,7 +14,7 @@ export type AsyncData<T> =
 
 /**
  * SuspenseRef helps us read the results of a request in a way that is integrated with Suspense.
- * 
+ *
  * It is a bucket for some async request data under one of three states:
  *   - the request is still loading, aka "pending"
  *   - the request has failed
@@ -28,7 +28,7 @@ export type AsyncData<T> =
  * When resolved, we return the resolved value and render.
  */
 export default class SuspenseRef<T> {
-  _current: AsyncData<T>
+  _current: AsyncData<T>;
 
   constructor(promise: Promise<T>) {
     this._current = {

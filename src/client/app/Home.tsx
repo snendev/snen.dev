@@ -1,22 +1,28 @@
 /** @jsx React.createElement */
-import { React } from "../deps.ts";
+import React from "../react.ts";
 
-type LazyPostsType = React.LazyExoticComponent<({url}: {url: URL}) => React.ReactElement>;
-const Posts: LazyPostsType = React.lazy(async () => await import("../content/Posts.tsx"));
+type LazyPostsType = React.LazyExoticComponent<
+  ({ url }: { url: URL }) => React.ReactElement
+>;
+const Posts: LazyPostsType = React.lazy(async () =>
+  await import("../content/Posts.tsx")
+);
 
 interface HomeProps {
-  url: URL
+  url: URL;
 }
 
-export default function HomeDirectory({url}: HomeProps) {
+export default function HomeDirectory({ url }: HomeProps) {
   return (
     <div>
       <section>
         <p>
-          This website is rendered using React 18's new SSR architecture, without a framework!
+          This website is rendered using React 18's new SSR architecture,
+          without a framework!
         </p>
         <p>
-          Concurrent rendering is enabled so that HTML is streamed and hydration is intermittent.
+          Concurrent rendering is enabled so that HTML is streamed and hydration
+          is intermittent.
         </p>
         <p>
           TODO: writeup
