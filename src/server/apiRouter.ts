@@ -1,53 +1,33 @@
 import { Router, contentType } from "./deps.ts";
+import loadEntries from "./loadEntries.ts"
+import type { EntriesListResponse, EntriesDetailResponse } from "./apiTypes.ts"
+
+const siteEntries = await loadEntries("./entries");
 
 const apiRouter = new Router();
 
-const FIRST_FIFTY_INTS = Array(50).fill(0).map((_, i) => i);
-const PAGE_SIZE = 4;
-apiRouter.get("/api/posts", (context) => {
-  const { page } = context.params;
-
-  const pageNumber = +(page ?? 0);
-  if (Number.isNaN(pageNumber)) {
-    context.response.status = 400;
-    context.response.body = "Bad Request";
-  }
-
-  const startValue = pageNumber * PAGE_SIZE;
-  const numbers = FIRST_FIFTY_INTS.slice(startValue, startValue + PAGE_SIZE);
-
+apiRouter.get("/api/entries", (context) => {
   context.response.type = contentType(".json");
-  context.response.body = JSON.stringify(numbers);
+  const entries: EntriesListResponse = Object.values(siteEntries)
+    .sort((a, b) => {
+      const value = a.modifyDate.valueOf() - b.modifyDate.valueOf();
+      return Math.abs(value);
+    })
+  context.response.body = JSON.stringify(entries);
 });
 
-const PAGE_CHAR_COUNT = 50;
+apiRouter.get("/api/entries/:slug", async (context) => {
+  const { slug } = context.params;
 
-apiRouter.get("/api/posts/:page", async (context) => {
-  const { page } = context.params;
+  const text = await Deno.readTextFile(`./entries/${slug}.md`);
+  const metadata = siteEntries[slug]
 
-  const pageNumber = +(page ?? 0);
-  if (Number.isNaN(pageNumber)) {
-    context.response.status = 400;
-    context.response.body = "Bad Request";
-    return
-  }
-
-  const startValue = pageNumber * PAGE_SIZE;
-  const numbers = FIRST_FIFTY_INTS.slice(startValue, startValue + PAGE_SIZE);
-
-  const text = await (await fetch(
-    "https://cdn.jsdelivr.net/gh/snendev/website/src/api.ts",
-  )).text();
-
+  const data: EntriesDetailResponse = {
+    content: text,
+    metadata,
+  };
   context.response.type = contentType(".json");
-  context.response.body = JSON.stringify(
-    numbers.map((i) =>
-      ({
-        title: i,
-        text: text.slice(PAGE_CHAR_COUNT * i, PAGE_CHAR_COUNT * (i + 1)),
-      })
-    )
-  );
+  context.response.body = JSON.stringify(data);
 });
 
 export default apiRouter;

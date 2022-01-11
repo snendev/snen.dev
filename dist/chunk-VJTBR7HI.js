@@ -45,7 +45,17 @@ function suspendData(key, getAsyncResult) {
   return result;
 }
 
+// src/client/data/readJsonAPI.ts
+function readJsonAPI(origin, endpoint, specifier) {
+  const pathname = `api/${endpoint}${specifier ? `/${specifier}` : ""}`;
+  return suspendData(pathname, async () => {
+    const response = await fetch(`${origin}/${pathname}`);
+    return await response.json();
+  });
+}
+
 export {
-  suspendData
+  suspendData,
+  readJsonAPI
 };
-//# sourceMappingURL=chunk-GVRIBERC.js.map
+//# sourceMappingURL=chunk-VJTBR7HI.js.map

@@ -5,6 +5,7 @@ import App from "../client/App.tsx";
 
 import staticRouter from "./staticRouter.ts";
 import apiRouter from "./apiRouter.ts";
+import sleep from "./sleep.ts"
 
 declare global {
   namespace ReactDOMServer {
@@ -24,9 +25,9 @@ function flushReader(reader: ReadableStreamDefaultReader) {
 }
 
 // tees the Reader stream and pipes through a text decoder
-function attachLogger<T extends BufferSource>(
-  stream: ReadableStream<T>,
-): ReadableStream<T> {
+function attachLogger(
+  stream: ReadableStream<Uint8Array>,
+): ReadableStream<Uint8Array> {
   const [passThroughStream, loggerStream] = stream.tee();
   const reader = loggerStream.pipeThrough(new TextDecoderStream())
     .getReader();
@@ -50,7 +51,7 @@ app.use(apiRouter.allowedMethods());
 app.use(staticRouter.routes());
 app.use(staticRouter.allowedMethods());
 
-// handle everything else an app route
+// handle everything else as an app route
 app.use(async (context) => {
   const nodeStream = await ReactDOMServer
     .renderToReadableStream(

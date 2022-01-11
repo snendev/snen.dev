@@ -2,48 +2,20 @@
 /** @jsxFrag React.Fragment */
 import React from "../react.ts";
 
-import suspendData from "../data/suspendData.ts";
-
-interface ArchivePageProps {
-  url: URL;
-}
-
-function ArchivePage({ url }: ArchivePageProps) {
-  const archive = suspendData(
-    `api/posts`,
-    async () => {
-      const response = await fetch(`${url.origin}/api/archive`);
-      return await response.json() as number[];
-    },
-  );
-  return (
-    <div>
-      {archive.map((i) => (
-        <span key={i} onClick={() => console.log(i)}>{i}</span>
-      ))}
-    </div>
-  );
-}
+import readJsonAPI from "../data/readJsonAPI.ts";
+import type { EntriesListResponse } from "../../server/apiTypes.ts"
 
 interface ArchiveProps {
   url: URL;
 }
 
 export default function Archive({ url }: ArchiveProps) {
+  const archive = readJsonAPI<EntriesListResponse>(url.origin, "entries");
   return (
-    <>
-      <React.Suspense fallback={<div>...</div>}>
-        <ArchivePage url={url} page={0} />
-      </React.Suspense>
-      <React.Suspense fallback={<div>...</div>}>
-        <ArchivePage url={url} page={1} />
-      </React.Suspense>
-      <React.Suspense fallback={<div>...</div>}>
-        <ArchivePage url={url} page={2} />
-      </React.Suspense>
-      <React.Suspense fallback={<div>...</div>}>
-        <ArchivePage url={url} page={3} />
-      </React.Suspense>
-    </>
+    <div>
+      {archive.map(({slug}, i) => (
+        <span key={i} onClick={() => console.log(slug)}>{slug}</span>
+      ))}
+    </div>
   );
 }

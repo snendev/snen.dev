@@ -1,13 +1,5 @@
 import { Router, contentType } from "./deps.ts";
-
-async function sleep(seconds: number) {
-  return await new Promise<void>((resolve) => {
-    setTimeout(
-      () => { resolve() },
-      seconds * 1000,
-    )
-  })
-}
+import sleep from "./sleep.ts"
 
 // handle static asset requests (ts, js, sourcemaps, css, images, etc)
 const staticRouter = new Router();
