@@ -1,2 +1,2 @@
 #!/bin/bash
-deno --unstable run --allow-read --allow-net --allow-env ./src/server/server.tsx
+REPO_LINK=https://github.com/snendev/writing deno --unstable run --allow-read --allow-net --allow-env ./src/server/server.tsx

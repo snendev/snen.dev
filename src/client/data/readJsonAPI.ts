@@ -3,7 +3,7 @@ import suspendData from "./suspendData.ts";
 export default function readJsonAPI<T>(
   origin: string,
   endpoint: string,
-  specifier?: string
+  specifier?: string,
 ): T {
   const pathname = `api/${endpoint}${specifier ? `/${specifier}` : ""}`;
   return suspendData(

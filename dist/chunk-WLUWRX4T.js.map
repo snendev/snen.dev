@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/client/theme.tsx"],
+  "sourcesContent": ["import React from \"./react.ts\";\n\ntype Color = \"light\" | \"dark\" | \"primary\" | \"accent\" | \"surface\" | \"warning\";\n\ninterface ThemeContextHandle {\n  getClassname: (background: Color, level: 0 | 1 | 2) => string;\n}\n\nconst ThemeContext = React.createContext<ThemeContextHandle | null>(null);\n\ninterface ThemeProviderProps {\n  children: React.ReactNode;\n}\n\nexport function ThemeProvider({ children }: ThemeProviderProps) {\n  const value = React.useMemo(() => ({\n    getClassname: (bg: Color, level: 0 | 1 | 2) => {\n      const text = bg === \"light\" || bg === \"surface\" ? \"dark\" : \"light\";\n      return `text-${text}-${level} bg-${bg}-${level}`;\n    },\n  }), []);\n  return (\n    <ThemeContext.Provider value={value}>\n      {children}\n    </ThemeContext.Provider>\n  );\n}\n\nexport function useTheme(): ThemeContextHandle {\n  const context = React.useContext(ThemeContext);\n  if (context === null) {\n    throw new Error(\"useTheme must be used inside a <ThemeProvider>\");\n  }\n  return context;\n}\n"],
+  "mappings": ";;;;;AAQA,IAAM,eAAe,cAAM,cAAyC;AAM7D,uBAAuB,EAAE,YAAgC;AAC9D,QAAM,QAAQ,cAAM,QAAQ,MAAO;AAAA,IACjC,cAAc,CAAC,IAAW,UAAqB;AAC7C,YAAM,OAAO,OAAO,WAAW,OAAO,YAAY,SAAS;AAC3D,aAAO,QAAQ,QAAQ,YAAY,MAAM;AAAA;AAAA,MAEzC;AACJ,SACE,4CAAC,aAAa,UAAd;AAAA,IAAuB;AAAA,KACpB;AAAA;AAKA,oBAAwC;AAC7C,QAAM,UAAU,cAAM,WAAW;AACjC,MAAI,YAAY,MAAM;AACpB,UAAM,IAAI,MAAM;AAAA;AAElB,SAAO;AAAA;",
+  "names": []
+}

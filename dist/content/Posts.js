@@ -1,35 +1,46 @@
 import {
-  readJsonAPI,
-  suspendData
-} from "../chunk-VJTBR7HI.js";
+  useTheme
+} from "../chunk-WLUWRX4T.js";
+import {
+  readJsonAPI
+} from "../chunk-GLDHBVFN.js";
 import {
   react_default
 } from "../chunk-HZ3YPBUC.js";
 
 // src/client/content/Posts.tsx
-import { Marked } from "https://deno.land/x/markdown@v2.0.0/mod.ts";
-function Post({ url, slug }) {
+function Post({ url, category, slug }) {
   const entry = readJsonAPI(url.origin, "entries", slug);
-  const html = suspendData(`parse-markdown/${slug}`, () => new Promise((resolve) => {
-    const result = Marked.parse(entry.content);
-    resolve(result.content);
-  }));
-  const [counter, setCounter] = react_default.useState(0);
+  const [isExpanded, setIsExpanded] = react_default.useState(false);
   function onClick() {
-    setCounter((prev) => prev + 1);
+    setIsExpanded((prev) => !prev);
   }
-  return /* @__PURE__ */ react_default.createElement("div", null, /* @__PURE__ */ react_default.createElement("div", null, counter, /* @__PURE__ */ react_default.createElement("button", {
+  const { getClassname } = useTheme();
+  const cardCss = getClassname("surface", 0);
+  const cardHeaderCss = getClassname("dark", 2);
+  const fullPostHref = `${category === "about" ? "" : `/${category}`}/${slug}`;
+  return /* @__PURE__ */ react_default.createElement("section", {
+    className: `card ${cardCss}`
+  }, /* @__PURE__ */ react_default.createElement("a", {
+    href: fullPostHref
+  }, /* @__PURE__ */ react_default.createElement("div", {
+    className: cardHeaderCss
+  }, entry.metadata.title)), /* @__PURE__ */ react_default.createElement("div", {
+    dangerouslySetInnerHTML: { __html: entry.content }
+  }), /* @__PURE__ */ react_default.createElement("button", {
+    className: "card-expander",
     onClick
-  }, "+")), /* @__PURE__ */ react_default.createElement("div", {
-    dangerouslySetInnerHTML: { __html: html }
-  }));
+  }, isExpanded ? "Collapse" : "Read More"));
 }
 function Posts({ url }) {
   const data = readJsonAPI(url.origin, "entries");
-  return /* @__PURE__ */ react_default.createElement("div", null, data.map(({ slug }) => /* @__PURE__ */ react_default.createElement(react_default.Suspense, {
+  return /* @__PURE__ */ react_default.createElement("div", {
+    className: "feed"
+  }, data.map(({ category, slug }) => /* @__PURE__ */ react_default.createElement(react_default.Suspense, {
     fallback: /* @__PURE__ */ react_default.createElement("div", null)
   }, /* @__PURE__ */ react_default.createElement(Post, {
     url,
+    category,
     slug
   }))));
 }

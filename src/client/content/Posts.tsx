@@ -1,46 +1,57 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
-import { Marked } from "https://deno.land/x/markdown@v2.0.0/mod.ts";
 import React from "../react.ts";
-
+import { useTheme } from "../theme.tsx"
+import type {
+  EntryCategory,
+  EntriesDetailResponse,
+  EntriesListResponse,
+} from "../../files/types.ts";
 import readJsonAPI from "../data/readJsonAPI.ts";
 import suspendData from "../data/suspendData.ts";
-import type {
-  EntriesListResponse,
-  EntriesDetailResponse,
-} from "../../server/apiTypes.ts"
 
 interface PostProps {
   url: URL;
+  category: EntryCategory;
   slug: string;
 }
 
-function Post({ url, slug }: PostProps) {
+function Post({ url, category, slug }: PostProps) {
   const entry = readJsonAPI<EntriesDetailResponse>(url.origin, "entries", slug);
-  const html = suspendData<string>(
-    `parse-markdown/${slug}`,
-    () =>
-      new Promise((resolve) => {
-        const result = Marked.parse(entry.content);
-        resolve(result.content);
-      }),
-  );
+  // const html = suspendData<string>(
+  //   `parse-markdown/${slug}`,
+  //   () =>
+  //     new Promise((resolve) => {
+  //       const result = Marked.parse(entry.content);
+  //       resolve(result.content);
+  //     }),
+  // );
 
-  const [counter, setCounter] = React.useState(0);
+  const [isExpanded, setIsExpanded] = React.useState(false);
   function onClick() {
-    setCounter((prev) => prev + 1);
+    setIsExpanded((prev) => !prev);
   }
 
+  const { getClassname } = useTheme()
+  const cardCss = getClassname("surface", 0);
+  const cardHeaderCss = getClassname("dark", 2);
+
+  const fullPostHref = `${category === "about" ? "" : `/${category}`}/${slug}`;
   return (
-    <div>
-      <div>
-        {counter}
-        <button onClick={onClick}>+</button>
-      </div>
-      <div dangerouslySetInnerHTML={{ __html: html }} />
-    </div>
+    <section className={`card ${cardCss}`}>
+      <a href={fullPostHref}>
+        <div className={cardHeaderCss}>
+          {entry.metadata.title}
+        </div>
+      </a>
+      <div dangerouslySetInnerHTML={{ __html: entry.content }} />
+      <button className="card-expander" onClick={onClick}>
+        {isExpanded ? "Collapse" : "Read More"}
+      </button>
+    </section>
   );
 }
+
 interface PostsProps {
   url: URL;
 }
@@ -48,10 +59,10 @@ interface PostsProps {
 export default function Posts({ url }: PostsProps) {
   const data = readJsonAPI<EntriesListResponse>(url.origin, "entries");
   return (
-    <div>
-      {data.map(({slug}) => (
+    <div className="feed">
+      {data.map(({ category, slug }) => (
         <React.Suspense fallback={<div />}>
-          <Post url={url} slug={slug} />
+          <Post url={url} category={category} slug={slug} />
         </React.Suspense>
       ))}
     </div>

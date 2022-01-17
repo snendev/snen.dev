@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+body {
+  height: 100vh;
+}
+
 body, div {
   margin: 0;
   padding: 0;
@@ -19,18 +23,20 @@ body, div {
 
 .page .header {
   width: 100%;
-  flex: 0 0 auto;
+  position: sticky;
+  top: 0;
   height: 5em;
 
-  position: sticky;
+  border-bottom: 1px solid #292929;
+  box-shadow: inset 0px 8px 16px rgba(255, 255, 255, 0.25);
+
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   padding: 0 5%;
 
-  border-bottom: 2px solid rgba(0, 0, 0, 0.7);
-  font-family: sans-serif
+  font-family: sans-serif;
 }
 
 .page .navbar * {
@@ -51,19 +57,30 @@ body, div {
 
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
 }
 
-.page .main > aside {
-  width: 140px;
-  padding-top: 3%;
-  flex: 0;
-  margin-right: 40px;
-  overflow-wrap: break-word;
+.page .main .sidebar {
+  padding-top: 2em;
+  margin-right: 3em;
+
+  width: 25%;
+  height: 100%;
 }
 
-.page .main > div {
+.page .main .sidebar section {
+  padding-left: 0.5em;
+  padding-right: 0.51em;
+}
+
+.sidebar .divider {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border-bottom: 1px solid #a8a8a8;
+}
+
+.page .main .body {
   flex: 1;
+  height: 100%;
 }
 
 .home {
@@ -73,6 +90,19 @@ body, div {
 .home .welcome {
   text-align: center;
 }
+
+.feed {
+  padding: 2em;
+}
+
+.feed > * {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+
+
+
 
 .reading-category {
   border: 2px solid #454545;

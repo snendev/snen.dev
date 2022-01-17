@@ -5,7 +5,7 @@ import App from "../client/App.tsx";
 
 import staticRouter from "./staticRouter.ts";
 import apiRouter from "./apiRouter.ts";
-import sleep from "./sleep.ts"
+import sleep from "./sleep.ts";
 
 declare global {
   namespace ReactDOMServer {
@@ -56,6 +56,7 @@ app.use(async (context) => {
   const nodeStream = await ReactDOMServer
     .renderToReadableStream(
       <App url={context.request.url} />,
+      { bootstrapModules: ["/index.js"] },
     );
   const stream = Deno.env.get("REACT_SSR_DEBUG")
     ? attachLogger(nodeStream)

@@ -55,7 +55,6 @@ function readJsonAPI(origin, endpoint, specifier) {
 }
 
 export {
-  suspendData,
   readJsonAPI
 };
-//# sourceMappingURL=chunk-VJTBR7HI.js.map
+//# sourceMappingURL=chunk-GLDHBVFN.js.map
