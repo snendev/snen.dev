@@ -18,19 +18,31 @@ function Post({ url, category, slug }) {
   const { getClassname } = useTheme();
   const cardCss = getClassname("surface", 0);
   const cardHeaderCss = getClassname("dark", 2);
+  const cardButtonCss = getClassname("primary", 2);
   const fullPostHref = `${category === "about" ? "" : `/${category}`}/${slug}`;
+  const isPostCollapsibleGuess = entry.metadata.abstract.length > 400;
+  const clampedCss = isExpanded || !isPostCollapsibleGuess ? void 0 : "clamp-text-3-lines";
+  console.log({ entry, isPostCollapsibleGuess });
   return /* @__PURE__ */ react_default.createElement("section", {
     className: `card ${cardCss}`
   }, /* @__PURE__ */ react_default.createElement("a", {
     href: fullPostHref
   }, /* @__PURE__ */ react_default.createElement("div", {
-    className: cardHeaderCss
-  }, entry.metadata.title)), /* @__PURE__ */ react_default.createElement("div", {
-    dangerouslySetInnerHTML: { __html: entry.content }
-  }), /* @__PURE__ */ react_default.createElement("button", {
-    className: "card-expander",
+    className: `card-header ${cardHeaderCss}`
+  }, /* @__PURE__ */ react_default.createElement("h3", {
+    className: "card-title"
+  }, entry.metadata.title))), /* @__PURE__ */ react_default.createElement("h4", {
+    className: clampedCss
+  }, entry.metadata.subhead), /* @__PURE__ */ react_default.createElement("p", {
+    className: clampedCss
+  }, entry.metadata.abstract), /* @__PURE__ */ react_default.createElement("span", null, /* @__PURE__ */ react_default.createElement("a", {
+    href: fullPostHref
+  }, "Read the full post")), isPostCollapsibleGuess ? /* @__PURE__ */ react_default.createElement("button", {
+    className: `card-button ${cardButtonCss}`,
     onClick
-  }, isExpanded ? "Collapse" : "Read More"));
+  }, isExpanded ? "Collapse" : "Read More") : /* @__PURE__ */ react_default.createElement("div", {
+    className: "spacer1em"
+  }));
 }
 function Posts({ url }) {
   const data = readJsonAPI(url.origin, "entries");

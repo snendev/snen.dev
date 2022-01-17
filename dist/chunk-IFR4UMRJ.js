@@ -52,14 +52,16 @@ function Navbar2() {
 function Page({ children, sidebarContent, url }) {
   const { getClassname } = useTheme();
   const headerCss = getClassname("dark", 2);
-  const mainCss = getClassname("dark", 1);
+  const bgCss = getClassname("dark", 1);
   const bodyCss = getClassname("light", 0);
   return /* @__PURE__ */ react_default.createElement("div", {
     className: "page"
   }, /* @__PURE__ */ react_default.createElement("header", {
     className: `header ${headerCss}`
-  }, /* @__PURE__ */ react_default.createElement("h2", null, "snen.dev"), /* @__PURE__ */ react_default.createElement(Navbar2, null)), /* @__PURE__ */ react_default.createElement("main", {
-    className: `main ${mainCss}`
+  }, /* @__PURE__ */ react_default.createElement("h2", null, "snen.dev"), /* @__PURE__ */ react_default.createElement(Navbar2, null)), /* @__PURE__ */ react_default.createElement("div", {
+    className: `main-container ${bgCss}`
+  }, /* @__PURE__ */ react_default.createElement("main", {
+    className: "main"
   }, /* @__PURE__ */ react_default.createElement("aside", {
     className: "sidebar"
   }, /* @__PURE__ */ react_default.createElement(Navbar, null), /* @__PURE__ */ react_default.createElement("div", {
@@ -70,12 +72,12 @@ function Page({ children, sidebarContent, url }) {
     url
   })), /* @__PURE__ */ react_default.createElement("div", {
     className: `body ${bodyCss}`
-  }, children)));
+  }, children))));
 }
 
-// src/client/app/Home.tsx
+// src/client/app/Router.tsx
 var Posts = react_default.lazy(async () => await import("./content/Posts.js"));
-function Home({ url }) {
+function Router({ url }) {
   return /* @__PURE__ */ react_default.createElement(Page, {
     sidebarContent: /* @__PURE__ */ react_default.createElement(react_default.Fragment, null, /* @__PURE__ */ react_default.createElement("p", null, "This website is rendered using React 18's new SSR architecture, without a framework!"), /* @__PURE__ */ react_default.createElement("p", null, "Concurrent rendering is enabled so that HTML is streamed and hydration is intermittent."), /* @__PURE__ */ react_default.createElement("p", null, "TODO: writeup")),
     url
@@ -122,7 +124,7 @@ function Html({ children }) {
 // src/client/App.tsx
 function App({ url }) {
   console.log({ url });
-  return /* @__PURE__ */ react_default.createElement(react_default.StrictMode, null, /* @__PURE__ */ react_default.createElement(Html, null, /* @__PURE__ */ react_default.createElement(ThemeProvider, null, /* @__PURE__ */ react_default.createElement(Home, {
+  return /* @__PURE__ */ react_default.createElement(react_default.StrictMode, null, /* @__PURE__ */ react_default.createElement(Html, null, /* @__PURE__ */ react_default.createElement(ThemeProvider, null, /* @__PURE__ */ react_default.createElement(Router, {
     url
   }))));
 }
@@ -130,4 +132,4 @@ function App({ url }) {
 export {
   App
 };
-//# sourceMappingURL=chunk-2L4MLNWC.js.map
+//# sourceMappingURL=chunk-IFR4UMRJ.js.map

@@ -10,6 +10,6 @@ const url = new URL(window.location.href);
 
 // @ts-ignore No ReactDOMServer@18 types exist yet
 const root = ReactDOMServer.hydrateRoot(
-  document.body,
+  document,
   <App url={url} />,
 );

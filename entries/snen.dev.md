@@ -6,12 +6,12 @@ subhead: "I abuse the React18 release candidate's new features as much as I can"
 tags: [ "deno", "react", "react18", "current rendering", "snen.dev" ]  
 ---  
 
-
 ## This website uses bleeding-edge web technology
 
-It leverages the [React 18 Release Candidate](https://github.com/reactwg/react-18/discussions/9),
-tying together two previously-incompatible features to handle React's most critical performance
-issues. All built without a framework using Deno, using its support for TypeScript, ESM, and more.
+It leverages the [React 18 Release Candidate](https://github.com/reactwg/react-18/discussions/9)
+(see [React](https://reactjs.org/)), tying together two previously-incompatible features to handle
+React's most critical performance issues. All built without a framework using Deno, using its
+support for TypeScript, ESM, and more.
 
 ### The upgrade
 
@@ -37,9 +37,51 @@ All of this works hand-in-hand with what React calls _concurrent rendering_, whi
 known as [_concurrent mode_](https://reactjs.org/docs/concurrent-mode-intro.html) (more on the
 naming [here](https://github.com/reactwg/react-18/discussions/64)). I could talk more about it,
 but the
-[GitHub discussion on the new architecture])(https://github.com/reactwg/react-18/discussions/37)
+[GitHub discussion on the new architecture](https://github.com/reactwg/react-18/discussions/37)
 provides a lot of detail and has a lot of pictures to explain things, so I encourage readers to
 check that out instead.
 
+### Why React?
 
+So far I've seen three major categories of intents behind this question:
 
+- Why React, as opposed to Angular, Vue, Svelte, or another JS framework
+- Why a JavaScript client-side framework, as opposed to vanilla HTML/JavaScript
+- Why JavaScript at all, instead of using a web framework in another language (with templates/etc)
+
+The last two, I'll answer first. I think JavaScript is neat. I think reactive web frameworks
+provide powerful toolkits for UI building. I find the APIs to be intuitive and the application
+architectures that I develop using them to be sWith regard to why I prefer React over other
+JavaScript frameworks, I'm biased since I'm most sensibly readable and manageable.
+
+With regard to why I prefer React over other JavaScript frameworks, I'm biased since I'm most
+experienced with React, and I also think their newest concurrent rendering technology is pretty
+cool. I do generally like to experiment with other frameworks when I can, but for this website,
+React was my go-to choice.
+
+### Why Deno?
+
+[Deno](https://deno.land/) is a TypeScript-first runtime leveraging V8 and built to match existing
+browser specifications as much as possible in top-level APIs. It supports JSX and ESM natively,
+and it encourages [remote imports](https://deno.land/manual/linking_to_external_code). This site
+leverages that to the fullest, code-splitting where possible and ignoring third-party dependency
+imports in the bundler.
+
+Also, the ability to run TypeScript code server-side with no additional bells or whistles is
+quite convenient for me. I find it very useful to sketch out types that define how I expect data
+to be shaped as I go along. TypeScript catches when I break a contract I set for myself, and
+that's very useful for me as a developer.
+
+Deno's focus on "native everything" streamlined the work necessary to build a "framework" for
+myself. That process, which Deno simplified, helped me learn more about Webpack's involvement
+in React 18 and how modern data-fetching solutions will change with Suspense.
+
+Finally, [Deno Deploy](https://deno.com/deploy) makes deploying this site easier than ever.
+By connecting my repository, I can redeploy every time I push a new commit. There are plenty of
+services that do that, but Deno Deploy even provides
+[playgrounds](https://deno.com/deploy/docs/playgrounds) where you can test your deployment ahead
+of time.
+
+Basically, Deno kind of does it all, and while it's still relatively unstable, I have fun
+developing with it. Since I wanted to test React 18 without a framework, Deno was a perfect
+choice.

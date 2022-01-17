@@ -6,8 +6,6 @@ subhead: "Hi, I’m Sean. I am a professional (full-stack) software developer wi
 tags: [ ]  
 ---  
 
-# About me (and this website)
-
 Thank you for visiting my website!
 
 My name is Sean Sullivan, and I work as a freelance software developer. Most of

@@ -2,7 +2,7 @@
 /** @jsxFrag React.Fragment */
 import React from "./react.ts";
 
-import Home from "./app/Home.tsx";
+import Router from "./app/Router.tsx";
 import Html from "./app/Html.tsx";
 import { ThemeProvider } from "./theme.tsx";
 
@@ -16,7 +16,7 @@ export default function App({ url }: AppProps) {
     <React.StrictMode>
       <Html>
         <ThemeProvider>
-          <Home url={url} />
+          <Router url={url} />
         </ThemeProvider>
       </Html>
     </React.StrictMode>

@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: sans-serif;
 }
 
 body {
@@ -27,7 +28,6 @@ body, div {
   top: 0;
   height: 5em;
 
-  border-bottom: 1px solid #292929;
   box-shadow: inset 0px 8px 16px rgba(255, 255, 255, 0.25);
 
   display: flex;
@@ -44,22 +44,19 @@ body, div {
   font-size: 1.4em;
 }
 
-.page .main {
+.page .main-container {
   flex: 1;
   width: 100%;
   padding: 0% 5%;
+}
 
-  border: 1px solid #000000;
-  border-top-width: 0;
-  border-bottom-width: 0;
-
-  overflow-y: auto;
-
+.page .main-container .main {
+  height: 100%;
   display: flex;
   flex-direction: row;
 }
 
-.page .main .sidebar {
+.main .sidebar {
   padding-top: 2em;
   margin-right: 3em;
 
@@ -67,18 +64,18 @@ body, div {
   height: 100%;
 }
 
-.page .main .sidebar section {
+.main .sidebar section {
   padding-left: 0.5em;
   padding-right: 0.51em;
 }
 
-.sidebar .divider {
+.main .sidebar .divider {
   margin-top: 2em;
   margin-bottom: 2em;
   border-bottom: 1px solid #a8a8a8;
 }
 
-.page .main .body {
+.main .body {
   flex: 1;
   height: 100%;
 }
@@ -99,6 +96,40 @@ body, div {
   margin-top: 2em;
   margin-bottom: 2em;
 }
+
+.card {
+  filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.25));
+}
+
+.card > p, .card > h4, .card > span {
+  margin: 2em;
+}
+
+.card-header {
+  padding: 1.5em 1.5em;
+}
+
+.card-title {
+  margin: 0;
+}
+
+.card-button {
+  width: 100%;
+  padding: 0.5em 0;
+  margin: 1.5em 0 0;
+}
+
+.spacer1em {
+  height: 1em;
+}
+
+.clamp-text-3-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+
 
 
 

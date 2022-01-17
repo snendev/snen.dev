@@ -1,6 +1,6 @@
 import {
   App
-} from "./chunk-2L4MLNWC.js";
+} from "./chunk-IFR4UMRJ.js";
 import "./chunk-WLUWRX4T.js";
 import "./chunk-HZ3YPBUC.js";
 export {

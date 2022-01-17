@@ -15,7 +15,7 @@ interface PageProps {
 export default function Page({ children, sidebarContent, url }: PageProps) {
   const { getClassname } = useTheme();
   const headerCss = getClassname("dark", 2);
-  const mainCss = getClassname("dark", 1);
+  const bgCss = getClassname("dark", 1);
   const bodyCss = getClassname("light", 0);
   return (
     <div className="page">
@@ -23,20 +23,22 @@ export default function Page({ children, sidebarContent, url }: PageProps) {
         <h2>snen.dev</h2>
         <Navbar />
       </header>
-      <main className={`main ${mainCss}`}>
-        <aside className="sidebar">
-          <MediaLinks />
-          <div className="divider" />
-          <section>
-            {sidebarContent}
-          </section>
-          <div className="divider" />
-          <ArchiveFeed url={url} />
-        </aside>
-        <div className={`body ${bodyCss}`}>
-          {children}
-        </div>
-      </main>
+      <div className={`main-container ${bgCss}`}>
+        <main className="main">
+          <aside className="sidebar">
+            <MediaLinks />
+            <div className="divider" />
+            <section>
+              {sidebarContent}
+            </section>
+            <div className="divider" />
+            <ArchiveFeed url={url} />
+          </aside>
+          <div className={`body ${bodyCss}`}>
+            {children}
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

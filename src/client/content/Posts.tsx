@@ -35,19 +35,40 @@ function Post({ url, category, slug }: PostProps) {
   const { getClassname } = useTheme()
   const cardCss = getClassname("surface", 0);
   const cardHeaderCss = getClassname("dark", 2);
+  const cardButtonCss = getClassname("primary", 2);
 
   const fullPostHref = `${category === "about" ? "" : `/${category}`}/${slug}`;
+  const isPostCollapsibleGuess = entry.metadata.abstract.length > 400;
+  const clampedCss = isExpanded || !isPostCollapsibleGuess ? undefined : "clamp-text-3-lines"
+  console.log({entry, isPostCollapsibleGuess})
   return (
     <section className={`card ${cardCss}`}>
       <a href={fullPostHref}>
-        <div className={cardHeaderCss}>
-          {entry.metadata.title}
+        <div className={`card-header ${cardHeaderCss}`}>
+          <h3 className="card-title">
+            {entry.metadata.title}
+          </h3>
         </div>
       </a>
-      <div dangerouslySetInnerHTML={{ __html: entry.content }} />
-      <button className="card-expander" onClick={onClick}>
-        {isExpanded ? "Collapse" : "Read More"}
-      </button>
+      <h4 className={clampedCss}>
+        {entry.metadata.subhead}
+      </h4>
+      <p className={clampedCss}>
+        {entry.metadata.abstract}
+      </p>
+      <span>
+        <a href={fullPostHref}>Read the full post</a>
+      </span>
+      {isPostCollapsibleGuess ? (
+        <button
+          className={`card-button ${cardButtonCss}`}
+          onClick={onClick}
+        >
+          {isExpanded ? "Collapse" : "Read More"}
+        </button>
+      ) : (
+        <div className="spacer1em" />
+      )}
     </section>
   );
 }

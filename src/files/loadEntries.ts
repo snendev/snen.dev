@@ -40,10 +40,9 @@ async function collectSiteEntries(
         // try to get the first "section" of text
         // skip the frontmatter, then get the first #, from the line after that until the next #.
         const abstract = source.split("---")[2]
-          .split("#")[1]
-          .split("\n")
+          .split("##")
           .slice(1)
-          .join("\n")
+          .join('#')
           .trim();
         const filename = name.slice(0, name.length - 3);
         const slug = buildSlug(metadata.category, filename);
