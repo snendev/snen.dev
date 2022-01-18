@@ -2,7 +2,7 @@
 title: "About me (and this website)"  
 category: "about"  
 slug: "about"  
-subhead: "Hi, I’m Sean. I am a professional (full-stack) software developer with a variety of interests. In short: I like to build stuff.\nOne of my biggest projects right now is building this website, where I aim to document the things I build and provide guides on how to reproduce my journey. Check out more about how this website is made here."  
+subhead: "Hi, I’m Sean. I am a professional (full-stack) software developer with a variety of interests. In short: I like to build stuff.\nOne of my biggest projects right now is building this website, where I aim to document the things I build and provide guides on how to reproduce my journey."  
 tags: [ ]  
 ---  
 

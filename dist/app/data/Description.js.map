@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/client/app/data/Description.tsx"],
+  "sourcesContent": ["/** @jsx React.createElement */\n/** @jsxFrag React.Fragment */\nimport React from \"../../deps/react.ts\";\nimport type {\n  EntriesDetailResponse,\n} from \"../../../files/types.ts\";\n\nimport readJsonAPI from \"./api/readJsonAPI.ts\";\n\ninterface PostDescriptionProps {\n  slug?: string\n}\n\nexport default function Description({ slug = \"about\" }: PostDescriptionProps) {\n  const entry = readJsonAPI<EntriesDetailResponse>(\"entries\", slug);\n  return <p>{entry.metadata.subhead}</p>;\n}\n"],
+  "mappings": ";;;;;;;;AAae,qBAAqB,EAAE,OAAO,WAAiC;AAC5E,QAAM,QAAQ,YAAmC,WAAW;AAC5D,SAAO,4CAAC,KAAD,MAAI,MAAM,SAAS;AAAA;",
+  "names": []
+}

@@ -7,8 +7,8 @@ const entryPoints = [
   "src/client/App.tsx",
   "src/client/index.tsx",
 ];
-for await (const entry of Deno.readDir("src/client/content")) {
-  entryPoints.push(`src/client/content/${entry.name}`);
+for await (const entry of Deno.readDir("src/client/app/data")) {
+  if (entry.isFile) entryPoints.push(`src/client/app/data/${entry.name}`);
 }
 console.log(`Bundling ${entryPoints.length} files...`);
 

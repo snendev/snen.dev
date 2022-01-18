@@ -1,7 +1,7 @@
 {
   "version": 3,
-  "sources": ["../src/client/index.tsx"],
-  "sourcesContent": ["/** @jsx React.createElement */\n/** @jsxFrag React.Fragment */\n/// <reference lib=\"dom\" />\nimport ReactDOMServer from \"https://esm.sh/react-dom@18.0.0-rc.0?deps=react@18.0.0-rc.0&pin=v59\";\n\nimport React from \"./react.ts\";\nimport App from \"./App.tsx\";\n\nconst url = new URL(window.location.href);\n\n// @ts-ignore No ReactDOMServer@18 types exist yet\nconst root = ReactDOMServer.hydrateRoot(\n  document,\n  <App url={url} />,\n);\n"],
-  "mappings": ";;;;;;;;;AAGA;AAKA,IAAM,MAAM,IAAI,IAAI,OAAO,SAAS;AAGpC,IAAM,OAAO,eAAe,YAC1B,UACA,4CAAC,KAAD;AAAA,EAAK;AAAA;",
+  "sources": ["../src/client/deps/react-dom.ts", "../src/client/index.tsx"],
+  "sourcesContent": ["import ReactDOM from \"https://esm.sh/react-dom@18.0.0-rc.0?deps=react@18.0.0-rc.0&pin=v63\";\n\nexport default ReactDOM;\n", "/** @jsx React.createElement */\n/** @jsxFrag React.Fragment */\n/// <reference lib=\"dom\" />\nimport React from \"./deps/react.ts\";\nimport ReactDOM from \"./deps/react-dom.ts\";\nimport { BrowserRouter } from \"./deps/react-router.ts\";\n\nimport App from \"./App.tsx\";\n\n// @ts-ignore No ReactDOMServer@18 types exist yet\nconst root = ReactDOM.hydrateRoot(\n  document,\n  <React.StrictMode>\n    <BrowserRouter>\n      <App />\n    </BrowserRouter>\n  </React.StrictMode>,\n);\n"],
+  "mappings": ";;;;;;;;;;AAAA;AAEA,IAAO,oBAAQ;;;ACQf,IAAM,OAAO,kBAAS,YACpB,UACA,4CAAC,cAAM,YAAP,MACE,4CAAC,oCAAD,MACE,4CAAC,KAAD;",
   "names": []
 }

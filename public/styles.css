@@ -44,13 +44,13 @@ body, div {
   font-size: 1.4em;
 }
 
-.page .main-container {
+.page .page-container {
   flex: 1;
   width: 100%;
   padding: 0% 5%;
 }
 
-.page .main-container .main {
+.main {
   height: 100%;
   display: flex;
   flex-direction: row;

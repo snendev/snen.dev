@@ -1,15 +1,16 @@
 import {
-  App
-} from "./chunk-ESUW26DR.js";
-import "./chunk-WLUWRX4T.js";
+  App,
+  react_router_exports
+} from "./chunk-2VJACPRR.js";
+import "./chunk-3IGTP4YB.js";
 import {
   react_default
-} from "./chunk-HZ3YPBUC.js";
+} from "./chunk-SQXXAXP7.js";
+
+// src/client/deps/react-dom.ts
+import ReactDOM from "https://esm.sh/react-dom@18.0.0-rc.0?deps=react@18.0.0-rc.0&pin=v63";
+var react_dom_default = ReactDOM;
 
 // src/client/index.tsx
-import ReactDOMServer from "https://esm.sh/react-dom@18.0.0-rc.0?deps=react@18.0.0-rc.0&pin=v59";
-var url = new URL(window.location.href);
-var root = ReactDOMServer.hydrateRoot(document, /* @__PURE__ */ react_default.createElement(App, {
-  url
-}));
+var root = react_dom_default.hydrateRoot(document, /* @__PURE__ */ react_default.createElement(react_default.StrictMode, null, /* @__PURE__ */ react_default.createElement(react_router_exports.BrowserRouter, null, /* @__PURE__ */ react_default.createElement(App, null))));
 //# sourceMappingURL=index.js.map

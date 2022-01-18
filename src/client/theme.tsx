@@ -1,4 +1,4 @@
-import React from "./react.ts";
+import React from "./deps/react.ts";
 
 type Color = "light" | "dark" | "primary" | "accent" | "surface" | "warning";
 

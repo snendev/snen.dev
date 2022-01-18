@@ -1,6 +1,6 @@
-import { Application, ReactDOMServer } from "./deps.ts";
+import { Application, ReactDOMServer, ReactStaticRouter } from "./deps.ts";
 
-import React from "../client/react.ts";
+import React from "../client/deps/react.ts";
 import App from "../client/App.tsx";
 
 import staticRouter from "./staticRouter.ts";
@@ -55,7 +55,11 @@ app.use(staticRouter.allowedMethods());
 app.use(async (context) => {
   const nodeStream = await ReactDOMServer
     .renderToReadableStream(
-      <App url={context.request.url} />,
+      <React.StrictMode>
+        <ReactStaticRouter location={context.request.url.href}>
+          <App />
+        </ReactStaticRouter>
+      </React.StrictMode>,
       { bootstrapModules: ["/index.js"] },
     );
   const stream = Deno.env.get("REACT_SSR_DEBUG")

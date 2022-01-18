@@ -1,5 +1,5 @@
 /** @jsx React.createElement */
-import React from "../react.ts";
+import React from "../deps/react.ts";
 
 // Reset some browser default CSS.
 const RESET_STYLE = `

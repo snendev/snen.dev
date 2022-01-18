@@ -1,24 +1,17 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
-import React from "./react.ts";
+import React from "./deps/react.ts";
 
-import Router from "./app/Router.tsx";
+import AppRouter from "./app/AppRouter.tsx";
 import Html from "./app/Html.tsx";
 import { ThemeProvider } from "./theme.tsx";
 
-interface AppProps {
-  url: URL;
-}
-
-export default function App({ url }: AppProps) {
-  console.log({ url });
+export default function App() {
   return (
-    <React.StrictMode>
-      <Html>
-        <ThemeProvider>
-          <Router url={url} />
-        </ThemeProvider>
-      </Html>
-    </React.StrictMode>
+    <Html>
+      <ThemeProvider>
+        <AppRouter />
+      </ThemeProvider>
+    </Html>
   );
 }

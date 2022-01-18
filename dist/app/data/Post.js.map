@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/client/app/data/Post.tsx"],
+  "sourcesContent": ["/** @jsx React.createElement */\n/** @jsxFrag React.Fragment */\nimport React from \"../../deps/react.ts\";\nimport type {\n  EntriesDetailResponse,\n} from \"../../../files/types.ts\";\n\nimport { useTheme } from \"../../theme.tsx\"\n\nimport readJsonAPI from \"./api/readJsonAPI.ts\";\n\ninterface PostProps {\n  slug: string\n}\n\nexport default function Post({ slug }: PostProps) {\n  const entry = readJsonAPI<EntriesDetailResponse>(\"entries\", slug);\n  // const html = Marked.parse(entry.content).content;\n\n  const { getClassname } = useTheme()\n  const titleCss = getClassname(\"dark\", 2);\n\n  return (\n    <article>\n      <h3 className={`title ${titleCss}`}>\n        {entry.metadata.title}\n      </h3>\n      <div dangerouslySetInnerHTML={{ __html: entry.content }} />\n    </article>\n  );\n}\n"],
+  "mappings": ";;;;;;;;;;;AAee,cAAc,EAAE,QAAmB;AAChD,QAAM,QAAQ,YAAmC,WAAW;AAG5D,QAAM,EAAE,iBAAiB;AACzB,QAAM,WAAW,aAAa,QAAQ;AAEtC,SACE,4CAAC,WAAD,MACE,4CAAC,MAAD;AAAA,IAAI,WAAW,SAAS;AAAA,KACrB,MAAM,SAAS,QAElB,4CAAC,OAAD;AAAA,IAAK,yBAAyB,EAAE,QAAQ,MAAM;AAAA;AAAA;",
+  "names": []
+}

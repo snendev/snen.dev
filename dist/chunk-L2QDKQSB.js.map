@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/client/deps/react.ts"],
+  "sourcesContent": ["import React from \"https://unpkg.com/react@18.0.0-rc.0/umd/react.development.js\";\n\nexport default React;\n"],
+  "mappings": ";;;;;;;;;;;;;;AAAA;AAEA,IAAO,gBAAQ;",
+  "names": []
+}
