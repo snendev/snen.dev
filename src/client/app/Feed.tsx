@@ -1,21 +1,22 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from "../react.ts";
+import { EntryCategory } from "../../files/types.ts"
 
 import Page from "./page/Page.tsx";
 
-type LazyPostsType = React.LazyExoticComponent<
-  ({ url }: { url: URL }) => React.ReactElement
+type LazyPostListType = React.LazyExoticComponent<
+  ({ feed }: { feed?: EntryCategory }) => React.ReactElement
 >;
-const Posts: LazyPostsType = React.lazy(async () =>
-  await import("../content/Posts.tsx")
+const PostList: LazyPostListType = React.lazy(async () =>
+  await import("../content/PostList.tsx")
 );
 
-interface HomeProps {
-  url: URL;
+interface FeedProps {
+  feed?: EntryCategory
 }
 
-export default function Home({ url }: HomeProps) {
+export default function Feed({ feed }: FeedProps) {
   return (
     <Page
       sidebarContent={
@@ -33,11 +34,10 @@ export default function Home({ url }: HomeProps) {
           </p>
         </>
       }
-      url={url}
     >
       <section>
         <React.Suspense fallback={<div>Loading...</div>}>
-          <Posts url={url} />
+          <PostList feed={feed} />
         </React.Suspense>
       </section>
     </Page>

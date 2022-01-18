@@ -10,22 +10,14 @@ import type {
 import readJsonAPI from "../data/readJsonAPI.ts";
 import suspendData from "../data/suspendData.ts";
 
-interface PostProps {
-  url: URL;
+interface CardProps {
   category: EntryCategory;
   slug: string;
 }
 
-function Post({ url, category, slug }: PostProps) {
-  const entry = readJsonAPI<EntriesDetailResponse>(url.origin, "entries", slug);
-  // const html = suspendData<string>(
-  //   `parse-markdown/${slug}`,
-  //   () =>
-  //     new Promise((resolve) => {
-  //       const result = Marked.parse(entry.content);
-  //       resolve(result.content);
-  //     }),
-  // );
+function Card({ category, slug }: CardProps) {
+  const entry = readJsonAPI<EntriesDetailResponse>("entries", slug);
+  // const html = Marked.parse(entry.content).content;
 
   const [isExpanded, setIsExpanded] = React.useState(false);
   function onClick() {
@@ -40,15 +32,13 @@ function Post({ url, category, slug }: PostProps) {
   const fullPostHref = `${category === "about" ? "" : `/${category}`}/${slug}`;
   const isPostCollapsibleGuess = entry.metadata.abstract.length > 400;
   const clampedCss = isExpanded || !isPostCollapsibleGuess ? undefined : "clamp-text-3-lines"
-  console.log({entry, isPostCollapsibleGuess})
+
   return (
-    <section className={`card ${cardCss}`}>
+    <article className={`card ${cardCss}`}>
       <a href={fullPostHref}>
-        <div className={`card-header ${cardHeaderCss}`}>
-          <h3 className="card-title">
-            {entry.metadata.title}
-          </h3>
-        </div>
+        <h3 className={`title ${cardHeaderCss}`}>
+          {entry.metadata.title}
+        </h3>
       </a>
       <h4 className={clampedCss}>
         {entry.metadata.subhead}
@@ -69,21 +59,21 @@ function Post({ url, category, slug }: PostProps) {
       ) : (
         <div className="spacer1em" />
       )}
-    </section>
+    </article>
   );
 }
 
-interface PostsProps {
-  url: URL;
+interface PostListProps {
+  feed?: EntryCategory
 }
 
-export default function Posts({ url }: PostsProps) {
-  const data = readJsonAPI<EntriesListResponse>(url.origin, "entries");
+export default function PostList({ feed }: PostListProps) {
+  const data = readJsonAPI<EntriesListResponse>("entries");
   return (
     <div className="feed">
       {data.map(({ category, slug }) => (
         <React.Suspense fallback={<div />}>
-          <Post url={url} category={category} slug={slug} />
+          <Card category={category} slug={slug} />
         </React.Suspense>
       ))}
     </div>

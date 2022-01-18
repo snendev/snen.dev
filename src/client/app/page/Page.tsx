@@ -9,10 +9,9 @@ import Navbar from "./Navbar.tsx";
 interface PageProps {
   children: React.ReactNode;
   sidebarContent: React.ReactNode;
-  url: URL;
 }
 
-export default function Page({ children, sidebarContent, url }: PageProps) {
+export default function Page({ children, sidebarContent }: PageProps) {
   const { getClassname } = useTheme();
   const headerCss = getClassname("dark", 2);
   const bgCss = getClassname("dark", 1);
@@ -32,7 +31,7 @@ export default function Page({ children, sidebarContent, url }: PageProps) {
               {sidebarContent}
             </section>
             <div className="divider" />
-            <ArchiveFeed url={url} />
+            <ArchiveFeed />
           </aside>
           <div className={`body ${bodyCss}`}>
             {children}

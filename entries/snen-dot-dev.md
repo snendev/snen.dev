@@ -2,21 +2,23 @@
 title: "snen.dev: A technical introduction"  
 category: "about"  
 slug: "what-is-this"  
-subhead: "I abuse the React18 release candidate's new features as much as I can"  
+subhead: "I tinker with the React 18 release candidate's new features in a framework-less environment"  
 tags: [ "deno", "react", "react18", "current rendering", "snen.dev" ]  
 ---  
 
 ## This website uses bleeding-edge web technology
 
 It leverages the [React 18 Release Candidate](https://github.com/reactwg/react-18/discussions/9)
-(see [React](https://reactjs.org/)), tying together two previously-incompatible features to handle
-React's most critical performance issues. All built without a framework using Deno, using its
-support for TypeScript, ESM, and more.
+(see [React](https://reactjs.org/) if you're not familiar), tying together two
+previously-incompatible features to mitigate React's most critical performance issues. All
+built and served without a framework using Deno's native support for TypeScript, ESM, and more.
 
 ### The upgrade
 
-React 18 released several new features, but when considering the architecture of user code, the
-focus is on a couple of long-discussed topics in the React ecosystem:
+React 18 is coming out with several new features, but these features mostly center around a few
+architectural themes. These are primarily in pursuit of _concurrent rendering_ and
+_selective hydration_. This becomes relevant when considering two of the following
+previously-incompatible features:
 
 - [Server-Side Rendering](https://reactjs.org/docs/react-dom-server.html), which is to render the
 React tree into HTML on the server first, rather than on the client's browser. After the browser
@@ -27,32 +29,33 @@ loaded, which provides a poor loading experience.
 rendering a component when resources are not fully prepared. Previously, this was not supported
 under SSR, but it has been used widely for bundle
 [code-splitting](https://reactjs.org/docs/code-splitting.html#reactlazy) for some time now.
-At first glance, it may only seem like this only offers some improved Loading API, but it also
-enables strategies for managing asynchronous data that are less bug-prone.
+At first glance, it may only seem like this only offers some improved Loading API, but with
+React 18, it may also enable data fetching strategies that are less bug-prone.
 
 (See also the note on SSR support in the above link and at the bottom of
 [this page](https://reactjs.org/docs/react-api.html#reactsuspense).)
 
-All of this works hand-in-hand with what React calls _concurrent rendering_, which was previously
-known as [_concurrent mode_](https://reactjs.org/docs/concurrent-mode-intro.html) (more on the
-naming [here](https://github.com/reactwg/react-18/discussions/64)). I could talk more about it,
-but the
+All of this works hand-in-hand with what React calls _concurrent rendering_. I could talk more
+about it, but the
 [GitHub discussion on the new architecture](https://github.com/reactwg/react-18/discussions/37)
 provides a lot of detail and has a lot of pictures to explain things, so I encourage readers to
-check that out instead.
+check that out instead. For those who might recall something like this, it was previously known
+described as [_concurrent mode_](https://reactjs.org/docs/concurrent-mode-intro.html), and there
+is more information on the naming [here](https://github.com/reactwg/react-18/discussions/64)).
 
 ### Why React?
 
-So far I've seen three major categories of intents behind this question:
+Plenty of tools exist for building websites or applications, so the choice of a front-end
+framework is always somewhat deliberate. So "Why React?" is a natural question to ask someone
+in my position. Often, the question's intent is really one of three more specific questions:
 
-- Why React, as opposed to Angular, Vue, Svelte, or another JS framework
-- Why a JavaScript client-side framework, as opposed to vanilla HTML/JavaScript
-- Why JavaScript at all, instead of using a web framework in another language (with templates/etc)
+- Why React, as opposed to Angular, Vue, Svelte, or another JS framework?
+- Why a JavaScript client-side framework, as opposed to vanilla HTML/JavaScript?
+- Why JavaScript at all, instead of using a web framework in another language (with templates/etc)?
 
 The last two, I'll answer first. I think JavaScript is neat. I think reactive web frameworks
 provide powerful toolkits for UI building. I find the APIs to be intuitive and the application
-architectures that I develop using them to be sWith regard to why I prefer React over other
-JavaScript frameworks, I'm biased since I'm most sensibly readable and manageable.
+code that I develop using them to be sensible, readable, and maintainable.
 
 With regard to why I prefer React over other JavaScript frameworks, I'm biased since I'm most
 experienced with React, and I also think their newest concurrent rendering technology is pretty
@@ -82,6 +85,11 @@ services that do that, but Deno Deploy even provides
 [playgrounds](https://deno.com/deploy/docs/playgrounds) where you can test your deployment ahead
 of time.
 
-Basically, Deno kind of does it all, and while it's still relatively unstable, I have fun
-developing with it. Since I wanted to test React 18 without a framework, Deno was a perfect
-choice.
+Basically, Deno kind-of does it all. Even though it is still somewhat unstable, I have fun
+developing with it.
+
+## What if I want to know more?
+
+I'm hoping to release a guide as React 18 stabilizes, but there's a lot to experiment and test.
+For the time being, feel free to check out the
+[source code on github](https://github.com/snendev/snen.dev).

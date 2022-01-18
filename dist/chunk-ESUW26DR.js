@@ -8,12 +8,10 @@ import {
 
 // src/client/app/page/ArchiveFeed.tsx
 var Archive = react_default.lazy(async () => await import("./content/Archive.js"));
-function ArchiveFeed({ url }) {
+function ArchiveFeed() {
   return /* @__PURE__ */ react_default.createElement("section", null, /* @__PURE__ */ react_default.createElement(react_default.Suspense, {
     fallback: /* @__PURE__ */ react_default.createElement("span", null, "...")
-  }, /* @__PURE__ */ react_default.createElement(Archive, {
-    url
-  })));
+  }, /* @__PURE__ */ react_default.createElement(Archive, null)));
 }
 
 // src/client/app/page/MediaLinks.tsx
@@ -38,6 +36,8 @@ function Navbar2() {
   return /* @__PURE__ */ react_default.createElement("nav", {
     className: "navbar"
   }, /* @__PURE__ */ react_default.createElement("a", {
+    href: "/"
+  }, "home"), /* @__PURE__ */ react_default.createElement("a", {
     href: "/about"
   }, "about"), /* @__PURE__ */ react_default.createElement("a", {
     href: "/read"
@@ -49,7 +49,7 @@ function Navbar2() {
 }
 
 // src/client/app/page/Page.tsx
-function Page({ children, sidebarContent, url }) {
+function Page({ children, sidebarContent }) {
   const { getClassname } = useTheme();
   const headerCss = getClassname("dark", 2);
   const bgCss = getClassname("dark", 1);
@@ -68,24 +68,61 @@ function Page({ children, sidebarContent, url }) {
     className: "divider"
   }), /* @__PURE__ */ react_default.createElement("section", null, sidebarContent), /* @__PURE__ */ react_default.createElement("div", {
     className: "divider"
-  }), /* @__PURE__ */ react_default.createElement(ArchiveFeed, {
-    url
-  })), /* @__PURE__ */ react_default.createElement("div", {
+  }), /* @__PURE__ */ react_default.createElement(ArchiveFeed, null)), /* @__PURE__ */ react_default.createElement("div", {
     className: `body ${bodyCss}`
   }, children))));
 }
 
-// src/client/app/Router.tsx
-var Posts = react_default.lazy(async () => await import("./content/Posts.js"));
-function Router({ url }) {
+// src/client/app/Article.tsx
+var Post = react_default.lazy(async () => await import("./content/Post.js"));
+function Article({ slug }) {
   return /* @__PURE__ */ react_default.createElement(Page, {
-    sidebarContent: /* @__PURE__ */ react_default.createElement(react_default.Fragment, null, /* @__PURE__ */ react_default.createElement("p", null, "This website is rendered using React 18's new SSR architecture, without a framework!"), /* @__PURE__ */ react_default.createElement("p", null, "Concurrent rendering is enabled so that HTML is streamed and hydration is intermittent."), /* @__PURE__ */ react_default.createElement("p", null, "TODO: writeup")),
-    url
+    sidebarContent: /* @__PURE__ */ react_default.createElement(react_default.Fragment, null, /* @__PURE__ */ react_default.createElement("p", null, "This website is rendered using React 18's new SSR architecture, without a framework!"), /* @__PURE__ */ react_default.createElement("p", null, "Concurrent rendering is enabled so that HTML is streamed and hydration is intermittent."), /* @__PURE__ */ react_default.createElement("p", null, "TODO: writeup"))
   }, /* @__PURE__ */ react_default.createElement("section", null, /* @__PURE__ */ react_default.createElement(react_default.Suspense, {
     fallback: /* @__PURE__ */ react_default.createElement("div", null, "Loading...")
-  }, /* @__PURE__ */ react_default.createElement(Posts, {
-    url
+  }, /* @__PURE__ */ react_default.createElement(Post, {
+    slug
   }))));
+}
+
+// src/client/app/Feed.tsx
+var PostList = react_default.lazy(async () => await import("./content/PostList.js"));
+function Feed({ feed }) {
+  return /* @__PURE__ */ react_default.createElement(Page, {
+    sidebarContent: /* @__PURE__ */ react_default.createElement(react_default.Fragment, null, /* @__PURE__ */ react_default.createElement("p", null, "This website is rendered using React 18's new SSR architecture, without a framework!"), /* @__PURE__ */ react_default.createElement("p", null, "Concurrent rendering is enabled so that HTML is streamed and hydration is intermittent."), /* @__PURE__ */ react_default.createElement("p", null, "TODO: writeup"))
+  }, /* @__PURE__ */ react_default.createElement("section", null, /* @__PURE__ */ react_default.createElement(react_default.Suspense, {
+    fallback: /* @__PURE__ */ react_default.createElement("div", null, "Loading...")
+  }, /* @__PURE__ */ react_default.createElement(PostList, {
+    feed
+  }))));
+}
+
+// src/client/app/Router.tsx
+function Redirect() {
+  react_default.useEffect(() => {
+    window.location.assign("/");
+  }, []);
+  return null;
+}
+function Router({ url }) {
+  const [, category, slug] = url.pathname.split("/");
+  const BodyComponent = slug === void 0 ? Feed : Article;
+  switch (category) {
+    case "":
+      return /* @__PURE__ */ react_default.createElement(BodyComponent, {
+        slug
+      });
+    case "about":
+    case "read":
+    case "tech":
+    case "media":
+      return /* @__PURE__ */ react_default.createElement(BodyComponent, {
+        slug,
+        feed: category
+      });
+    default:
+      return /* @__PURE__ */ react_default.createElement(Redirect, null);
+  }
 }
 
 // src/client/app/Html.tsx
@@ -132,4 +169,4 @@ function App({ url }) {
 export {
   App
 };
-//# sourceMappingURL=chunk-IFR4UMRJ.js.map
+//# sourceMappingURL=chunk-ESUW26DR.js.map

@@ -89,7 +89,7 @@ body, div {
 }
 
 .feed {
-  padding: 2em;
+  margin: 2em;
 }
 
 .feed > * {
@@ -105,12 +105,9 @@ body, div {
   margin: 2em;
 }
 
-.card-header {
-  padding: 1.5em 1.5em;
-}
-
-.card-title {
-  margin: 0;
+.title {
+  padding: 1em;
+  margin-top: 0;
 }
 
 .card-button {
@@ -129,7 +126,6 @@ body, div {
   -webkit-box-orient: vertical;  
   overflow: hidden;
 }
-
 
 
 

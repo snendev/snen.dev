@@ -5,20 +5,21 @@ import React from "../react.ts";
 import readJsonAPI from "../data/readJsonAPI.ts";
 import type { EntriesListResponse } from "../../files/types.ts";
 
-interface ArchiveProps {
-  url: URL;
-}
-
-export default function Archive({ url }: ArchiveProps) {
-  const archive = readJsonAPI<EntriesListResponse>(url.origin, "entries");
+export default function Archive() {
+  const archive = readJsonAPI<EntriesListResponse>("entries");
   return (
     <div>
-      {archive.map(({ slug }, i) => (
+      {archive.map(({ title, category }, i) => (
         <div
           key={i}
-          onClick={() => console.log(slug)}
+          onClick={() => console.log(title)}
         >
-          {slug}
+          <h5>
+            {title}
+          </h5>
+          <span>
+            {category}
+          </span>
         </div>
       ))}
     </div>

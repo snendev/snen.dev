@@ -3,14 +3,14 @@ import {
 } from "../chunk-WLUWRX4T.js";
 import {
   readJsonAPI
-} from "../chunk-GLDHBVFN.js";
+} from "../chunk-VWDSX3SW.js";
 import {
   react_default
 } from "../chunk-HZ3YPBUC.js";
 
-// src/client/content/Posts.tsx
-function Post({ url, category, slug }) {
-  const entry = readJsonAPI(url.origin, "entries", slug);
+// src/client/content/PostList.tsx
+function Card({ category, slug }) {
+  const entry = readJsonAPI("entries", slug);
   const [isExpanded, setIsExpanded] = react_default.useState(false);
   function onClick() {
     setIsExpanded((prev) => !prev);
@@ -22,16 +22,13 @@ function Post({ url, category, slug }) {
   const fullPostHref = `${category === "about" ? "" : `/${category}`}/${slug}`;
   const isPostCollapsibleGuess = entry.metadata.abstract.length > 400;
   const clampedCss = isExpanded || !isPostCollapsibleGuess ? void 0 : "clamp-text-3-lines";
-  console.log({ entry, isPostCollapsibleGuess });
-  return /* @__PURE__ */ react_default.createElement("section", {
+  return /* @__PURE__ */ react_default.createElement("article", {
     className: `card ${cardCss}`
   }, /* @__PURE__ */ react_default.createElement("a", {
     href: fullPostHref
-  }, /* @__PURE__ */ react_default.createElement("div", {
-    className: `card-header ${cardHeaderCss}`
   }, /* @__PURE__ */ react_default.createElement("h3", {
-    className: "card-title"
-  }, entry.metadata.title))), /* @__PURE__ */ react_default.createElement("h4", {
+    className: `title ${cardHeaderCss}`
+  }, entry.metadata.title)), /* @__PURE__ */ react_default.createElement("h4", {
     className: clampedCss
   }, entry.metadata.subhead), /* @__PURE__ */ react_default.createElement("p", {
     className: clampedCss
@@ -44,19 +41,18 @@ function Post({ url, category, slug }) {
     className: "spacer1em"
   }));
 }
-function Posts({ url }) {
-  const data = readJsonAPI(url.origin, "entries");
+function PostList({ feed }) {
+  const data = readJsonAPI("entries");
   return /* @__PURE__ */ react_default.createElement("div", {
     className: "feed"
   }, data.map(({ category, slug }) => /* @__PURE__ */ react_default.createElement(react_default.Suspense, {
     fallback: /* @__PURE__ */ react_default.createElement("div", null)
-  }, /* @__PURE__ */ react_default.createElement(Post, {
-    url,
+  }, /* @__PURE__ */ react_default.createElement(Card, {
     category,
     slug
   }))));
 }
 export {
-  Posts as default
+  PostList as default
 };
-//# sourceMappingURL=Posts.js.map
+//# sourceMappingURL=PostList.js.map

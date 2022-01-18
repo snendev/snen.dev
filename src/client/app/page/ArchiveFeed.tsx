@@ -3,21 +3,17 @@
 import React from "../../react.ts";
 
 type LazyArchiveType = React.LazyExoticComponent<
-  ({ url }: { url: URL }) => React.ReactElement
+  () => React.ReactElement
 >;
 const Archive: LazyArchiveType = React.lazy(async () =>
   await import("../../content/Archive.tsx")
 );
 
-interface ArchiveFeedProps {
-  url: URL;
-}
-
-export default function ArchiveFeed({ url }: ArchiveFeedProps) {
+export default function ArchiveFeed() {
   return (
     <section>
       <React.Suspense fallback={<span>...</span>}>
-        <Archive url={url} />
+        <Archive />
       </React.Suspense>
     </section>
   );

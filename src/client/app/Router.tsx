@@ -2,44 +2,32 @@
 /** @jsxFrag React.Fragment */
 import React from "../react.ts";
 
-import Page from "./page/Page.tsx";
+import Article from "./Article.tsx";
+import Feed from "./Feed.tsx";
 
-type LazyPostsType = React.LazyExoticComponent<
-  ({ url }: { url: URL }) => React.ReactElement
->;
-const Posts: LazyPostsType = React.lazy(async () =>
-  await import("../content/Posts.tsx")
-);
+
+function Redirect() {
+  React.useEffect(() => {
+    window.location.assign("/")
+  }, [])
+  return null
+}
 
 interface RouterProps {
   url: URL;
 }
 
-export default function Router({ url }: HomeProps) {
-  return (
-    <Page
-      sidebarContent={
-        <>
-          <p>
-            This website is rendered using React 18's new SSR architecture,
-            without a framework!
-          </p>
-          <p>
-            Concurrent rendering is enabled so that HTML is streamed and
-            hydration is intermittent.
-          </p>
-          <p>
-            TODO: writeup
-          </p>
-        </>
-      }
-      url={url}
-    >
-      <section>
-        <React.Suspense fallback={<div>Loading...</div>}>
-          <Posts url={url} />
-        </React.Suspense>
-      </section>
-    </Page>
-  );
+export default function Router({ url }: RouterProps) {
+  const [, category, slug] = url.pathname.split("/");
+
+  const BodyComponent = slug === undefined ? Feed : Article;
+
+  switch (category) {
+    case "": return <BodyComponent slug={slug} />
+    case "about":
+    case "read":
+    case "tech":
+    case "media": return <BodyComponent slug={slug} feed={category} />
+    default: return <Redirect />
+  }
 }

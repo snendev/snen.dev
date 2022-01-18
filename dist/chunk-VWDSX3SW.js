@@ -46,10 +46,10 @@ function suspendData(key, getAsyncResult) {
 }
 
 // src/client/data/readJsonAPI.ts
-function readJsonAPI(origin, endpoint, specifier) {
-  const pathname = `api/${endpoint}${specifier ? `/${specifier}` : ""}`;
+function readJsonAPI(endpoint, specifier) {
+  const pathname = `/api/${endpoint}${specifier ? `/${specifier}` : ""}`;
   return suspendData(pathname, async () => {
-    const response = await fetch(`${origin}/${pathname}`);
+    const response = await fetch(pathname);
     return await response.json();
   });
 }
@@ -57,4 +57,4 @@ function readJsonAPI(origin, endpoint, specifier) {
 export {
   readJsonAPI
 };
-//# sourceMappingURL=chunk-GLDHBVFN.js.map
+//# sourceMappingURL=chunk-VWDSX3SW.js.map
