@@ -5,9 +5,17 @@ import { readDirectory, readFile } from "../files/directory.ts";
 
 const apiRouter = new Router();
 
-apiRouter.get("/api/entries", (context) => {
+apiRouter.get("/api/(entries|feed)", (context) => {
   context.response.type = contentType(".json");
   const entries = readDirectory();
+  context.response.body = JSON.stringify(entries);
+});
+
+apiRouter.get("/api/feed/:slug", (context) => {
+  const { slug } = context.params;
+
+  context.response.type = contentType(".json");
+  const entries = readDirectory(slug);
   context.response.body = JSON.stringify(entries);
 });
 

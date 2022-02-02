@@ -69,7 +69,7 @@ interface PostListProps {
 }
 
 export default function PostList({ feed }: PostListProps) {
-  const data = readJsonAPI<EntriesListResponse>("entries");
+  const data = readJsonAPI<EntriesListResponse>("feed", feed);
   return (
     <div className="feed">
       {data.map(({ category, slug }) => (
