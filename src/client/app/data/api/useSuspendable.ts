@@ -1,4 +1,4 @@
-import React from "../../../deps/react.ts";
+import React from "../../../../deps/react.ts";
 
 import { AsyncData } from "./SuspenseRef.ts";
 

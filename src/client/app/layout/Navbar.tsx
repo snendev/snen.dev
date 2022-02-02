@@ -1,6 +1,6 @@
 /** @jsx React.createElement */
-import React from "../../deps/react.ts";
-import { Link } from "../../deps/react-router.ts"
+import React from "../../../deps/react.ts";
+import { Link } from "../../../deps/react-router-dom.tsx"
 
 export default function Navbar() {
   return (

@@ -1,7 +1,7 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
-import React from "../../deps/react.ts";
-import { useParams } from "../../deps/react-router.ts"
+import React from "../../../deps/react.ts";
+import { useParams } from "../../../deps/react-router-dom.tsx"
 import type { EntryCategory } from "../../../files/types.ts"
 
 import Error404 from "./Error404.tsx"
@@ -18,13 +18,10 @@ const PostList: LazyPostListType = React.lazy(async () =>
   await import("../data/PostList.tsx")
 );
 
-interface FeedProps {
-  feed?: EntryCategory
-}
-
-export default function Feed({ feed }: FeedProps) {
+export default function Feed() {
   const { category } = useParams()
-  if (category === undefined || !isEntryCategory(category)) {
+
+  if (category !== undefined && !isEntryCategory(category)) {
     return <Error404 />
   }
   return (

@@ -1,7 +1,10 @@
-import { Application, ReactDOMServer, ReactStaticRouter } from "./deps.ts";
+import React from "../deps/react.ts";
+import ReactDOMServer from "../deps/react-dom-server.ts";
+import { Application } from "../deps/oak.ts";
+import { StaticRouter as ReactStaticRouter } from "../deps/react-router-dom-server.tsx"
 
-import React from "../client/deps/react.ts";
 import App from "../client/App.tsx";
+import Html from "../client/Html.tsx";
 
 import staticRouter from "./staticRouter.ts";
 import apiRouter from "./apiRouter.ts";
@@ -56,11 +59,12 @@ app.use(async (context) => {
   const nodeStream = await ReactDOMServer
     .renderToReadableStream(
       <React.StrictMode>
-        <ReactStaticRouter location={context.request.url.href}>
-          <App />
-        </ReactStaticRouter>
-      </React.StrictMode>,
-      { bootstrapModules: ["/index.js"] },
+        <Html>
+          <ReactStaticRouter location={context.request.url.href}>
+            <App />
+          </ReactStaticRouter>
+        </Html>
+      </React.StrictMode>
     );
   const stream = Deno.env.get("REACT_SSR_DEBUG")
     ? attachLogger(nodeStream)

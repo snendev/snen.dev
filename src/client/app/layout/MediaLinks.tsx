@@ -1,5 +1,5 @@
 /** @jsx React.createElement */
-import React from "../../deps/react.ts";
+import React from "../../../deps/react.ts";
 
 export default function Navbar() {
   return (

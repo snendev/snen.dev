@@ -13,6 +13,8 @@ interface HtmlProps {
   children: React.ReactNode;
 }
 
+
+
 export default function Html({ children }: HtmlProps) {
   return (
     <html lang="en">
@@ -25,6 +27,7 @@ export default function Html({ children }: HtmlProps) {
           // set dangerously to avoid HTML escapes
           dangerouslySetInnerHTML={{ __html: RESET_STYLE }}
         />
+        <script type="module" src="/index.js" />
         <link rel="stylesheet" href="/styles.css" />
         <link rel="stylesheet" href="/colors.css" />
       </head>
@@ -34,7 +37,9 @@ export default function Html({ children }: HtmlProps) {
             __html: `<b>Enable JavaScript to run this app.</b>`,
           }}
         />
-        {children}
+        <div id="root">
+          {children}
+        </div>
       </body>
     </html>
   );

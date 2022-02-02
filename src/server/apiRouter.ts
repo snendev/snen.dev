@@ -1,6 +1,7 @@
-import { readDirectory, readFile } from "../files/directory.ts";
+import { Router } from "../deps/oak.ts";
+import { contentType } from "../deps/media_types.ts";
 
-import { contentType, Router } from "./deps.ts";
+import { readDirectory, readFile } from "../files/directory.ts";
 
 const apiRouter = new Router();
 

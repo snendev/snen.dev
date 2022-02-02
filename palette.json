@@ -1,0 +1,158 @@
+Add Swatch
+Toggle Handles
+Interpolate
+Map Palettes
+H
+S
+V
+Name
+HSV
+Hex
+RGB
+	White	Black
+AA	✓	
+AAA	✓	
+Lg AA	✓	
+Lg AAA	✓	
+
+[
+  {
+    "paletteName": "Primary",
+    "swatches": [
+      {
+        "name": "New Swatch",
+        "color": "040A19"
+      },
+      {
+        "name": "New Swatch",
+        "color": "101757"
+      },
+      {
+        "name": "New Swatch",
+        "color": "293B9B"
+      },
+      {
+        "name": "New Swatch",
+        "color": "697BD5"
+      },
+      {
+        "name": "New Swatch",
+        "color": "8991FF"
+      }
+    ]
+  },
+  {
+    "paletteName": "Greyscale",
+    "swatches": [
+      {
+        "name": "New Swatch",
+        "color": "131314"
+      },
+      {
+        "name": "New Swatch",
+        "color": "1E1F20"
+      },
+      {
+        "name": "New Swatch",
+        "color": "2F3032"
+      },
+      {
+        "name": "New Swatch",
+        "color": "525357"
+      },
+      {
+        "name": "New Swatch",
+        "color": "7C7E84"
+      },
+      {
+        "name": "New Swatch",
+        "color": "A7A8AC"
+      },
+      {
+        "name": "New Swatch",
+        "color": "CDCED1"
+      },
+      {
+        "name": "New Swatch",
+        "color": "E3E5EA"
+      }
+    ]
+  },
+  {
+    "paletteName": "Accent",
+    "swatches": [
+      {
+        "name": "New Swatch",
+        "color": "330532"
+      },
+      {
+        "name": "New Swatch",
+        "color": "661752"
+      },
+      {
+        "name": "New Swatch",
+        "color": "994887"
+      },
+      {
+        "name": "New Swatch",
+        "color": "BE6EAF"
+      },
+      {
+        "name": "New Swatch",
+        "color": "CF80BE"
+      }
+    ]
+  },
+  {
+    "paletteName": "Surface",
+    "swatches": [
+      {
+        "name": "New Swatch",
+        "color": "252B04"
+      },
+      {
+        "name": "New Swatch",
+        "color": "38410D"
+      },
+      {
+        "name": "New Swatch",
+        "color": "657222"
+      },
+      {
+        "name": "New Swatch",
+        "color": "91A13E"
+      },
+      {
+        "name": "New Swatch",
+        "color": "C1D464"
+      }
+    ]
+  },
+  {
+    "paletteName": "Warning",
+    "swatches": [
+      {
+        "name": "New Swatch",
+        "color": "510A15"
+      },
+      {
+        "name": "New Swatch",
+        "color": "6E101D"
+      },
+      {
+        "name": "New Swatch",
+        "color": "901D33"
+      },
+      {
+        "name": "New Swatch",
+        "color": "C43D58"
+      },
+      {
+        "name": "New Swatch",
+        "color": "FF6D88"
+      }
+    ]
+  }
+]
+
+

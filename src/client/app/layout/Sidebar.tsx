@@ -1,6 +1,6 @@
 /** @jsx React.createElement */
-import React from "../../deps/react.ts";
-import { useParams } from "../../deps/react-router.ts"
+import React from "../../../deps/react.ts";
+import { useParams } from "../../../deps/react-router-dom.tsx"
 
 import MediaLinks from "./MediaLinks.tsx";
 

@@ -1,6 +1,6 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
-import React from "../../deps/react.ts";
+import React from "../../../deps/react.ts";
 import type {
   EntryCategory,
   EntriesDetailResponse,

@@ -1,15 +1,15 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 /// <reference lib="dom" />
-import React from "./deps/react.ts";
-import ReactDOM from "./deps/react-dom.ts";
-import { BrowserRouter } from "./deps/react-router.ts";
+import React from "../deps/react.ts";
+import ReactDOM from "../deps/react-dom.ts";
+import { BrowserRouter } from "../deps/react-router-dom.tsx";
 
 import App from "./App.tsx";
+import Html from "./Html.tsx";
 
-// @ts-ignore No ReactDOMServer@18 types exist yet
 const root = ReactDOM.hydrateRoot(
-  document,
+  document.getElementById("root"),
   <React.StrictMode>
     <BrowserRouter>
       <App />
