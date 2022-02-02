@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../src/client/app/data/Archive.tsx"],
-  "sourcesContent": ["/** @jsx React.createElement */\n/** @jsxFrag React.Fragment */\nimport React from \"../../deps/react.ts\";\nimport type { EntriesListResponse } from \"../../../files/types.ts\";\n\nimport readJsonAPI from \"./api/readJsonAPI.ts\";\n\nexport default function Archive() {\n  const archive = readJsonAPI<EntriesListResponse>(\"entries\");\n  return (\n    <div>\n      {archive.map(({ title, category }, i) => (\n        <div\n          key={i}\n          onClick={() => console.log(title)}\n        >\n          <h5>\n            {title}\n          </h5>\n          <span>\n            {category}\n          </span>\n        </div>\n      ))}\n    </div>\n  );\n}\n"],
-  "mappings": ";;;;;;;;AAOe,mBAAmB;AAChC,QAAM,UAAU,YAAiC;AACjD,SACE,4CAAC,OAAD,MACG,QAAQ,IAAI,CAAC,EAAE,OAAO,YAAY,MACjC,4CAAC,OAAD;AAAA,IACE,KAAK;AAAA,IACL,SAAS,MAAM,QAAQ,IAAI;AAAA,KAE3B,4CAAC,MAAD,MACG,QAEH,4CAAC,QAAD,MACG;AAAA;",
-  "names": []
-}
