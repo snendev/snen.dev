@@ -1,35 +1,18 @@
-Add Swatch
-Toggle Handles
-Interpolate
-Map Palettes
-H
-S
-V
-Name
-HSV
-Hex
-RGB
-	White	Black
-AA	✓	
-AAA	✓	
-Lg AA	✓	
-Lg AAA	✓	
-
 [
   {
-    "paletteName": "Primary",
+    "paletteName": "primary",
     "swatches": [
       {
         "name": "New Swatch",
-        "color": "040A19"
+        "color": "060F26"
       },
       {
         "name": "New Swatch",
-        "color": "101757"
+        "color": "0E144B"
       },
       {
         "name": "New Swatch",
-        "color": "293B9B"
+        "color": "273892"
       },
       {
         "name": "New Swatch",
@@ -42,7 +25,7 @@ Lg AAA	✓
     ]
   },
   {
-    "paletteName": "Greyscale",
+    "paletteName": "greyscale",
     "swatches": [
       {
         "name": "New Swatch",
@@ -54,32 +37,32 @@ Lg AAA	✓
       },
       {
         "name": "New Swatch",
-        "color": "2F3032"
+        "color": "303032"
       },
       {
         "name": "New Swatch",
-        "color": "525357"
+        "color": "535457"
       },
       {
         "name": "New Swatch",
-        "color": "7C7E84"
+        "color": "7D7F84"
       },
       {
         "name": "New Swatch",
-        "color": "A7A8AC"
+        "color": "A1A4AC"
       },
       {
         "name": "New Swatch",
-        "color": "CDCED1"
+        "color": "C2C7D1"
       },
       {
         "name": "New Swatch",
-        "color": "E3E5EA"
+        "color": "D5DBEA"
       }
     ]
   },
   {
-    "paletteName": "Accent",
+    "paletteName": "accent",
     "swatches": [
       {
         "name": "New Swatch",
@@ -87,7 +70,7 @@ Lg AAA	✓
       },
       {
         "name": "New Swatch",
-        "color": "661752"
+        "color": "551344"
       },
       {
         "name": "New Swatch",
@@ -104,15 +87,15 @@ Lg AAA	✓
     ]
   },
   {
-    "paletteName": "Surface",
+    "paletteName": "surface",
     "swatches": [
       {
         "name": "New Swatch",
-        "color": "252B04"
+        "color": "1F2404"
       },
       {
         "name": "New Swatch",
-        "color": "38410D"
+        "color": "2E350B"
       },
       {
         "name": "New Swatch",
@@ -129,23 +112,23 @@ Lg AAA	✓
     ]
   },
   {
-    "paletteName": "Warning",
+    "paletteName": "warning",
     "swatches": [
       {
         "name": "New Swatch",
-        "color": "510A15"
+        "color": "39070F"
       },
       {
         "name": "New Swatch",
-        "color": "6E101D"
+        "color": "520C15"
       },
       {
         "name": "New Swatch",
-        "color": "901D33"
+        "color": "7C192C"
       },
       {
         "name": "New Swatch",
-        "color": "C43D58"
+        "color": "BA3954"
       },
       {
         "name": "New Swatch",
@@ -154,5 +137,3 @@ Lg AAA	✓
     ]
   }
 ]
-
-

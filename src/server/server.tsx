@@ -4,10 +4,10 @@ import { Application } from "../deps/oak.ts";
 import { StaticRouter as ReactStaticRouter } from "../deps/react-router-dom-server.tsx"
 
 import App from "../client/App.tsx";
-import Html from "../client/Html.tsx";
 
 import staticRouter from "./staticRouter.ts";
 import apiRouter from "./apiRouter.ts";
+import Html from "./Html.tsx";
 import sleep from "./sleep.ts";
 
 declare global {

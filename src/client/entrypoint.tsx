@@ -6,7 +6,6 @@ import ReactDOM from "../deps/react-dom.ts";
 import { BrowserRouter } from "../deps/react-router-dom.tsx";
 
 import App from "./App.tsx";
-import Html from "./Html.tsx";
 
 const root = ReactDOM.hydrateRoot(
   document.getElementById("root"),

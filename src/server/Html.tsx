@@ -13,8 +13,6 @@ interface HtmlProps {
   children: React.ReactNode;
 }
 
-
-
 export default function Html({ children }: HtmlProps) {
   return (
     <html lang="en">
@@ -27,9 +25,9 @@ export default function Html({ children }: HtmlProps) {
           // set dangerously to avoid HTML escapes
           dangerouslySetInnerHTML={{ __html: RESET_STYLE }}
         />
-        <script type="module" src="/index.js" />
+        <script type="module" src="/entrypoint.js" />
         <link rel="stylesheet" href="/styles.css" />
-        <link rel="stylesheet" href="/colors.css" />
+        <link rel="stylesheet" href="/theme.css" />
       </head>
       <body>
         <noscript

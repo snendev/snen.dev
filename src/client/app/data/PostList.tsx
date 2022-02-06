@@ -7,7 +7,7 @@ import type {
   EntriesListResponse,
 } from "../../../files/types.ts";
 
-import { useTheme } from "../../theme.tsx"
+import { Layer, Header, Button } from "../theme.tsx"
 
 import readJsonAPI from "./api/readJsonAPI.ts";
 
@@ -25,42 +25,41 @@ function Card({ category, slug }: CardProps) {
     setIsExpanded((prev) => !prev);
   }
 
-  const { getClassname } = useTheme()
-  const cardCss = getClassname("surface", 0);
-  const cardHeaderCss = getClassname("dark", 2);
-  const cardButtonCss = getClassname("primary", 2);
-
   const fullPostHref = `${category === "about" ? "" : `/${category}`}/${slug}`;
   const isPostCollapsibleGuess = entry.metadata.abstract.length > 400;
   const clampedCss = isExpanded || !isPostCollapsibleGuess ? undefined : "clamp-text-3-lines"
 
   return (
-    <article className={`card ${cardCss}`}>
-      <a href={fullPostHref}>
-        <h3 className={`title ${cardHeaderCss}`}>
-          {entry.metadata.title}
-        </h3>
-      </a>
-      <h4 className={clampedCss}>
-        {entry.metadata.subhead}
-      </h4>
-      <p className={clampedCss}>
-        {entry.metadata.abstract}
-      </p>
-      <span>
-        <a href={fullPostHref}>Read the full post</a>
-      </span>
-      {isPostCollapsibleGuess ? (
-        <button
-          className={`card-button ${cardButtonCss}`}
-          onClick={onClick}
-        >
-          {isExpanded ? "Collapse" : "Read More"}
-        </button>
-      ) : (
-        <div className="spacer1em" />
-      )}
-    </article>
+    <Layer className="card">
+      <article>
+        <Header>
+          <a href={fullPostHref}>
+            <h3 className="title">
+              {entry.metadata.title}
+            </h3>
+          </a>
+        </Header>
+        <h4 className={clampedCss}>
+          {entry.metadata.subhead}
+        </h4>
+        <p className={clampedCss}>
+          {entry.metadata.abstract}
+        </p>
+        <span>
+          <a href={fullPostHref}>Read the full post</a>
+        </span>
+        {isPostCollapsibleGuess ? (
+          <Button
+            className="card-button"
+            onClick={onClick}
+          >
+            {isExpanded ? "Collapse" : "Read More"}
+          </Button>
+        ) : (
+          <div className="spacer1em" />
+        )}
+      </article>
+    </Layer>
   );
 }
 

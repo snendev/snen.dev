@@ -5,7 +5,7 @@ import type {
   EntriesDetailResponse,
 } from "../../../files/types.ts";
 
-import { useTheme } from "../../theme.tsx"
+import { Layer, Header } from "../theme.tsx"
 
 import readJsonAPI from "./api/readJsonAPI.ts";
 
@@ -17,15 +17,16 @@ export default function Post({ slug }: PostProps) {
   const entry = readJsonAPI<EntriesDetailResponse>("entries", slug);
   // const html = Marked.parse(entry.content).content;
 
-  const { getClassname } = useTheme()
-  const titleCss = getClassname("dark", 2);
-
   return (
-    <article>
-      <h3 className={`title ${titleCss}`}>
-        {entry.metadata.title}
-      </h3>
-      <div dangerouslySetInnerHTML={{ __html: entry.content }} />
-    </article>
+    <Layer>
+      <article>
+        <Header>
+          <h3 className="title">
+            {entry.metadata.title}
+          </h3>
+        </Header>
+        <div dangerouslySetInnerHTML={{ __html: entry.content }} />
+      </article>
+    </Layer>
   );
 }
