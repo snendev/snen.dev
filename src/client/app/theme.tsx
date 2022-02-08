@@ -154,6 +154,8 @@ export function Layer({
   )
 }
 
+// shades are 20% increments up and down 2x maybe 3x
+
 export function Header({
   children,
   className,
@@ -165,7 +167,7 @@ export function Header({
     textColor: options.textColor,
     showBorder: options.showBorder ?? true,
   }
-  const layer = useLayer(headerOptions, -1)
+  const layer = useLayer(headerOptions, -2)
   const layerClassName = getLayerClassname(layer, mode)
   return (
     <header className={cx(layerClassName, "header", className)}>

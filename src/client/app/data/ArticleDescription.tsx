@@ -1,17 +1,15 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
+import { useParams } from "../../../deps/react-router-dom.tsx"
 import type {
   EntriesDetailResponse,
-} from "../../../files/types.ts";
+} from "../../../server/files/types.ts";
 
 import readJsonAPI from "./api/readJsonAPI.ts";
 
-interface PostDescriptionProps {
-  slug?: string
-}
-
-export default function Description({ slug = "about" }: PostDescriptionProps) {
+export default function Description() {
+  const { slug = "about-me" } = useParams()
   const entry = readJsonAPI<EntriesDetailResponse>("entries", slug);
   return <p>{entry.metadata.subhead}</p>;
 }

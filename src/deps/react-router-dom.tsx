@@ -1,4 +1,4 @@
-/// THIS FILE WAS COPIED AND MANUALLY ALTERED TO FIX A BUILD ISSUE
+/// THIS FILE WAS COPIED AND MANUALLY ALTERED TO CIRCUMVENT A BUILD ISSUE
 /// SEE https://github.com/esm-dev/esm.sh/issues/165
 /// taken from https://github.com/remix-run/react-router/blob/5dc07e20e38ecda14b6f6918998a62aa42416fe2/packages/react-router-dom/index.tsx
 

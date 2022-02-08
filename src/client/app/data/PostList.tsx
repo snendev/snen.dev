@@ -5,7 +5,7 @@ import type {
   EntryCategory,
   EntriesDetailResponse,
   EntriesListResponse,
-} from "../../../files/types.ts";
+} from "../../../server/files/types.ts";
 
 import { Layer, Header, Button } from "../theme.tsx"
 

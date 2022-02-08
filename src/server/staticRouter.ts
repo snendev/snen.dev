@@ -1,8 +1,7 @@
 import { Router } from "../deps/oak.ts";
 import { contentType } from "../deps/media_types.ts";
 
-import { readRSSFeed } from "../files/directory.ts";
-
+import { readRSSFeed } from "./files/mod.ts";
 import sleep from "./sleep.ts";
 
 // handle static asset requests (ts, js, sourcemaps, css, images, etc)

@@ -1,19 +1,19 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
+import { useParams } from "../../../deps/react-router-dom.tsx"
 import type {
   EntriesDetailResponse,
-} from "../../../files/types.ts";
+} from "../../../server/files/types.ts";
 
 import { Layer, Header } from "../theme.tsx"
 
 import readJsonAPI from "./api/readJsonAPI.ts";
 
-interface PostProps {
-  slug: string
-}
-
-export default function Post({ slug }: PostProps) {
+export default function ArticleContent() {
+  // TODO does this order work?
+  const { slug } = useParams<'slug'>();
+  console.log(slug)
   const entry = readJsonAPI<EntriesDetailResponse>("entries", slug);
   // const html = Marked.parse(entry.content).content;
 

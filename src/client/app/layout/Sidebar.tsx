@@ -1,14 +1,13 @@
 /** @jsx React.createElement */
 import React from "../../../deps/react.ts";
-import { useParams } from "../../../deps/react-router-dom.tsx"
 
 import MediaLinks from "./MediaLinks.tsx";
 
-type LazyDescriptionType = React.LazyExoticComponent<
-  ({ slug }: { slug?: string }) => React.ReactElement
+type LazyComponent = React.LazyExoticComponent<
+  () => React.ReactElement
 >;
-const Description: LazyDescriptionType = React.lazy(async () =>
-  await import("../data/Description.tsx")
+const ArticleDescription: LazyComponent = React.lazy(async () =>
+  await import("../data/ArticleDescription.tsx")
 );
 
 type LazyArchiveType = React.LazyExoticComponent<
@@ -19,14 +18,13 @@ const Archive: LazyArchiveType = React.lazy(async () =>
 );
 
 export default function Sidebar() {
-  const { slug } = useParams()
   return (
     <aside className="sidebar">
       <MediaLinks />
       <div className="divider" />
       <section>
         <React.Suspense fallback={<span>...</span>}>
-          <Description slug={slug} />
+          <ArticleDescription />
         </React.Suspense>
       </section>
       <div className="divider" />

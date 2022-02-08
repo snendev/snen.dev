@@ -1,22 +1,11 @@
-import React from "../deps/react.ts";
-import ReactDOMServer from "../deps/react-dom-server.ts";
 import { Application } from "../deps/oak.ts";
-import { StaticRouter as ReactStaticRouter } from "../deps/react-router-dom-server.tsx"
 
-import App from "../client/App.tsx";
+import render from "../client/server/render.tsx"
 
-import staticRouter from "./staticRouter.ts";
 import apiRouter from "./apiRouter.ts";
-import Html from "./Html.tsx";
+import gitRouter from "./gitRouter.ts"
+import staticRouter from "./staticRouter.ts";
 import sleep from "./sleep.ts";
-
-declare global {
-  namespace ReactDOMServer {
-    export const renderToReadableStream: (
-      element: React.ReactElement,
-    ) => ReadableStream<Uint8Array>;
-  }
-}
 
 function flushReader(reader: ReadableStreamDefaultReader) {
   async function read() {
@@ -51,21 +40,14 @@ app.use(async (context, next) => {
 
 app.use(apiRouter.routes());
 app.use(apiRouter.allowedMethods());
+app.use(gitRouter.routes());
+app.use(gitRouter.allowedMethods());
 app.use(staticRouter.routes());
 app.use(staticRouter.allowedMethods());
 
 // handle everything else as an app route
 app.use(async (context) => {
-  const nodeStream = await ReactDOMServer
-    .renderToReadableStream(
-      <React.StrictMode>
-        <Html>
-          <ReactStaticRouter location={context.request.url.href}>
-            <App />
-          </ReactStaticRouter>
-        </Html>
-      </React.StrictMode>
-    );
+  const nodeStream = await render(context.request.url.href);
   const stream = Deno.env.get("REACT_SSR_DEBUG")
     ? attachLogger(nodeStream)
     : nodeStream;
