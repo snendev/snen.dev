@@ -1,11 +1,3 @@
----  
-title: "snen.dev: A technical introduction"  
-category: "about"  
-slug: "snen-dot-dev"  
-subhead: "I tinker with the React 18 release candidate's new features in a framework-less Deno environment"  
-tags: [ "deno", "react", "react18", "concurrent rendering", "snen.dev" ]  
----  
-
 # This website uses bleeding-edge web technology
 
 Welcome to [snen.dev](https://snen.dev)!
@@ -72,55 +64,54 @@ encapsulate large in compact statements.
 This makes code written using React (and its cousins) a lot more convenient
 to write, read, design, and understand.
 
-/// Aside: More on JSX
+> #### Aside: More on JSX
+> 
+> To support JSX, JavaScript runtimes look for a unique file extension, `.tsx`
+> or `.jsx` to enable JSX in the file.
+> Usage of JSX allows easily weaving component subtrees with any relevant
+> properties:
+> 
+> ```tsx
+> // component.ts
+> const value = someValue
+> const calculatedList = readableFunctionName(value)
+> const handlePress = () => alert('Hello!')
+> const jsx = (
+>   // Container that defines layout
+>   <ContainerDiv>
+>     { /* Header component that renders according to some data */ }
+>     <HeaderComponent title="JSX Title" value={calculatedList.length} />
+>     { /* Body container */ }
+>     <Body>
+>       <button type="button" onClick={handlePress}>Say hi!</button>
+>       { /* Render each item in a list of values */ }
+>       {calculatedList.map((listItem) => (
+>         <span>{listItem}</span>
+>       ))}
+>     </Body>
+>   </ContainerDiv>
+> )
+> ```
+> 
+> Values such as the `title="JSX Title"` and `value={calculatedList.length}` on
+> `HeaderComponent` are considered _props_.
+> Props include both the "attributes" on any React component and the "children"
+> (child components) represented underneath them.
+> This notion of "children" allows us to represent the `ContainerDiv` and `Body`
+> components, which might _wrap_ subcomponents but not directly _control_ them.
+> TypeScript also supports JSX, so all these values are type-checked.
+> 
+> In general, libraries like React define how JSX syntax should be used.
+> JSX syntax just yields "elements":
+> in React's case, components and their props are passed to
+> [`React.createElement`](https://reactjs.org/docs/react-api.html#createelement).
+> For comparison, Preact uses a function named
+> [`h`](https://jasonformat.com/wtf-is-jsx/).
+> (That link refers to how the [_Babel_](https://babeljs.io/) transpiler handles
+> JSX, but Deno and many browsers provide much of the same functionality.)
+> There are several ways to inform a JavaScript runtime/compiler how to handle
+> JSX, and environments often have their own recommendations.
 
-To support JSX, JavaScript runtimes look for a unique file extension, `.tsx`
-or `.jsx` to enable JSX in the file.
-Usage of JSX allows easily weaving component subtrees with any relevant
-properties:
-
-```tsx
-// component.ts
-const value = someValue
-const calculatedList = readableFunctionName(value)
-const handlePress = () => alert('Hello!')
-const jsx = (
-  // Container that defines layout
-  <ContainerDiv>
-    { /* Header component that renders according to some data */ }
-    <HeaderComponent title="JSX Title" value={calculatedList.length} />
-    { /* Body container */ }
-    <Body>
-      <button type="button" onClick={handlePress}>Say hi!</button>
-      { /* Render each item in a list of values */ }
-      {calculatedList.map((listItem) => (
-        <span>{listItem}</span>
-      ))}
-    </Body>
-  </ContainerDiv>
-)
-```
-
-Values such as the `title="JSX Title"` and `value={calculatedList.length}` on
-`HeaderComponent` are considered _props_.
-Props include both the "attributes" on any React component and the "children"
-(child components) represented underneath them.
-This notion of "children" allows us to represent the `ContainerDiv` and `Body`
-components, which might _wrap_ subcomponents but not directly _control_ them.
-TypeScript also supports JSX, so all these values are type-checked.
-
-In general, libraries like React define how JSX syntax should be used.
-JSX syntax just yields "elements":
-in React's case, components and their props are passed to
-[`React.createElement`](https://reactjs.org/docs/react-api.html#createelement).
-For comparison, Preact uses a function named
-[`h`](https://jasonformat.com/wtf-is-jsx/).
-(That link refers to how the [_Babel_](https://babeljs.io/) transpiler handles
-JSX, but Deno and many browsers provide much of the same functionality.)
-There are several ways to inform a JavaScript runtime/compiler how to handle
-JSX, and environments often have their own recommendations.
-
-///
 
 ### React 18 and Concurrent Rendering
 
@@ -221,7 +212,6 @@ for client files.
 
 ### Fewer moving parts
 
-
 This has less to do with Deno in particular, but I also like being able to
 move away from "heavy" frameworks.
 For example, to use React in NodeJS, most pages recommend leveraging some
@@ -244,77 +234,75 @@ When it's the norm for frameworks to move these concerns out of the way, it
 also becomes more and more rare to find examples that show how it all works
 end-to-end.
 
-/// Aside: Build toolchains are the "baseline" and always have been
-
-Actually, though.
-Most of the
-[top](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_getting_started#setting_up_your_first_react_app) [search](https://www.w3schools.com/REACT/DEFAULT.ASP)
-[results](https://react-tutorial.app/app.html?id=334)
-on google for "react tutorial" recommend using
-[create-react-app](https://create-react-app.dev/) to bootstrap new React
-applications.
-React's documentation,
-[even way back in 2017](https://github.com/facebook/react/blob/main/CHANGELOG.md#1562-september-25-2017),
-began the tutorial with
-[a note on prerequisites](https://react-legacy.netlify.app/tutorial/tutorial.html#prerequisites)
-that reference compiling via Babel with no explanation.
-
-There's a lot of historical reasons for this, and much of this is still
-relevant.
-For a long time, it's the only way things could work.
-Nowadays, some of these concerns are less important, since
-[users overwhelmingly browse with Google Chrome](https://en.wikipedia.org/wiki/Usage_share_of_web_browsers#Summary_tables),
-which supports (and pressures other browsers to support) lots of modern
-JavaScript features like JSX pragmas (so JSX can be used in-browser),
-async iterators, etc.
-
-However, there was a time when Internet Explorer dominated and terrorized the
-landscape.
-I'm simplifying here a bit, but IE, especially older versions, had a
-reputation for not quite playing nicely with other browsers, having missing or
-incorrect implementations for browser standards, and more.
-Browser compatibility was and still is a must-have, so any code that used
-newer ECMA features needed to be _transpiled_ so that they could work on older
-browsers like Internet Explorer.
-
-Over time, tools such as [webpack](https://webpack.js.org/) and
-[babel](https://babeljs.io/) were developed to help solve these problems;
-pre-processors that compile JavaScript in various ways to improve development
-experience without sacrificing usability.
-These tools were powerful enough to integrate all sorts of compilation steps,
-including ones that enable TypeScript and [flow](https://flow.org/) support.
-As those tools were developed, they were soon integrated into build toolchains
-everywhere.
-
-Thus, `create-react-app` was made to simplify bootstrapping and staying
-up-to-date with all those technologies and unwritten "standards" for
-JavaScript development.
-Truth be told, `create-react-app` is a really fantastic bit of technology.
-It supports a lot of convenient features; one of particular note is
-[hot module replacement](https://webpack.js.org/concepts/hot-module-replacement/),
-which enables updating a running development server with new code any time
-the developer saves a source file.
-
-For those that aim to take more control over their application,
-`create-react-app` supports an "ejection" feature, where it basically copies
-all its configuration files into your repository, exposing you to the dark and
-scary depths of _JavaScript build infrastructure_.
-Only then is the user exposed to the litany of (development-only) dependencies
-that provide all of these features.
-I know I'm not the first React developer to eject an app confidently and then
-fail horribly at subsequent infrastructural upgrades, thus leading me to
-reinitialize the source code in a new create-react-app environment, never to
-be touched again.
-
-It can be really scary to eject, since you don't really have any way to test
-things or explore piece-by-piece.
-Whatever under-the-hood dependencies are being used are _all_ now your concern.
-In that way, it can also make it hard to learn more.
-There's a bit of a trade-off in this way when using something like
-`create-react-app`, but if you are new to the ecosystem, you probably have
-no other reasonable choice.
-
-///
+> #### Aside: Build toolchains are the "baseline" and always have been
+> 
+> Actually, though.
+> Most of the
+> [top](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_getting_started#setting_up_your_first_react_app) > [search](https://www.w3schools.com/REACT/DEFAULT.ASP)
+> [results](https://react-tutorial.app/app.html?id=334)
+> on google for "react tutorial" recommend using
+> [create-react-app](https://create-react-app.dev/) to bootstrap new React
+> applications.
+> React's documentation,
+> [even way back in 2017](https://github.com/facebook/react/blob/main/CHANGELOG.md#1562-september-25-2017),
+> began the tutorial with
+> [a note on prerequisites](https://react-legacy.netlify.app/tutorial/tutorial.html#prerequisites)
+> that reference compiling via Babel with no explanation.
+> 
+> There's a lot of historical reasons for this, and much of this is still
+> relevant.
+> For a long time, it's the only way things could work.
+> Nowadays, some of these concerns are less important, since
+> [users overwhelmingly browse with Google Chrome](https://en.wikipedia.org/wiki/Usage_share_of_web_browsers#Summary_tables),
+> which supports (and pressures other browsers to support) lots of modern
+> JavaScript features like JSX pragmas (so JSX can be used in-browser),
+> async iterators, etc.
+> 
+> However, there was a time when Internet Explorer dominated and terrorized the
+> landscape.
+> I'm simplifying here a bit, but IE, especially older versions, had a
+> reputation for not quite playing nicely with other browsers, having missing or
+> incorrect implementations for browser standards, and more.
+> Browser compatibility was and still is a must-have, so any code that used
+> newer ECMA features needed to be _transpiled_ so that they could work on older
+> browsers like Internet Explorer.
+> 
+> Over time, tools such as [webpack](https://webpack.js.org/) and
+> [babel](https://babeljs.io/) were developed to help solve these problems;
+> pre-processors that compile JavaScript in various ways to improve development
+> experience without sacrificing usability.
+> These tools were powerful enough to integrate all sorts of compilation steps,
+> including ones that enable TypeScript and [flow](https://flow.org/) support.
+> As those tools were developed, they were soon integrated into build toolchains
+> everywhere.
+> 
+> Thus, `create-react-app` was made to simplify bootstrapping and staying
+> up-to-date with all those technologies and unwritten "standards" for
+> JavaScript development.
+> Truth be told, `create-react-app` is a really fantastic bit of technology.
+> It supports a lot of convenient features; one of particular note is
+> [hot module replacement](https://webpack.js.org/concepts/hot-module-replacement/),
+> which enables updating a running development server with new code any time
+> the developer saves a source file.
+> 
+> For those that aim to take more control over their application,
+> `create-react-app` supports an "ejection" feature, where it basically copies
+> all its configuration files into your repository, exposing you to the dark and
+> scary depths of _JavaScript build infrastructure_.
+> Only then is the user exposed to the litany of (development-only) dependencies
+> that provide all of these features.
+> I know I'm not the first React developer to eject an app confidently and then
+> fail horribly at subsequent infrastructural upgrades, thus leading me to
+> reinitialize the source code in a new create-react-app environment, never to
+> be touched again.
+> 
+> It can be really scary to eject, since you don't really have any way to test
+> things or explore piece-by-piece.
+> Whatever under-the-hood dependencies are being used are _all_ now your concern.
+> In that way, it can also make it hard to learn more.
+> There's a bit of a trade-off in this way when using something like
+> `create-react-app`, but if you are new to the ecosystem, you probably have
+> no other reasonable choice.
 
 Imagine seeing a React app for the first time as a new developer.
 To understand how a typical "React app" works, one must learn the machinery of
@@ -332,14 +320,60 @@ It's much harder to understand what a bundler is without understanding how my
 code reaches the browser in the first place, or without understanding that the
 browser is the thing interpreting your code.
 
-Deno doesn't directly solve those problems, but it does make it convenient to
-strive for framework-less code, simply because of those few statements above.
-First-class support for TypeScript and modern ECMAScript standards goes a long
-way, and so does the ability to write
-[isomorphic](https://en.wikipedia.org/wiki/Isomorphic_JavaScript)
-code.
-And, finally, doing things this way helped strengthen my knowledge about
-React, JavaScript, and the web.
+Like I said -- Deno doesn't directly solve these problems.
+But it does make it easier to approach these ideas in a framework-less way,
+which I think, if at nothing else, is a very important sandbox to have.
+
+### Remote imports as the default makes code-splitting more natural 
+
+Code-splitting involves compiling a JS project into _chunks_ instead of a
+single bundle file.
+This means that the browser can import code only when needed.
+Effectively, this reduces the impact that complexity in your app has on
+overall bundle size: if some feature that requires a large number of
+dependencies only appears on one page, the app is built in such a way
+that the expensive code only requested when it is about to be used,
+like when visiting a particular page.
+Finally, if multiple sources in the app use the same chunk, once the browser
+has received that chunk, any further requests for the same resource can be
+handled by the browser cache.
+
+Remote imports are a convenient baseline here because of this final point:
+all remotely-hosted code can stay out of the application bundle and in some
+ways feels already-"split" by default.
+
+An easy example is on the
+[theme explorer page](/reading/making-themes-bad-at-colors),
+which imports several extra `react-colors` dependencies that are otherwise
+not needed on the app.
+It is possible to enable code splitting by importing the `ThemePlayground`
+page lazily:
+
+```tsx
+// static import
+import ThemePlayground from ".../ThemePlayground"
+// dynamic ("lazy", run-time) import
+const ThemePlayground = React.lazy(() => import(".../ThemePlayground"))
+
+// ...
+
+// in AppRouter.tsx
+return (
+  <Route
+    path={path}
+    component={
+      <Suspense fallback={<Loading />}>
+        <ThemePlayground />
+      </Suspense>
+    }
+  />
+)
+```
+
+With this in place, any complex code in `ThemePlayground.tsx` is only imported
+when the user navigates to the appropriate route.
+
+### Deploy
 
 Finally, [Deno Deploy](https://deno.com/deploy) makes deploying this site
 easier than ever.
@@ -347,10 +381,24 @@ By connecting my repository, I can redeploy every time I push a new commit.
 There are plenty of services that do that, but Deno Deploy even provides
 [playgrounds](https://deno.com/deploy/docs/playgrounds) where you can test
 your deployment ahead of time.
-Since I'm already using Deno, it's a really easy choice to make.
+Also, at time of writing, Deno Deploy just released a new suite of features
+that enable developers to
+[build assets in CI](https://deno.com/blog/deploy-static-files)
+and improve how static files are handled.
+Since I'm already using Deno, Deploy is definitely the way to go.
 
-Basically, Deno kind-of does it all.
-I have fun developing with it.
+### Conclusion
+
+In short: Deno is convenient.
+First-class support for TypeScript and modern ECMAScript standards goes a long
+way, and so does the ability to write
+[isomorphic](https://en.wikipedia.org/wiki/Isomorphic_JavaScript)
+code.
+It supports a simple full-stack experience, including CI.
+Doing things this way helped strengthen my knowledge about
+React, JavaScript, and the web.
+
+And, most importantly, I have fun developing with it.
 
 ## What if I want to know more?
 

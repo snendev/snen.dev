@@ -7,7 +7,7 @@ import { ThemeProvider } from "./app/theme.tsx";
 
 export default function App() {
   return (
-    <ThemeProvider mode="dark">
+    <ThemeProvider>
       <AppRouter />
     </ThemeProvider>
   );

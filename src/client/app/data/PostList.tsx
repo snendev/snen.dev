@@ -1,13 +1,14 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
+import { Link } from "../../../deps/react-router-dom.tsx"
 import type {
   EntryCategory,
   EntriesDetailResponse,
   EntriesListResponse,
 } from "../../../server/files/types.ts";
 
-import { Layer, Header, Button } from "../theme.tsx"
+import { Block, Layer, Button } from "../theme.tsx"
 
 import readJsonAPI from "./api/readJsonAPI.ts";
 
@@ -25,41 +26,43 @@ function Card({ category, slug }: CardProps) {
     setIsExpanded((prev) => !prev);
   }
 
-  const fullPostHref = `${category === "about" ? "" : `/${category}`}/${slug}`;
+  const fullPostHref = `/${category}/${slug}`;
   const isPostCollapsibleGuess = entry.metadata.abstract.length > 400;
   const clampedCss = isExpanded || !isPostCollapsibleGuess ? undefined : "clamp-text-3-lines"
 
   return (
-    <Layer className="card">
-      <article>
-        <Header>
-          <a href={fullPostHref}>
-            <h3 className="title">
-              {entry.metadata.title}
-            </h3>
-          </a>
-        </Header>
-        <h4 className={clampedCss}>
-          {entry.metadata.subhead}
-        </h4>
-        <p className={clampedCss}>
-          {entry.metadata.abstract}
-        </p>
-        <span>
-          <a href={fullPostHref}>Read the full post</a>
-        </span>
-        {isPostCollapsibleGuess ? (
-          <Button
-            className="card-button"
-            onClick={onClick}
-          >
-            {isExpanded ? "Collapse" : "Read More"}
-          </Button>
-        ) : (
-          <div className="spacer1em" />
-        )}
-      </article>
-    </Layer>
+    <article>
+      <Layer
+        headerTitle={
+          <Link to={fullPostHref}>
+            {entry.metadata.title}
+          </Link>
+        }
+        className="card"
+      >
+        <Block>
+          <h4 className={clampedCss}>
+            {entry.metadata.subhead}
+          </h4>
+          <p className={clampedCss}>
+            {entry.metadata.abstract}
+          </p>
+          <span>
+            <Link to={fullPostHref}>Read the full post</Link>
+          </span>
+          {isPostCollapsibleGuess ? (
+            <Button
+              className="card-button"
+              onClick={onClick}
+            >
+              {isExpanded ? "Collapse" : "Read More"}
+            </Button>
+          ) : (
+            <div className="spacer1em" />
+          )}
+        </Block>
+      </Layer>
+    </article>
   );
 }
 

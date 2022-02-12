@@ -1,6 +1,7 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
+import { Link } from "../../../deps/react-router-dom.tsx";
 import type {
   EntriesListResponse,
   SiteEntryMetadata,
@@ -12,10 +13,10 @@ export default function Archive() {
   const archive = readJsonAPI<EntriesListResponse>("entries");
   return (
     <div>
-      {archive.map(({ title, category }: SiteEntryMetadata, i: number) => (
-        <div
-          key={i}
-          onClick={() => console.log(title)}
+      {archive.map(({ title, category, slug }: SiteEntryMetadata) => (
+        <Link
+          key={slug}
+          to={`/${category}/${slug}`}
         >
           <h5>
             {title}
@@ -23,7 +24,7 @@ export default function Archive() {
           <span>
             {category}
           </span>
-        </div>
+        </Link>
       ))}
     </div>
   );

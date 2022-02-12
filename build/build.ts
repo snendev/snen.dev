@@ -1,7 +1,7 @@
 import { parse } from "https://deno.land/std@0.120.0/flags/mod.ts";
 import * as esbuild from "https://deno.land/x/esbuild@v0.14.11/mod.js";
 
-import { buildPaletteCSS } from "./palette.ts"
+import buildThemeCSS from "./theme.ts"
 
 const { minify, sourcemap } = parse(Deno.args);
 
@@ -14,14 +14,14 @@ for await (const entry of Deno.readDir("src/client/app/data")) {
 }
 console.log(`Bundling ${entryPoints.length} files...`);
 
-const config = {
+const config: esbuild.BuildOptions = {
   entryPoints,
   loader: {
     ".ts": "ts",
     ".tsx": "tsx",
   } as const,
-  bundle: true,
   format: "esm" as const,
+  bundle: true,
   splitting: true,
   target: "esnext",
   minify: !!minify,
@@ -30,9 +30,7 @@ const config = {
   jsxFactory: "React.createElement",
   jsxFragment: "React.Fragment",
   outdir: "dist",
-  external: [
-    "https://*",
-  ],
+  external: [],
 };
 
 await esbuild.build(config);
@@ -42,7 +40,7 @@ esbuild.stop();
 
 console.log("Now generating theme-based CSS...")
 
-const paletteCss = buildPaletteCSS()
+const paletteCss = buildThemeCSS()
 await Deno.writeTextFile("public/theme.css", paletteCss)
 
 console.log("Done!")

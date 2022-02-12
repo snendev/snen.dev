@@ -1,29 +1,45 @@
 /** @jsx React.createElement */
+/** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
-import { Outlet } from "../../../deps/react-router-dom.tsx"
+import { Link, Outlet } from "../../../deps/react-router-dom.tsx"
 
-import { Layer, Header } from "../theme.tsx";
+import { Layer } from "../theme.tsx";
 
 import Navbar from "./Navbar.tsx";
 import Sidebar from "./Sidebar.tsx"
 
-export default function Page() {
+interface PageProps {
+  children: React.ReactNode
+  sidebar?: React.ReactNode
+}
+
+export function Page({children, sidebar}: PageProps) {
   return (
-    <div className="page">
-      <Header>
-        <h2>snen.dev</h2>
-        <Navbar />
-      </Header>
-      <Layer className="page-container">
-        <main className="main">
-          <Sidebar />
-          <Layer className="body">
-            <section>
-              <Outlet />
-            </section>
-          </Layer>
-        </main>
-      </Layer>
-    </div>
+    <Layer
+      className="page"
+      headerClassName="header"
+      headerTitle={
+        <Link to="/" className="page-title-link">
+          snen.dev
+        </Link>
+      }
+      headerRight={<Navbar />}
+      bodyClassName="main-container"
+    >
+      <main className="main">
+        {sidebar}
+        <Layer className="body">
+          {children}
+        </Layer>
+      </main>
+    </Layer>
   );
+}
+
+export default function ParentRoutePage() {
+  return (
+    <Page sidebar={<Sidebar />}>
+      <Outlet />
+    </Page>
+  )
 }

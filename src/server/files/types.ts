@@ -1,4 +1,4 @@
-export type EntryCategory = "about" | "read" | "tech" | "media";
+export type EntryCategory = "about" | "reading" | "tech" | "media";
 
 interface SiteEntryDeclaredMetadata {
   category: EntryCategory;

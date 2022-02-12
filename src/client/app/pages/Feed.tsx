@@ -6,7 +6,7 @@ import type { EntryCategory } from "../../../server/files/types.ts"
 
 import Error404 from "./Error404.tsx"
 
-const CATEGORIES: EntryCategory[] = ["about", "read", "tech", "media"]
+const CATEGORIES: EntryCategory[] = ["about", "reading", "tech", "media"]
 function isEntryCategory(category: string): category is EntryCategory {
   return CATEGORIES.includes(category as EntryCategory)
 }
@@ -25,8 +25,10 @@ export default function Feed() {
     return <Error404 />
   }
   return (
-    <React.Suspense fallback={<div>Loading...</div>}>
-      <PostList feed={category} />
-    </React.Suspense>
+    <section>
+      <React.Suspense fallback={<div>Loading...</div>}>
+        <PostList feed={category} />
+      </React.Suspense>
+    </section>
   );
 }

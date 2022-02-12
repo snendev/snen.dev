@@ -1,0 +1,26 @@
+[
+  {
+    "title": "About me (and this website)",
+    "category": "about",
+    "slug": "about-me",
+    "subhead": "Hi, I'm Sean. I am a professional (full-stack) software developer with a variety of interests. In short: I like to build stuff.\nOne of my biggest projects right now is building this website, where I aim to document the things I build and provide guides on how to reproduce my journey.",
+    "tags": [ ],
+    "file": "about-me.md"
+  },
+  {
+    "title": "snen.dev: A technical overview",
+    "category": "about",
+    "slug": "snen-dot-dev",
+    "subhead": "I tinker with the React 18 release candidate's new features in a framework-less Deno environment",
+    "tags": [ "deno", "react", "react18", "concurrent rendering", "snen.dev" ],
+    "file": "snen-dot-dev.md"
+  },
+  {
+    "title": "Streamlining visual design using React when you are bad at colors",
+    "category": "reading",
+    "slug": "themes-when-bad-at-colors",
+    "subhead": "In which I build a debugging tool to experiment with my app theme.",
+    "tags": [ "themes", "React", "design", "color" ],
+    "file": "themes-when-bad-at-colors.md"
+  }
+]

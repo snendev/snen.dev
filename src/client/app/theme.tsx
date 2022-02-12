@@ -1,44 +1,72 @@
 /** @jsx React.createElement */
 import React from "../../deps/react.ts";
 
-type Color = "greyscale" | "primary" | "accent" | "surface" | "warning";
-type ThemeMode = "light" | "dark"
+import cx from "./classnames.ts"
 
-const ThemeContext = React.createContext<ThemeMode | null>(null);
+// grey = primary theme mode color, contrast = the other one
+// so if dark mode, "grey" means black and "contrast" means white
+// if light mode, the opposite
+export type Grey = "grey" | "contrast"
+export type Color = "primary" | "accent" | "surface" | "warning";
+export type ColorTarget = "text" | "border" | "bg" | "shadow"
+export type ThemeMode = "light" | "dark"
 
-const LIGHTEST_GREY_DEPTH = 7
-const DARKEST_GREY_DEPTH = 0
-const LIGHTEST_HUE_DEPTH = 4
-
-const TOP_LAYER_DARK_MODE: LayerHandle = {
-  backgroundColor: "greyscale",
-  textColor: "greyscale",
-  depth: DARKEST_GREY_DEPTH + 1,
+export interface ThemeHandle {
+  mode: ThemeMode
+  toggleThemeMode: () => void
 }
 
-const TOP_LAYER_LIGHT_MODE: LayerHandle = {
-  backgroundColor: "greyscale",
-  textColor: "greyscale",
-  depth: LIGHTEST_GREY_DEPTH - 1,
+const ThemeContext = React.createContext<ThemeHandle | null>(null);
+
+const MIN_DEPTH = 0
+const MAX_DEPTH = 7
+
+const ROOT_LAYER: LayerHandle = {
+  backgroundColor: "grey",
+  depth: MIN_DEPTH,
 }
 
 interface ThemeProviderProps {
   children: React.ReactNode;
-  mode: ThemeMode
 }
 
-export function ThemeProvider({ children, mode }: ThemeProviderProps) {
-  const backLayer = mode === 'dark' ? TOP_LAYER_DARK_MODE : TOP_LAYER_LIGHT_MODE
+export function ThemeProvider({ children }: ThemeProviderProps) {
+  const [mode, setMode] = React.useState<'light' | 'dark' | null>(null)
+
+  function onChange(nextMode: "light" | "dark") {
+    // @ts-ignore
+    document.documentElement.className = nextMode
+    setMode(nextMode)
+  }
+
+  React.useLayoutEffect(() => {
+    if (mode !== null) return
+    // @ts-ignore Need to find a way to SSR + use <reference lib="dom">
+    const isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+    onChange(isLightMode ? "light" : "dark")
+  }, [mode])
+
+  function onToggle() {
+    if (mode === null) return
+    const nextMode = mode === "light" ? "dark" : "light"
+    onChange(nextMode)
+  }
+
+  const handle = React.useMemo<ThemeHandle>(() => ({
+    mode: mode ?? 'dark',
+    toggleThemeMode: onToggle,
+  }), [mode, onToggle])
+
   return (
-    <ThemeContext.Provider value={mode}>
-      <LayerContext.Provider value={backLayer}>
+    <ThemeContext.Provider value={handle}>
+      <LayerContext.Provider value={ROOT_LAYER}>
         {children}
       </LayerContext.Provider>
     </ThemeContext.Provider>
   );
 }
 
-export function useTheme(): ThemeMode {
+export function useTheme(): ThemeHandle {
   const context = React.useContext(ThemeContext);
   if (context === null) {
     throw new Error("useTheme must be used inside a <ThemeProvider>");
@@ -46,46 +74,42 @@ export function useTheme(): ThemeMode {
   return context;
 }
 
-interface LayerHandle {
-  backgroundColor: Color
-  textColor: Color
-  depth: number
+export function useThemeMode(): ThemeMode {
+  const { mode } = useTheme()
+  return mode;
 }
 
-// text color is always greyscale unless specified otherwise
-// this helper calculates which depth level to use, according to the surface color
-function getTextColorDepth(
-  surfaceColor: Color,
-  depth: number,
-  mode: ThemeMode,
-): number {
-  const max = mode === 'dark' ? LIGHTEST_GREY_DEPTH : DARKEST_GREY_DEPTH
-  const min = mode === 'dark' ? DARKEST_GREY_DEPTH : LIGHTEST_GREY_DEPTH
-  switch (surfaceColor) {
-    case 'greyscale': return depth < 4 ? max : min
-    case 'primary':
-    case 'accent':
-    case 'surface':
-    case 'warning':
-      return depth < 2 ? max : min
-  }
+function addDepth(depth: number, plus: number): number {
+  const mod = MAX_DEPTH + 1
+  // add in a weird order; go 0, 4, 1, 5, 2, 6...
+  // when incrementing, if even, jump forward N / 2; if odd, go back N / 2 - 1
+  // so if plus is even, depth + plus/2; else depth + (plus+5)/2
+  // const unusualAdder = plus % 2 === 0
+  //   ? plus / 2
+  //   : (plus + 1) / 2 + mod / 2
+  // console.log({depth, plus, unusualAdder, mod})
+  return (depth + plus + mod) % mod
+}
+
+interface LayerHandle {
+  backgroundColor: Color | Grey
+  depth: number
 }
 
 const LayerContext = React.createContext<LayerHandle | null>(null)
 
 interface LayerOptions {
-  backgroundColor?: Color,
-  textColor?: Color,
+  backgroundColor?: Color | Grey,
   showBorder?: boolean,
 }
 
-function useLayer(
-  options: LayerOptions,
-  additionalDepth = 1,
+export function useLayer(
+  options: LayerOptions = {},
+  additionalDepth = 0,
 ): LayerHandle {
-  const { backgroundColor, textColor } = options
+  const { backgroundColor } = options
 
-  const mode = useTheme()
+  const mode = useThemeMode()
   const parentLayer = React.useContext(LayerContext)
 
   if (parentLayer === null) {
@@ -93,90 +117,151 @@ function useLayer(
   }
 
   const layer = React.useMemo<LayerHandle>(() => ({
-    depth: parentLayer.depth + (mode === 'dark' ? additionalDepth : -additionalDepth),
+    depth: addDepth(parentLayer.depth, additionalDepth),
     backgroundColor: backgroundColor ?? parentLayer.backgroundColor,
-    textColor: textColor ?? "greyscale",
-  }), [parentLayer, backgroundColor, mode, textColor])
+  }), [parentLayer, backgroundColor, mode])
 
   return layer
 }
 
-function clamp(value: number, min: number, max: number): number {
-  return Math.min(Math.max(value, min), max)
-}
-
-function clampDepth(backgroundColor: Color, depth: number): number {
-  switch (backgroundColor) {
-    case 'greyscale': return clamp(depth, 0, LIGHTEST_GREY_DEPTH)
-    case 'primary':
-    case 'accent':
-    case 'surface':
-    case 'warning':
-      return clamp(depth, 0, LIGHTEST_HUE_DEPTH)
-  }
-}
-
-function cx(...classNames: (string | undefined)[]): string {
-  return classNames.join(' ')
-}
-
 function getLayerClassname(layer: LayerHandle, mode: ThemeMode): string {
-  const { depth, backgroundColor, textColor } = layer
-  const realDepth = clampDepth(backgroundColor, depth)
-  const surfaceClassName = `bg-${backgroundColor}-${realDepth}`
-  const borderDepth = clampDepth(backgroundColor, realDepth + (mode === 'dark' ? -1 : 1))
-  const borderClassName = `border-${backgroundColor}-${borderDepth}`
-  const textColorDepth = getTextColorDepth(backgroundColor, realDepth, mode)
-  const textClassName = `text-${textColor}-${textColorDepth}`
-  return cx(surfaceClassName, borderClassName, textClassName)
+  const { depth, backgroundColor } = layer
+
+  const surfaceClassName = `bg-${backgroundColor}-${depth}`
+  const borderClassName = `border-${backgroundColor}-${depth}`
+  return cx(surfaceClassName, borderClassName, "text-color")
 }
 
-interface LayerProps extends LayerOptions {
+interface SurfaceProps extends LayerOptions {
   children: React.ReactNode
   className?: string
+}
+
+interface LayerProps extends SurfaceProps {
+  headerLeft?: React.ReactNode
+  headerTitle?: React.ReactNode
+  headerRight?: React.ReactNode
+  headerClassName?: string
+  bodyClassName?: string
 }
 
 export function Layer({
   children,
   className,
+  headerLeft,
+  headerTitle,
+  headerRight,
+  headerClassName,
+  bodyClassName,
   ...options
 }: LayerProps) {
-  const mode = useTheme()
-  const layer = useLayer(options)
+  const mode = useThemeMode()
+  const layer = useLayer(options, 1)
   const layerClassName = getLayerClassname(layer, mode)
+  const headerOptions: LayerOptions = {
+    backgroundColor: options.backgroundColor ?? "primary",
+    showBorder: options.showBorder ?? true,
+  }
+  const headerLayer = useLayer(headerOptions)
+  const headerLayerClassName = getLayerClassname(headerLayer, mode)
+
   return (
-    <div className={cx(className, layerClassName)}>
-      {/* Stack the next layer */}
-      <LayerContext.Provider value={layer}>
-        {children}
-      </LayerContext.Provider>
+    <div className={cx("layer", layerClassName, className)}>
+      {headerLeft || headerTitle || headerRight ? (
+        <header className={cx("layer-header", `header-block-${headerLayer.depth}`, headerLayerClassName, headerClassName)}>
+          <div>
+            {headerLeft ?? null}
+            {headerTitle ? (
+              <Heading depth={headerLayer.depth}>
+                {headerTitle}
+              </Heading>
+            ) : null}
+          </div>
+          {headerRight ?? <div />}
+        </header>
+      ) : null}
+      <div className={cx("layer-body", bodyClassName)}>
+        {/* Stack the next layer */}
+        <LayerContext.Provider value={layer}>
+          {children}
+        </LayerContext.Provider>
+      </div>
     </div>
   )
 }
 
-// shades are 20% increments up and down 2x maybe 3x
+interface HeadingProps {
+  children: React.ReactNode
+  depth: number
+}
 
-export function Header({
+function Heading({children, depth}: HeadingProps) {
+  switch (depth) {
+    case 0: return (
+      <h1>{children}</h1>
+    )
+    case 1: return (
+      <h2>{children}</h2>
+    )
+    case 2: return (
+      <h3>{children}</h3>
+    )
+    case 3: return (
+      <h4>{children}</h4>
+    )
+    case 4: return (
+      <h5>{children}</h5>
+    )
+    default: return (
+      <h6>{children}</h6>
+    )
+  }
+}
+
+/**
+ * Block can be used to render an appropriate padding for the current depth.
+ * 
+ * @param props
+ */
+export function Block({
   children,
   className,
-  ...options
-}: LayerProps) {
-  const mode = useTheme()
-  const headerOptions: LayerOptions = {
-    backgroundColor: options.backgroundColor ?? "primary",
-    textColor: options.textColor,
-    showBorder: options.showBorder ?? true,
-  }
-  const layer = useLayer(headerOptions, -2)
-  const layerClassName = getLayerClassname(layer, mode)
+  ...rest
+}: React.HTMLProps<HTMLDivElement>): JSX.Element {
+  const layer = useLayer()
+  const blockClassName = `block-${layer.depth}`
   return (
-    <header className={cx(layerClassName, "header", className)}>
-      {/* Stack the next layer */}
-      <LayerContext.Provider value={layer}>
-        {children}
-      </LayerContext.Provider>
-    </header>
+    <div className={cx(blockClassName, className)} {...rest}>
+      {children}
+    </div>
   )
+}
+
+interface ListProps {
+  children: React.ReactNode[]
+  className?: string
+}
+
+/**
+ * Like Block but for lists.
+ * 
+ * @param props
+ */
+ export function List({
+  children,
+  className,
+}: ListProps): JSX.Element {
+  return (
+    <div className={className}>
+      {children.map((child) => (
+        <Block className="list-item">{child}</Block>
+      ))}
+    </div>
+  )
+}
+
+interface ButtonProps extends SurfaceProps {
+  onClick: () => void
 }
 
 export function Button({
@@ -184,14 +269,13 @@ export function Button({
   className,
   onClick,
   ...options
-}: LayerProps & { onClick: () => void }): JSX.Element {
-  const mode = useTheme()
+}: ButtonProps): JSX.Element {
+  const mode = useThemeMode()
   const buttonOptions: LayerOptions = {
     backgroundColor: options.backgroundColor ?? "primary",
-    textColor: options.textColor,
     showBorder: options.showBorder ?? true,
   }
-  const layer = useLayer(buttonOptions, -2)
+  const layer = useLayer(buttonOptions)
   const layerClassName = getLayerClassname(layer, mode)
   return (
     <button
@@ -200,5 +284,25 @@ export function Button({
     >
       {children}
     </button>
+  )
+}
+
+interface TextAreaProps extends React.HTMLProps<HTMLTextAreaElement> {
+  backgroundColor?: Grey
+}
+
+export function TextArea({
+  className,
+  backgroundColor,
+  ...textAreaProps
+}: TextAreaProps): JSX.Element {
+  const mode = useThemeMode()
+  const layer = useLayer({}, 2)
+  const layerClassName = getLayerClassname(layer, mode)
+  return (
+    <textarea
+      className={cx(layerClassName, className)}
+      {...textAreaProps}
+    />
   )
 }

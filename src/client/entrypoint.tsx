@@ -1,5 +1,4 @@
 /** @jsx React.createElement */
-/** @jsxFrag React.Fragment */
 /// <reference lib="dom" />
 import React from "../deps/react.ts";
 import ReactDOM from "../deps/react-dom.ts";

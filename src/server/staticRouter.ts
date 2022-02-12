@@ -1,5 +1,5 @@
 import { Router } from "../deps/oak.ts";
-import { contentType } from "../deps/media_types.ts";
+import { contentType } from "../deps/media-types.ts";
 
 import { readRSSFeed } from "./files/mod.ts";
 import sleep from "./sleep.ts";

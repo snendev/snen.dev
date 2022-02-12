@@ -11,8 +11,10 @@ const ArticleContent: LazyPostType = React.lazy(async () =>
 
 export default function Article() {
   return (
-    <React.Suspense fallback={<div>Loading...</div>}>
-      <ArticleContent />
-    </React.Suspense>
+    <section>
+      <React.Suspense fallback={<div>Loading...</div>}>
+        <ArticleContent />
+      </React.Suspense>
+    </section>
   );
 }

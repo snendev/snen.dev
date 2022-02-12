@@ -20,8 +20,8 @@ export function readDirectory(feed?: string): EntriesListResponse | null {
       return Object.values(entries);
     case "about":
       return getCategoryEntries("about");
-    case "read":
-      return getCategoryEntries("read");
+    case "reading":
+      return getCategoryEntries("reading");
     case "tech":
       return getCategoryEntries("tech");
     case "media":

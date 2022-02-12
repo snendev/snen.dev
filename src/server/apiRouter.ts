@@ -1,5 +1,5 @@
 import { Router } from "../deps/oak.ts";
-import { contentType } from "../deps/media_types.ts";
+import { contentType } from "../deps/media-types.ts";
 
 import { readDirectory, readFile } from "./files/mod.ts";
 
