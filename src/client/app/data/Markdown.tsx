@@ -4,7 +4,7 @@ import React from "../../../deps/react.ts";
 import { Link } from "../../../deps/react-router-dom.tsx";
 import { Token, tokens as parseTokens } from "../../../deps/rusty-markdown.ts";
 
-import { Layer, Block } from "../theme.tsx"
+import { Layer, Block, Highlight } from "../theme.tsx"
 import cx from "../classnames.ts"
 
 type Tag =
@@ -216,7 +216,7 @@ function MarkdownNode({ node }: MarkdownNodeProps): JSX.Element | null {
       )
     }
     case "link": {
-      const { url, children} = node
+      const { url, children } = node
       return url.startsWith("/") || url.startsWith("./") || url.startsWith("../")
         ? (
           <Link to={url}>
@@ -230,16 +230,22 @@ function MarkdownNode({ node }: MarkdownNodeProps): JSX.Element | null {
         )
     }
     case "image": {
-      const { url } = node
-      return <img src={url} />
+      const { url, children } = node
+      const textChild = children.at(0)
+      const content = textChild?.tag === "text" && textChild.content || ""
+      return <img src={url} alt={content} />
     }
     case "codeBlock": {
       const { kind, language, children } = node
       return (
         <pre>
-          <code>
-            {children.map(renderChild)}
-          </code>
+          <Layer>
+            <Block>
+              <code>
+                {children.map(renderChild)}
+              </code>
+            </Block>
+          </Layer>
         </pre>
       )
     }
@@ -260,17 +266,17 @@ function MarkdownNode({ node }: MarkdownNodeProps): JSX.Element | null {
     case "list": {
       const { children } = node
       return (
-        <li>
+        <ul>
           {children.map(renderChild)}
-        </li>
+        </ul>
       )
     }
     case "listItem": {
       const { children } = node
       return (
-        <ul>
+        <li>
           {children.map(renderChild)}
-        </ul>
+        </li>
       )
     }
     case "table": {
@@ -335,7 +341,11 @@ function MarkdownNode({ node }: MarkdownNodeProps): JSX.Element | null {
     }
     case "code": {
       const { content } = node
-      return <code>{content}</code>
+      return (
+        <Highlight backgroundColor="accent">
+          <code>{content}</code>
+        </Highlight>
+      )
     }
     case "html": {
       const { content } = node

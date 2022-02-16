@@ -3,7 +3,7 @@
 import React from "../../../../../deps/react.ts";
 import { HuePicker } from "../../../../../deps/react-color.ts"
 
-import { Block, Color, Layer, List, TextArea } from "../../../theme.tsx"
+import { Color, Layer, Block } from "../../../theme.tsx"
 import { Page } from "../../../layout/Page.tsx"
 
 import buildHSLString from "./buildHSLString.tsx"
@@ -83,121 +83,118 @@ export default function ThemePlayground() {
     })
 
   const sidebar = (
-    <Layer>
-      <Block>
-        <List>
-          <div className="flex-row-evenly">
-            <Layer>
-              {COLOR_KEYS_ORDER.map((color) => {
-                const hue = hues[color]
-                return (
-                  <>
-                    <label>{color} - {Math.round(hue)}</label>
-                    <HuePicker
-                      width="100px"
-                      color={{h: hue, s: 0, l: 0}}
-                      onChangeComplete={({ hsl }: any) => {
-                        updateHues(color, hsl.h)
-                      }}
-                    />
-                  </>
-                )
-              })}
-            </Layer>
-            <Layer>
-              {saturations.map((saturation, depth) => (
-                <LevelPicker
-                  value={saturation}
-                  onChange={(value) => {
-                    updateSaturations(depth, value)
+    <div>
+      <Block className="flex-row-evenly">
+        <Layer>
+          {COLOR_KEYS_ORDER.map((color) => {
+            const hue = hues[color]
+            return (
+              <React.Fragment key={color}>
+                <label>{color} - {Math.round(hue)}</label>
+                <HuePicker
+                  width="100px"
+                  color={{h: hue, s: 0, l: 0}}
+                  onChangeComplete={({ hsl }: any) => {
+                    updateHues(color, hsl.h)
                   }}
                 />
-              ))}
-            </Layer>
-          </div>
-          <div className="flex-row-evenly">
-            <Layer>
-              <label>hue lightness</label>
-              {lightnesses.map((lightness, depth) => (
-                <LevelPicker
-                  value={lightness}
-                  onChange={(value) => {
-                    updateLightnesses(depth, value)
-                  }}
-                />
-              ))}
-            </Layer>
-            <Layer>
-              <label>contrast hue lightness</label>
-              {contrastLightnesses.map((lightness, depth) => (
-                <LevelPicker
-                  value={lightness}
-                  onChange={(value) => {
-                    updateContrastLightnesses(depth, value)
-                  }}
-                />
-              ))}
-            </Layer>
-          </div>
-          <div className="flex-row-evenly">
-            <Layer>
-              <label>grey</label>
-              {greys.map((grey, depth) => (
-                <LevelPicker
-                  value={grey}
-                  onChange={(value) => {
-                    updateGreys(depth, value)
-                  }}
-                />
-              ))}
-            </Layer>
-            <Layer>
-              <label>contrast grey</label>
-              {contrastGreys.map((grey, depth) => (
-                <LevelPicker
-                  value={grey}
-                  onChange={(value) => {
-                    updateContrastGreys(depth, value)
-                  }}
-                />
-              ))}
-            </Layer>
-          </div>
-        </List>
+              </React.Fragment>
+            )
+          })}
+        </Layer>
+        <Layer>
+          {saturations.map((saturation, depth) => (
+            <LevelPicker
+              value={saturation}
+              onChange={(value) => {
+                updateSaturations(depth, value)
+              }}
+            />
+          ))}
+        </Layer>
       </Block>
-    </Layer>
+      <Block className="flex-row-evenly">
+        <Layer>
+          <label>hue lightness</label>
+          {lightnesses.map((lightness, depth) => (
+            <LevelPicker
+              value={lightness}
+              onChange={(value) => {
+                updateLightnesses(depth, value)
+              }}
+            />
+          ))}
+        </Layer>
+        <Layer>
+          <label>contrast hue lightness</label>
+          {contrastLightnesses.map((contrastLightness, depth) => (
+            <LevelPicker
+              value={contrastLightness}
+              onChange={(value) => {
+                updateContrastLightnesses(depth, value)
+              }}
+            />
+          ))}
+        </Layer>
+      </Block>
+      <Block className="flex-row-evenly">
+        <Layer>
+          <label>grey</label>
+          {greys.map((grey, depth) => (
+            <LevelPicker
+              value={grey}
+              onChange={(value) => {
+                updateGreys(depth, value)
+              }}
+            />
+          ))}
+        </Layer>
+        <Layer>
+          <label>contrast grey</label>
+          {contrastGreys.map((grey, depth) => (
+            <LevelPicker
+              value={grey}
+              onChange={(value) => {
+                updateContrastGreys(depth, value)
+              }}
+            />
+          ))}
+        </Layer>
+      </Block>
+    </div>
   )
   return (
     <Page sidebar={sidebar}>
-      <Layer>
-        <List>
-          <Layer>
-            <Block className="flex-row-evenly">
-              {colorGrid.map((column) => (
-                <div>
-                  <label>{column[0].color}</label>
-                  {column.map((hslColor) => (
-                    <div
-                      style={{
-                        backgroundColor: buildHSLString(hslColor.hue, hslColor.saturation, hslColor.lightness),
-                        width: 20,
-                        height: 20,
-                        borderRadius: 10,
-                        margin: 4,
-                      }}
-                    />
-                  ))} 
-                </div>
-              ))}
-            </Block>
-          </Layer>
+      <Block>
+        <Layer>
+          <div className="flex-row-evenly">
+            {colorGrid.map((column) => (
+              <Block key={column[0].color}>
+                <label>{column[0].color}</label>
+                {column.map((hslColor) => (
+                  <div
+                    key={`${hslColor.saturation}-${hslColor.lightness}`}
+                    style={{
+                      backgroundColor: buildHSLString(hslColor.hue, hslColor.saturation, hslColor.lightness),
+                      width: 20,
+                      height: 20,
+                      borderRadius: 10,
+                      margin: 4,
+                    }}
+                  />
+                ))} 
+              </Block>
+            ))}
+          </div>
+        </Layer>
+      </Block>
+      <Block>
+        <TestLayer>
           <TestLayer>
-            <TestLayer>
-              <TestLayer />
-            </TestLayer>
+            <TestLayer />
           </TestLayer>
-        </List>
-      </Layer>
+        </TestLayer>
+      </Block>
     </Page>
   );
 }

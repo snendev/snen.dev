@@ -6,8 +6,10 @@ import cx from "./classnames.ts"
 // grey = primary theme mode color, contrast = the other one
 // so if dark mode, "grey" means black and "contrast" means white
 // if light mode, the opposite
-export type Grey = "grey" | "contrast"
-export type Color = "primary" | "accent" | "surface" | "warning";
+export type Grey = "grey" | "grey-contrast"
+export type Color =
+  | "primary" | "accent" | "surface" | "warning"
+  | "primary-contrast" | "accent-contrast" | "surface-contrast" | "warning-contrast";
 export type ColorTarget = "text" | "border" | "bg" | "shadow"
 export type ThemeMode = "light" | "dark"
 
@@ -19,7 +21,7 @@ export interface ThemeHandle {
 const ThemeContext = React.createContext<ThemeHandle | null>(null);
 
 const MIN_DEPTH = 0
-const MAX_DEPTH = 7
+const MAX_DEPTH = 5
 
 const ROOT_LAYER: LayerHandle = {
   backgroundColor: "grey",
@@ -81,13 +83,7 @@ export function useThemeMode(): ThemeMode {
 
 function addDepth(depth: number, plus: number): number {
   const mod = MAX_DEPTH + 1
-  // add in a weird order; go 0, 4, 1, 5, 2, 6...
-  // when incrementing, if even, jump forward N / 2; if odd, go back N / 2 - 1
-  // so if plus is even, depth + plus/2; else depth + (plus+5)/2
-  // const unusualAdder = plus % 2 === 0
-  //   ? plus / 2
-  //   : (plus + 1) / 2 + mod / 2
-  // console.log({depth, plus, unusualAdder, mod})
+  // TODO: snake instead of ring?
   return (depth + plus + mod) % mod
 }
 
@@ -129,7 +125,13 @@ function getLayerClassname(layer: LayerHandle, mode: ThemeMode): string {
 
   const surfaceClassName = `bg-${backgroundColor}-${depth}`
   const borderClassName = `border-${backgroundColor}-${depth}`
-  return cx(surfaceClassName, borderClassName, "text-color")
+
+  // only add a shadow to border grey backgrounds in light mode
+  const shadowClassName: string | undefined =
+    mode === "light" && backgroundColor === "grey"
+      ? `shadow-grey-contrast-${depth}`
+      : undefined
+  return cx(surfaceClassName, borderClassName, shadowClassName, "text-color", mode)
 }
 
 interface SurfaceProps extends LayerOptions {
@@ -143,6 +145,7 @@ interface LayerProps extends SurfaceProps {
   headerRight?: React.ReactNode
   headerClassName?: string
   bodyClassName?: string
+  root?: boolean
 }
 
 export function Layer({
@@ -153,10 +156,11 @@ export function Layer({
   headerRight,
   headerClassName,
   bodyClassName,
+  root = false,
   ...options
 }: LayerProps) {
   const mode = useThemeMode()
-  const layer = useLayer(options, 1)
+  const layer = useLayer(options, root ? 0 : 1)
   const layerClassName = getLayerClassname(layer, mode)
   const headerOptions: LayerOptions = {
     backgroundColor: options.backgroundColor ?? "primary",
@@ -218,8 +222,28 @@ function Heading({children, depth}: HeadingProps) {
   }
 }
 
+/** Highlight renders inline backgrounds */
+export function Highlight({
+  children,
+  className,
+  ...options
+}: SurfaceProps) {
+  const mode = useThemeMode()
+  const layer = useLayer(options, 1)
+  const layerClassName = getLayerClassname(layer, mode)
+
+  return (
+    <span className={cx(layerClassName, className)}>
+      {/* Stack the next layer */}
+      <LayerContext.Provider value={layer}>
+        {children}
+      </LayerContext.Provider>
+    </span>
+  )
+}
+
 /**
- * Block can be used to render an appropriate padding for the current depth.
+ * Block renders padding at a width determined by the current depth.
  * 
  * @param props
  */
@@ -229,33 +253,10 @@ export function Block({
   ...rest
 }: React.HTMLProps<HTMLDivElement>): JSX.Element {
   const layer = useLayer()
-  const blockClassName = `block-${layer.depth}`
+  const paddingClassName = `block-${layer.depth}`
   return (
-    <div className={cx(blockClassName, className)} {...rest}>
+    <div className={cx(paddingClassName, className)} {...rest}>
       {children}
-    </div>
-  )
-}
-
-interface ListProps {
-  children: React.ReactNode[]
-  className?: string
-}
-
-/**
- * Like Block but for lists.
- * 
- * @param props
- */
- export function List({
-  children,
-  className,
-}: ListProps): JSX.Element {
-  return (
-    <div className={className}>
-      {children.map((child) => (
-        <Block className="list-item">{child}</Block>
-      ))}
     </div>
   )
 }
@@ -279,7 +280,7 @@ export function Button({
   const layerClassName = getLayerClassname(layer, mode)
   return (
     <button
-      className={cx(layerClassName, className)}
+      className={cx(layerClassName, `header-block-${layer.depth}`, className)}
       onClick={onClick}
     >
       {children}

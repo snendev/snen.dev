@@ -31,7 +31,7 @@ function Card({ category, slug }: CardProps) {
   const clampedCss = isExpanded || !isPostCollapsibleGuess ? undefined : "clamp-text-3-lines"
 
   return (
-    <article>
+    <article className="article">
       <Layer
         headerTitle={
           <Link to={fullPostHref}>
@@ -50,6 +50,8 @@ function Card({ category, slug }: CardProps) {
           <span>
             <Link to={fullPostHref}>Read the full post</Link>
           </span>
+        </Block>
+        <Block>
           {isPostCollapsibleGuess ? (
             <Button
               className="card-button"
@@ -58,7 +60,7 @@ function Card({ category, slug }: CardProps) {
               {isExpanded ? "Collapse" : "Read More"}
             </Button>
           ) : (
-            <div className="spacer1em" />
+            <div />
           )}
         </Block>
       </Layer>
@@ -73,11 +75,13 @@ interface PostListProps {
 export default function PostList({ feed }: PostListProps) {
   const data = readJsonAPI<EntriesListResponse>("feed", feed);
   return (
-    <div className="feed">
+    <div>
       {data.map(({ category, slug }) => (
-        <React.Suspense fallback={<div />}>
-          <Card category={category} slug={slug} />
-        </React.Suspense>
+        <Block key={slug}>
+          <React.Suspense fallback={<div />}>
+            <Card category={category} slug={slug} />
+          </React.Suspense>
+        </Block>
       ))}
     </div>
   );

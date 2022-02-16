@@ -2,7 +2,7 @@
 /** @jsxFrag React.Fragment */
 import React from "../../../../../deps/react.ts";
 
-import { Layer, List, Button, TextArea, useLayer } from "../../../theme.tsx"
+import { Layer, Button, Block, TextArea, useLayer } from "../../../theme.tsx"
 
 interface TestLayerProps {
   children?: React.ReactNode
@@ -13,7 +13,7 @@ export default function TestLayer({ children }: TestLayerProps) {
   const { depth } = layer
   return (
     <Layer headerTitle={`Depth: ${depth}`}>
-      <List>
+      <div>
         <div className="flex-row-evenly">
           <div>
             <Button
@@ -48,9 +48,13 @@ export default function TestLayer({ children }: TestLayerProps) {
             </Button>
           </div>
         </div>
-        <TextArea value={JSON.stringify(layer)} />
-        {children}
-      </List>
+        <Block>
+          <TextArea value={JSON.stringify(layer)} />
+        </Block>
+        <Block>
+          {children}
+        </Block>
+      </div>
     </Layer>
   )
 }

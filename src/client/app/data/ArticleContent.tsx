@@ -2,7 +2,6 @@
 /** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
 import { useParams } from "../../../deps/react-router-dom.tsx"
-import { tokens as parseTokens } from "../../../deps/rusty-markdown.ts";
 import type {
   EntriesDetailResponse,
 } from "../../../server/files/types.ts";
@@ -19,7 +18,7 @@ export default function ArticleContent() {
   // const html = Marked.parse(entry.content).content;
 
   return (
-    <article>
+    <article className="article">
       <Layer headerTitle={entry.metadata.title}>
         <Block>
           <Markdown source={entry.content} />

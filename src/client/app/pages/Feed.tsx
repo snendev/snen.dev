@@ -4,6 +4,8 @@ import React from "../../../deps/react.ts";
 import { useParams } from "../../../deps/react-router-dom.tsx"
 import type { EntryCategory } from "../../../server/files/types.ts"
 
+import { Layer } from "../theme.tsx"
+
 import Error404 from "./Error404.tsx"
 
 const CATEGORIES: EntryCategory[] = ["about", "reading", "tech", "media"]

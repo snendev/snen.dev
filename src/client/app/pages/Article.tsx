@@ -2,6 +2,8 @@
 /** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
 
+import { Layer } from "../theme.tsx"
+
 type LazyPostType = React.LazyExoticComponent<
   () => React.ReactElement
 >;

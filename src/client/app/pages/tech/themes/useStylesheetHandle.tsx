@@ -81,7 +81,7 @@ function updateCSSRules(
     const { target, color, depth } = rule
     if (filter(rule)) {
       const property = getStyleProperty(target)
-      if (color === 'grey' || color === 'contrast') {
+      if (color === 'grey' || color === 'grey-contrast') {
         // blue tint
         const hue = 204
         // weak saturation for a slight tint
@@ -115,6 +115,10 @@ function initPalette(): Palette {
       "accent": 0,
       "surface": 0,
       "warning": 0,
+      "primary-contrast": 0,
+      "accent-contrast": 0,
+      "surface-contrast": 0,
+      "warning-contrast": 0,
     },
     saturations,
     lightnesses: [...lightnesses],
@@ -156,7 +160,7 @@ export default function useThemeStylesheetHandle(): ThemeStylesheetHandle {
       rules,
       newPalette,
       ({ depth: ruleDepth, color: ruleColor }) =>
-        ruleDepth === depth && ruleColor !== 'contrast' && ruleColor !== 'grey',
+        ruleDepth === depth && ruleColor !== 'grey-contrast' && ruleColor !== 'grey',
     )
     setPalette(newPalette)
   }, [palette])
@@ -173,14 +177,14 @@ export default function useThemeStylesheetHandle(): ThemeStylesheetHandle {
       rules,
       newPalette,
       ({ depth: ruleDepth, color: ruleColor }) =>
-        ruleDepth === depth && ruleColor !== 'contrast' && ruleColor !== 'grey',
+        ruleDepth === depth && ruleColor !== 'grey-contrast' && ruleColor !== 'grey',
     )
     setPalette(newPalette)
   }, [palette])
 
   const updateContrastLightnesses = React.useCallback((depth: number, value: number) => {
     const rules = getCSSRules()
-    const nextContrastLightnesses = [...palette.lightnesses]
+    const nextContrastLightnesses = [...palette.contrastLightnesses]
     nextContrastLightnesses[depth] = value
     const newPalette: Palette = {
       ...palette,
@@ -190,7 +194,7 @@ export default function useThemeStylesheetHandle(): ThemeStylesheetHandle {
       rules,
       newPalette,
       ({ depth: ruleDepth, color: ruleColor }) =>
-        ruleDepth === depth && ruleColor !== 'contrast' && ruleColor !== 'grey',
+        ruleDepth === depth && ruleColor !== 'grey-contrast' && ruleColor !== 'grey',
     )
     setPalette(newPalette)
   }, [palette])
@@ -224,7 +228,7 @@ export default function useThemeStylesheetHandle(): ThemeStylesheetHandle {
       rules,
       newPalette,
       ({ depth: ruleDepth, color: ruleColor }) =>
-        ruleDepth === depth && ruleColor === 'contrast',
+        ruleDepth === depth && ruleColor === 'grey-contrast',
     )
     setPalette(newPalette)
   }, [palette])

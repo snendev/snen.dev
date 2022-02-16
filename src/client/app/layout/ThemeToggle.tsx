@@ -11,6 +11,7 @@ export default function ThemeToggle() {
     <button
       onClick={toggleThemeMode}
       className={cx("fa", "fab", mode === "light" ? "fa-sun" : "fa-moon")}
+      aria-label="Visual theme toggle"
     >
     </button>
   );

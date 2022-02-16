@@ -38,7 +38,7 @@ body, div {
 .page .header {
   width: 100%;
 
-  box-shadow: inset 0px 4px 16px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0px -4px 32px rgba(255, 255, 255, 0.1);
 
   display: flex;
   justify-content: space-between;
@@ -72,16 +72,13 @@ body, div {
 }
 
 .main .sidebar {
-  padding-top: 2em;
-  margin-right: 3em;
-
   width: 25%;
-  height: 100%;
+  min-height: 100%;
 }
 
 .main .sidebar section {
-  padding-left: 0.5em;
-  padding-right: 0.51em;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
 }
 
 .main .sidebar .divider {
@@ -103,23 +100,8 @@ body, div {
   text-align: center;
 }
 
-.feed {
-  margin: 2em;
-}
-
-.feed > * {
-  margin-top: 2em;
-  margin-bottom: 2em;
-}
-
-.card > p, .card > h4, .card > span {
-  margin: 2em;
-}
-
 .card-button {
   width: 100%;
-  padding: 0.5em 0;
-  margin: 1.5em 0 0;
 }
 
 .spacer1em {
@@ -168,7 +150,10 @@ body, div {
 
 .article {
   max-width: 1200px;
-  padding: 2% 10%;
+}
+
+.article img {
+  max-width: 100%;
 }
 
 .game-preview {
@@ -242,6 +227,10 @@ body, div {
   margin-left: 1em;
   margin-right: 1em;
   line-height: 1.5em;
+}
+
+.icon-padding {
+  padding: 0 1px;
 }
 
 .twitter-icon {

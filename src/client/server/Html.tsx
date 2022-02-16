@@ -19,6 +19,10 @@ export default function Html({ children }: HtmlProps) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="snen.dev is a website where I post my work, including experiments, tools, guides, and more."
+        />
         <link rel="shortcut icon" href="/favicon.ico" />
         <title>snen.dev</title>
         <style
@@ -30,7 +34,15 @@ export default function Html({ children }: HtmlProps) {
         <link rel="stylesheet" href="/theme.css" />
         <link
           rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/fontawesome.min.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/brands.min.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/solid.min.css"
         />
       </head>
       <body>

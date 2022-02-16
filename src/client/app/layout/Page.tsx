@@ -25,6 +25,7 @@ export function Page({children, sidebar}: PageProps) {
       }
       headerRight={<Navbar />}
       bodyClassName="main-container"
+      root
     >
       <main className="main">
         {sidebar}

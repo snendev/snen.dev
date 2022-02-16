@@ -1,6 +1,8 @@
 /** @jsx React.createElement */
 import React from "../../../deps/react.ts";
 
+import { Block, Layer } from "../theme.tsx"
+
 import MediaLinks from "./MediaLinks.tsx";
 
 type LazyComponent = React.LazyExoticComponent<
@@ -19,20 +21,24 @@ const Archive: LazyArchiveType = React.lazy(async () =>
 
 export default function Sidebar() {
   return (
-    <aside className="sidebar">
-      <MediaLinks />
-      <div className="divider" />
-      <section>
-        <React.Suspense fallback={<span>...</span>}>
-          <ArticleDescription />
-        </React.Suspense>
-      </section>
-      <div className="divider" />
-      <section>
-        <React.Suspense fallback={<span>...</span>}>
-          <Archive />
-        </React.Suspense>
-      </section>
-    </aside>
+    <Layer className="sidebar">
+      <aside>
+        <Block>
+          <MediaLinks />
+          <div className="divider" />
+          <section>
+            <React.Suspense fallback={<span>...</span>}>
+              <ArticleDescription />
+            </React.Suspense>
+          </section>
+          <div className="divider" />
+          <section>
+            <React.Suspense fallback={<span>...</span>}>
+              <Archive />
+            </React.Suspense>
+          </section>
+        </Block>
+      </aside>
+    </Layer>
   );
 }
