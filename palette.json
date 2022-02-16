@@ -1,211 +1,291 @@
 [
   {
-    "paletteName": "primary",
+    "paletteName": "grey-dark",
     "swatches": [
       {
         "name": "New Swatch",
-        "color": "070C19"
+        "color": "141416"
       },
       {
         "name": "New Swatch",
-        "color": "080E20"
+        "color": "19191B"
       },
       {
         "name": "New Swatch",
-        "color": "0C1534"
+        "color": "1F1F21"
       },
       {
         "name": "New Swatch",
-        "color": "111A43"
+        "color": "242426"
       },
       {
         "name": "New Swatch",
-        "color": "18214F"
+        "color": "2A2A2C"
       },
       {
         "name": "New Swatch",
-        "color": "1F2659"
-      },
-      {
-        "name": "New Swatch",
-        "color": "262C64"
-      },
-      {
-        "name": "New Swatch",
-        "color": "2E326E"
+        "color": "2F2F31"
       }
     ]
   },
   {
-    "paletteName": "grey",
+    "paletteName": "grey-light",
     "swatches": [
       {
         "name": "New Swatch",
-        "color": "080809"
+        "color": "EEEEFA"
       },
       {
         "name": "New Swatch",
-        "color": "0F0F0F"
+        "color": "E7E7F0"
       },
       {
         "name": "New Swatch",
-        "color": "151516"
+        "color": "DFDFE6"
       },
       {
         "name": "New Swatch",
-        "color": "1B1B1C"
+        "color": "D5D5DC"
       },
       {
         "name": "New Swatch",
-        "color": "212123"
+        "color": "CCCCD2"
       },
       {
         "name": "New Swatch",
-        "color": "272729"
-      },
-      {
-        "name": "New Swatch",
-        "color": "2D2D30"
-      },
-      {
-        "name": "New Swatch",
-        "color": "333336"
+        "color": "C3C3C7"
       }
     ]
   },
   {
-    "paletteName": "accent",
+    "paletteName": "primary-dark",
     "swatches": [
       {
         "name": "New Swatch",
-        "color": "23091E"
+        "color": "020E29"
       },
       {
         "name": "New Swatch",
-        "color": "290A24"
+        "color": "040E2C"
       },
       {
         "name": "New Swatch",
-        "color": "3F0D36"
+        "color": "061230"
       },
       {
         "name": "New Swatch",
-        "color": "47103D"
+        "color": "081532"
       },
       {
         "name": "New Swatch",
-        "color": "501344"
+        "color": "0A1633"
       },
       {
         "name": "New Swatch",
-        "color": "58174B"
-      },
-      {
-        "name": "New Swatch",
-        "color": "601C53"
+        "color": "0C1938"
       }
     ]
   },
   {
-    "paletteName": "surface",
+    "paletteName": "primary-light",
     "swatches": [
       {
         "name": "New Swatch",
-        "color": "181F08"
+        "color": "013CD0"
       },
       {
         "name": "New Swatch",
-        "color": "1E270A"
+        "color": "0C45D4"
       },
       {
         "name": "New Swatch",
-        "color": "243208"
+        "color": "174FD8"
       },
       {
         "name": "New Swatch",
-        "color": "2E440D"
+        "color": "2358DC"
       },
       {
         "name": "New Swatch",
-        "color": "3A5314"
+        "color": "2F62E1"
       },
       {
         "name": "New Swatch",
-        "color": "48631C"
-      },
-      {
-        "name": "New Swatch",
-        "color": "547326"
+        "color": "3C6CE5"
       }
     ]
   },
   {
-    "paletteName": "warning",
+    "paletteName": "accent-dark",
     "swatches": [
       {
         "name": "New Swatch",
-        "color": "360B05"
+        "color": "101704"
       },
       {
         "name": "New Swatch",
-        "color": "410903"
+        "color": "141D04"
       },
       {
         "name": "New Swatch",
-        "color": "4D0600"
+        "color": "192305"
       },
       {
         "name": "New Swatch",
-        "color": "560905"
+        "color": "1D2907"
       },
       {
         "name": "New Swatch",
-        "color": "5F0D0A"
+        "color": "222F09"
       },
       {
         "name": "New Swatch",
-        "color": "671110"
-      },
-      {
-        "name": "New Swatch",
-        "color": "701717"
+        "color": "27360C"
       }
     ]
   },
   {
-    "paletteName": "contrast",
+    "paletteName": "accent-light",
     "swatches": [
       {
         "name": "New Swatch",
-        "color": "94959D"
+        "color": "73B000"
       },
       {
         "name": "New Swatch",
-        "color": "A1A1A9"
+        "color": "80C205"
       },
       {
         "name": "New Swatch",
-        "color": "AEAEB6"
+        "color": "8CD00F"
       },
       {
         "name": "New Swatch",
-        "color": "BBBBC3"
+        "color": "98DD17"
       },
       {
         "name": "New Swatch",
-        "color": "C8C8D0"
+        "color": "A3E921"
       },
       {
         "name": "New Swatch",
-        "color": "D5D5DD"
+        "color": "AFF52B"
+      }
+    ]
+  },
+  {
+    "paletteName": "surface-dark",
+    "swatches": [
+      {
+        "name": "New Swatch",
+        "color": "170316"
       },
       {
         "name": "New Swatch",
-        "color": "E2E2E9"
+        "color": "1D041B"
       },
       {
         "name": "New Swatch",
-        "color": "F0F0F6"
+        "color": "230621"
+      },
+      {
+        "name": "New Swatch",
+        "color": "290827"
+      },
+      {
+        "name": "New Swatch",
+        "color": "2F0A2D"
+      },
+      {
+        "name": "New Swatch",
+        "color": "360D33"
+      }
+    ]
+  },
+  {
+    "paletteName": "surface-light",
+    "swatches": [
+      {
+        "name": "New Swatch",
+        "color": "AA15A0"
+      },
+      {
+        "name": "New Swatch",
+        "color": "B71EAD"
+      },
+      {
+        "name": "New Swatch",
+        "color": "C429BA"
+      },
+      {
+        "name": "New Swatch",
+        "color": "D235C8"
+      },
+      {
+        "name": "New Swatch",
+        "color": "DF42D5"
+      },
+      {
+        "name": "New Swatch",
+        "color": "EC50E2"
+      }
+    ]
+  },
+  {
+    "paletteName": "warning-dark",
+    "swatches": [
+      {
+        "name": "New Swatch",
+        "color": "270003"
+      },
+      {
+        "name": "New Swatch",
+        "color": "2E0104"
+      },
+      {
+        "name": "New Swatch",
+        "color": "340105"
+      },
+      {
+        "name": "New Swatch",
+        "color": "3B0308"
+      },
+      {
+        "name": "New Swatch",
+        "color": "42070C"
+      },
+      {
+        "name": "New Swatch",
+        "color": "490C11"
+      }
+    ]
+  },
+  {
+    "paletteName": "warning-light",
+    "swatches": [
+      {
+        "name": "New Swatch",
+        "color": "B60404"
+      },
+      {
+        "name": "New Swatch",
+        "color": "C20D0D"
+      },
+      {
+        "name": "New Swatch",
+        "color": "CF1515"
+      },
+      {
+        "name": "New Swatch",
+        "color": "DB1C1C"
+      },
+      {
+        "name": "New Swatch",
+        "color": "E82323"
+      },
+      {
+        "name": "New Swatch",
+        "color": "F42828"
       }
     ]
   }
