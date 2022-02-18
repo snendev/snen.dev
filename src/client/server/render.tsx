@@ -1,7 +1,7 @@
 /** @jsx React.createElement */
 import React from "../../deps/react.ts";
 import ReactDOMServer from "../../deps/react-dom-server.ts";
-import { StaticRouter as ReactStaticRouter } from "../../deps/react-router-dom-server.tsx"
+import { StaticRouter as ReactStaticRouter } from "../../deps/react-router-dom-server.tsx";
 
 import App from "../App.tsx";
 

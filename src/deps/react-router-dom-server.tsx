@@ -24,6 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+/** @jsx React.createElement */
 import React from "./react.ts";
 import { Action, Location, To, createPath, parsePath } from "./history.ts";
 import { Router } from "./react-router-dom.tsx";
