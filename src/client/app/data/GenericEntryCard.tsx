@@ -52,9 +52,11 @@ function ReadingCard({ metadata, to }: ReadingCardProps) {
           limitSections={isExpanded ? 8 :  3}
         />
       </React.Suspense>
-      <span>
-        <Link to={to}>Read the full post</Link>
-      </span>
+      {isExpanded ? (
+        <span>
+          <Link to={to}>Read the full post</Link>
+        </span>
+      ) : null}
     </Card>
   );
 }
