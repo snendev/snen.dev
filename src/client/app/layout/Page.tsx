@@ -19,7 +19,7 @@ export function Page({children, sidebar}: PageProps) {
       className="page"
       headerClassName="header"
       headerTitle={
-        <Link to="/" className="page-title-link">
+        <Link to="/" className="button-link">
           snen.dev
         </Link>
       }
@@ -28,10 +28,10 @@ export function Page({children, sidebar}: PageProps) {
       root
     >
       <main className="main">
-        {sidebar}
         <Layer className="body">
           {children}
         </Layer>
+        {sidebar}
       </main>
     </Layer>
   );

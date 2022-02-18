@@ -14,13 +14,7 @@ function max<T>(collection: T[], iteratee: (item: T) => number): T {
 
 export default function buildRSSFeed(items: SiteEntryMetadata[]) {
   if (items.length === 0) return null;
-  // in practice these should already be sorted, but include these lines
-  // in case of future usages
-  const sortedItems = items.sort((a, b) => {
-    const value = a.modifyDate.valueOf() - b.modifyDate.valueOf();
-    return Math.abs(value);
-  });
-  const itemBlocks = sortedItems
+  const itemBlocks = items
     .map(({ title, subhead, href, permalink, publishDate, tags }) => `
       <item>
         <title>${title}</title>
@@ -34,7 +28,7 @@ export default function buildRSSFeed(items: SiteEntryMetadata[]) {
   // get most recent build time from the last modifyDate
   // modifyDate will always be > publicationDate
   const lastBuildDate =
-    max(sortedItems, (item) => item.modifyDate.valueOf()).modifyDate;
+    max(items, (item) => item.modifyDate.valueOf()).modifyDate;
 
   return `<?xml version="1.0" encoding="UTF-8" ?>
     <rss version="2.0">

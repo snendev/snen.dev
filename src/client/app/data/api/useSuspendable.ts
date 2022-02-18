@@ -43,7 +43,6 @@ export default function useSuspendable<T>(
             status: "resolved",
             value,
           };
-          console.log(ref);
         }
       },
       (error) => {

@@ -38,10 +38,10 @@ app.use(async (context, next) => {
   }
 });
 
-app.use(apiRouter.routes());
-app.use(apiRouter.allowedMethods());
 app.use(gitRouter.routes());
 app.use(gitRouter.allowedMethods());
+app.use(apiRouter.routes());
+app.use(apiRouter.allowedMethods());
 app.use(staticRouter.routes());
 app.use(staticRouter.allowedMethods());
 

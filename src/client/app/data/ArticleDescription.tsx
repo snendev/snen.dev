@@ -3,13 +3,13 @@
 import React from "../../../deps/react.ts";
 import { useParams } from "../../../deps/react-router-dom.tsx"
 import type {
-  EntriesDetailResponse,
+  SiteEntryMetadata,
 } from "../../../server/files/types.ts";
 
 import readJsonAPI from "./api/readJsonAPI.ts";
 
 export default function Description() {
   const { slug = "about-me" } = useParams()
-  const entry = readJsonAPI<EntriesDetailResponse>("entries", slug);
-  return <p>{entry.metadata.subhead}</p>;
+  const metadata = readJsonAPI<SiteEntryMetadata>("entries", slug);
+  return <p>{metadata.subhead}</p>;
 }

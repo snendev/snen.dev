@@ -1,27 +1,34 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
-import { useParams } from "../../../deps/react-router-dom.tsx"
 import type {
-  EntriesDetailResponse,
+  SiteEntryMetadata,
 } from "../../../server/files/types.ts";
 
 import { Block, Layer } from "../theme.tsx";
 
 import readJsonAPI from "./api/readJsonAPI.ts";
-import Markdown from "./Markdown.tsx"
 
-export default function ArticleContent() {
-  // TODO does this order work?
-  const { slug } = useParams<'slug'>();
-  const entry = readJsonAPI<EntriesDetailResponse>("entries", slug);
-  // const html = Marked.parse(entry.content).content;
+type LazyComponent = React.LazyExoticComponent<
+  (props: { slug: string; limitSections?: number}) => React.ReactElement
+>;
+const Markdown: LazyComponent = React.lazy(async () =>
+  await import("./Markdown.tsx")
+);
 
+interface ArticleContentProps {
+  slug: string
+}
+
+export default function ArticleContent({ slug }: ArticleContentProps) {
+  const metadata = readJsonAPI<SiteEntryMetadata>("entries", slug);
   return (
     <article className="article">
-      <Layer headerTitle={entry.metadata.title}>
+      <Layer headerTitle={metadata.title}>
         <Block>
-          <Markdown source={entry.content} />
+          <React.Suspense fallback={<div />}>
+            <Markdown slug={slug} />
+          </React.Suspense>
         </Block>
       </Layer>
     </article>

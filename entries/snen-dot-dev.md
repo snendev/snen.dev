@@ -2,17 +2,17 @@
 
 Welcome to [snen.dev](https://snen.dev)!
 
-This website leverages the [React 18 Release Candidate](https://github.com/reactwg/react-18/discussions/9) (see [React](https://reactjs.org/) if you're not familiar), enabling support for two previously-incompatible React features which massively improve the performance and usability of the React model.
+This website leverages the [React 18 Release Candidate](https://github.com/reactwg/react-18/discussions/9) (see [React](https://reactjs.org/) if you're not familiar), enabling support for two previously-incompatible React features which massively improve its performance and usability.
 
 The server uses Deno, a [TypeScript](https://www.typescriptlang.org/) runtime with native support for ESM and other modern browser features, which builds and serves the application without a typical framework.
 
 ## Why React?
 
-Plenty of tools exist for building websites or applications, so the choice of a front-end framework is always somewhat deliberate. So "Why React?" is a natural question to ask someone in my position. Often, the question's intent is really one of three more specific questions:
+Plenty of tools exist for building websites or applications, so the choice of a front-end framework is always somewhat deliberate. Often, people want to know one of three more specific answers:
 
-- Why a JavaScript client-side framework, as opposed to vanilla   HTML/JavaScript?  
-- Why JavaScript at all, instead of using a web framework in another language   (rendering with HTML templates/etc)?  
-- Why React, as opposed to Angular, Vue, Svelte, or another JS framework?  
+- Why a JavaScript client-side framework, as opposed to vanilla HTML/JavaScript?  
+- Why JavaScript at all, instead of using a web framework in another language (rendering with HTML templates/etc)?
+- Why React, as opposed to Angular, Vue, Svelte, or another JS framework?
 
 The first two, I'll answer first. I think JavaScript is neat; I enjoy writing TypeScript code in particular. I think reactive web frameworks provide powerful toolkits for building UIs. I thinkg the APIs exposed by React and libraries in the React ecosystem are intuitive, and the application code I write with them is sensible, readable, and maintainable.
 
@@ -56,13 +56,14 @@ JSX also synergizes well with the type of composition that "component"-based fra
 > 
 > In general, libraries like React define how JSX syntax should be used. JSX syntax just yields "elements": in React's case, components and their props are passed to [`React.createElement`](https://reactjs.org/docs/react-api.html#createelement). For comparison, Preact uses a function named [`h`](https://jasonformat.com/wtf-is-jsx/). (That link refers to how the [_Babel_](https://babeljs.io/) transpiler handles JSX, but Deno and many browsers provide much of the same functionality.) There are several ways to inform a JavaScript runtime/compiler how to handle JSX, and environments often have their own recommendations.
 
+Many modern browsers also support JSX nowadays when scripts use the correct [pragmas](https://johno.com/jsx-pragma)
 
 ### React 18 and Concurrent Rendering
 
 React 18 is coming out with several new features, but these features mostly center around a few architectural themes. These are primarily in pursuit of _concurrent rendering_ and _selective hydration_. This becomes relevant when considering two of the following previously- incompatible features:
 
-- [Server-Side Rendering](https://reactjs.org/docs/react-dom-server.html).   Traditionally, React builds a clientside app by shipping a "bare" HTML page   to the browser which does little but request a JavaScript bundle.   Once that bundle arrives, it loads the React tree and renders the   application.    With SSR, the React tree is rendered into HTML on the server first.   Then, once the browser completes page load, React undergoes "hydration" and   matches up the component tree to the pre-rendered HTML in the browser's DOM.   This avoids the delayed loading experience required for a "client-side   rendered" application.
-- [Suspense](https://reactjs.org/docs/concurrent-mode-suspense.html), which   lets React "suspend" rendering a component when resources are not fully   prepared.   Previously, this was not supported when using SSR   ([see the bottom of this page](https://reactjs.org/docs/react-api.html#reactsuspense)),   but it has been used widely for bundle   [code-splitting](https://reactjs.org/docs/code-splitting.html#reactlazy)   for some time now.   At first glance, it may only seem like Suspense only offers some improved API   for declaring loading states.   However, it also signals the evolution toward React 18's   _concurrent rendering_ paradigm, since there is now a better way to declare   that subtrees of an app might be _pending resolution_.   In the near future, Suspense will also enable data fetching strategies that   allow even more salient and predictable React development patterns.   Some of this is (experimentally) implemented in this website!
+- [Server-Side Rendering](https://reactjs.org/docs/react-dom-server.html). Traditionally, React builds a clientside app by shipping a "bare" HTML page to the browser which does little but request a JavaScript bundle. Once that bundle arrives, it loads the React tree and renders the application. With SSR, the React tree is rendered into HTML on the server first. Then, once the browser completes page load, React undergoes "hydration" and matches up the component tree to the pre-rendered HTML in the browser's DOM. This avoids the delayed loading experience required for a "client-side rendered" application.
+- [Suspense](https://reactjs.org/docs/concurrent-mode-suspense.html), which lets React "suspend" rendering a component when resources are not fully prepared. Previously, this was not supported when using SSR ([see the bottom of this page](https://reactjs.org/docs/react-api.html#reactsuspense)), but it has been used widely for bundle [code-splitting](https://reactjs.org/docs/code-splitting.html#reactlazy) for some time now. At first glance, it may only seem like Suspense only offers some improved API for declaring loading states. However, it also signals the evolution toward React 18's _concurrent rendering_ paradigm, since there is now a better way to declare that subtrees of an app might be _pending resolution_. In the near future, Suspense will also enable data fetching strategies that allow even more salient and predictable React development patterns. Some of this is (experimentally) implemented in this website!
 
 All of this works hand-in-hand with what React calls _concurrent rendering_. I could talk more about it, but the [GitHub discussion on the new architecture](https://github.com/reactwg/react-18/discussions/37) provides a lot of detail and has a lot of pictures to explain things, so I encourage readers to check that out instead. For those who might recall something like this, it was previously known described as [_concurrent mode_](https://reactjs.org/docs/concurrent-mode-intro.html), and there is more information on the naming [here](https://github.com/reactwg/react-18/discussions/64)).
 
@@ -110,36 +111,36 @@ Now, it's not like complete mastery of all these topics is necessary for getting
 
 Like I said -- Deno doesn't directly solve these problems. But it does make it easier to approach these ideas in a framework-less way, which I think, if at nothing else, is a very important sandbox to have.
 
-### Remote imports as the default makes code-splitting more natural 
+### Remote imports synergize well with code-splitting
 
 Code-splitting involves compiling a JS project into _chunks_ instead of a single bundle file. This means that the browser can import code only when needed. Effectively, this reduces the impact that complexity in your app has on overall bundle size: if some feature that requires a large number of dependencies only appears on one page, the app is built in such a way that the expensive code only requested when it is about to be used, like when visiting a particular page. Finally, if multiple sources in the app use the same chunk, once the browser has received that chunk, any further requests for the same resource can be handled by the browser cache.
 
-Remote imports are a convenient baseline here because of this final point: all remotely-hosted code can stay out of the application bundle and in some ways feels already-"split" by default.
+> #### Example: Isolating usages of a dependency
+> 
+> A straightforward example of why code splitting is useful is the [theme explorer page](/reading/making-themes-bad-at-colors), which imports several extra `react-colors` dependencies that are otherwise not needed on the app. Since the theme explorer page is compiled into its own chunk, browsers can import it lazily at the time that the `/theme-explorer` route is visited. This way, both the component's code and any dependencies are imported only if they are needed for the current browsing context.
+>
+> ```tsx
+> // static import
+> import ThemePlayground from "(...)/ThemePlayground.js"
+> // dynamic import ("lazy", run-time)
+> const ThemePlayground = React.lazy(() => import("(...)/ThemePlayground.js"))
+>
+> // ...
+>
+> // in AppRouter.tsx
+> return (
+>   <Route
+>     path={path}
+>     component={
+>       <Suspense fallback={<Loading />}>
+>         <ThemePlayground />
+>       </Suspense>
+>     }
+>   />
+> )
+> ```
 
-An easy example is on the [theme explorer page](/reading/making-themes-bad-at-colors), which imports several extra `react-colors` dependencies that are otherwise not needed on the app. It is possible to enable code splitting by importing the `ThemePlayground` page lazily:
-
-```tsx
-// static import
-import ThemePlayground from ".../ThemePlayground"
-// dynamic ("lazy", run-time) import
-const ThemePlayground = React.lazy(() => import(".../ThemePlayground"))
-
-// ...
-
-// in AppRouter.tsx
-return (
-  <Route
-    path={path}
-    component={
-      <Suspense fallback={<Loading />}>
-        <ThemePlayground />
-      </Suspense>
-    }
-  />
-)
-```
-
-With this in place, any complex code in `ThemePlayground.tsx` is only imported when the user navigates to `/theme-explorer`.
+For this website, [esbuild](https://esbuild.github.io/) is used to strip the source files into the JavaScript chunks that will serve as the web bundle. I think many bundlers support code splitting nowadays, so this is not much of a surprise. However, it's a convenient synergy: remote resource requests are "split" by default, _and_ there's no need to maintain them as part of the compiled web bundle.
 
 ### Deploy
 

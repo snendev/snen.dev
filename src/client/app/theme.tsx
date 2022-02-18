@@ -172,7 +172,15 @@ export function Layer({
   return (
     <div className={cx("layer", layerClassName, className)}>
       {headerLeft || headerTitle || headerRight ? (
-        <header className={cx("layer-header", `header-block-${headerLayer.depth}`, headerLayerClassName, headerClassName)}>
+        <header
+          className={cx(
+            "layer-header",
+            `header-block-${headerLayer.depth}`,
+            root && mode === 'light' ? `shadow-grey-contrast-${headerLayer.depth}` : undefined,
+            headerLayerClassName,
+            headerClassName,
+          )}
+        >
           <div>
             {headerLeft ?? null}
             {headerTitle ? (
@@ -233,7 +241,7 @@ export function Highlight({
   const layerClassName = getLayerClassname(layer, mode)
 
   return (
-    <span className={cx(layerClassName, className)}>
+    <span className={cx(layerClassName, `inline-block-${layer.depth}`, className)}>
       {/* Stack the next layer */}
       <LayerContext.Provider value={layer}>
         {children}
@@ -250,10 +258,11 @@ export function Highlight({
 export function Block({
   children,
   className,
+  additionalDepth = 0,
   ...rest
-}: React.HTMLProps<HTMLDivElement>): JSX.Element {
+}: React.HTMLProps<HTMLDivElement> & {additionalDepth?: number}): JSX.Element {
   const layer = useLayer()
-  const paddingClassName = `block-${layer.depth}`
+  const paddingClassName = `block-${Math.min(layer.depth + additionalDepth, MAX_DEPTH)}`
   return (
     <div className={cx(paddingClassName, className)} {...rest}>
       {children}

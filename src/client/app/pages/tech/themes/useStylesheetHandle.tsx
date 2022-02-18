@@ -96,7 +96,7 @@ function updateCSSRules(
         const lightness = palette.lightnesses[depth]
         rule.cssRule.style[property] = buildHSLString(hue, saturation, lightness)
       }
-    } 
+    }
   }
 }
 

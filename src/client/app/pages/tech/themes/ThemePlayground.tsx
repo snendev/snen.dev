@@ -4,7 +4,6 @@ import React from "../../../../../deps/react.ts";
 import { HuePicker } from "../../../../../deps/react-color.ts"
 
 import { Color, Layer, Block } from "../../../theme.tsx"
-import { Page } from "../../../layout/Page.tsx"
 
 import buildHSLString from "./buildHSLString.tsx"
 import useStylesheetHandle from "./useStylesheetHandle.tsx"
@@ -164,37 +163,42 @@ export default function ThemePlayground() {
     </div>
   )
   return (
-    <Page sidebar={sidebar}>
-      <Block>
-        <Layer>
-          <div className="flex-row-evenly">
-            {colorGrid.map((column) => (
-              <Block key={column[0].color}>
-                <label>{column[0].color}</label>
-                {column.map((hslColor) => (
-                  <div
-                    key={`${hslColor.saturation}-${hslColor.lightness}`}
-                    style={{
-                      backgroundColor: buildHSLString(hslColor.hue, hslColor.saturation, hslColor.lightness),
-                      width: 20,
-                      height: 20,
-                      borderRadius: 10,
-                      margin: 4,
-                    }}
-                  />
-                ))} 
-              </Block>
-            ))}
-          </div>
-        </Layer>
-      </Block>
-      <Block>
-        <TestLayer>
+    <div className="flex-row-evenly">
+      {sidebar}
+      <div>
+        <Block>
+          <Layer>
+            <div className="flex-row-evenly">
+              {colorGrid.map((column) => (
+                <div>
+                  <Block key={column[0].color}>
+                    <label>{column[0].color}</label>
+                    {column.map((hslColor) => (
+                      <div
+                        key={`${hslColor.saturation}-${hslColor.lightness}`}
+                        style={{
+                          backgroundColor: buildHSLString(hslColor.hue, hslColor.saturation, hslColor.lightness),
+                          width: 20,
+                          height: 20,
+                          borderRadius: 10,
+                          margin: 4,
+                        }}
+                      />
+                    ))} 
+                  </Block>
+                </div>
+              ))}
+            </div>
+          </Layer>
+        </Block>
+        <Block>
           <TestLayer>
-            <TestLayer />
+            <TestLayer>
+              <TestLayer />
+            </TestLayer>
           </TestLayer>
-        </TestLayer>
-      </Block>
-    </Page>
+        </Block>
+      </div>
+    </div>
   );
 }

@@ -1,11 +1,11 @@
 [
   {
-    "title": "About me (and this website)",
-    "category": "about",
-    "slug": "about-me",
-    "subhead": "Hi, I'm Sean. I am a professional (full-stack) software developer with a variety of interests. In short: I like to build stuff.\nOne of my biggest projects right now is building this website, where I aim to document the things I build and provide guides on how to reproduce my journey.",
-    "tags": [ ],
-    "file": "about-me.md"
+    "title": "Streamlining visual design using React when you are bad at colors",
+    "category": "reading",
+    "slug": "themes-when-bad-at-colors",
+    "subhead": "In which I build a debugging tool to experiment with my app theme.",
+    "tags": [ "themes", "React", "design", "color" ],
+    "pathToResource": "themes-when-bad-at-colors.md"
   },
   {
     "title": "snen.dev: A technical overview",
@@ -13,14 +13,42 @@
     "slug": "snen-dot-dev",
     "subhead": "I tinker with the React 18 release candidate's new features in a framework-less Deno environment",
     "tags": [ "deno", "react", "react18", "concurrent rendering", "snen.dev" ],
-    "file": "snen-dot-dev.md"
+    "pathToResource": "snen-dot-dev.md"
   },
   {
-    "title": "Streamlining visual design using React when you are bad at colors",
-    "category": "reading",
-    "slug": "themes-when-bad-at-colors",
-    "subhead": "In which I build a debugging tool to experiment with my app theme.",
-    "tags": [ "themes", "React", "design", "color" ],
-    "file": "themes-when-bad-at-colors.md"
+    "title": "Theme Explorer",
+    "category": "tech",
+    "slug": "theme-explorer",
+    "subhead": "Update the page's stylesheet live using simple hue, saturation, and lightness controls.",
+    "tags": [ "themes", "design", "color", "debug tools" ],
+    "previewImageSrc": "/theme-explorer-dev-photo.png",
+    "pathToResource": "/tech/theme-explorer",
+    "dynamicResourceMetadata": {
+      "publishDate": "16 February 2022",
+      "modifyDate": "16 February 2022",
+      "abstract": "A tool for toying with the global theme on this site."
+    }
+  },
+  {
+    "title": "About me (and this website)",
+    "category": "about",
+    "slug": "about-me",
+    "subhead": "Hi, I'm Sean. I am a professional (full-stack) software developer with a variety of interests. In short: I like to build stuff. On this website, I aim to document the things I build and provide guides on how to reproduce my journey.",
+    "tags": [ "snen", "about" ],
+    "pathToResource": "about-me.md"
+  },
+  {
+    "title": "Bingo Poppidopolous' Pinball-Golf Paradise",
+    "category": "media",
+    "slug": "bingo-poppidopolous-pinball-golf-paradise",
+    "subhead": "A silly, hacky game I made for a hackathon.",
+    "tags": [ "games", "godot", "hackathon" ],
+    "pathToResource": "https://snenmin.itch.io/bingo-poppidoppolous-pinball-golf-paradise",
+    "previewImageSrc": "/bingo-poppidopolous.png",
+    "dynamicResourceMetadata": {
+      "publishDate": "17 October 2021",
+      "modifyDate": "22 October 2021",
+      "abstract": "Welcome to Paradise! Can you take on Bingo's pinball challenge?"
+    }
   }
 ]

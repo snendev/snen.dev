@@ -7,6 +7,19 @@ interface SiteEntryDeclaredMetadata {
   // secondary headline for the entry
   subhead: string;
   tags: string[];
+  slug: string
+  pathToResource: string;
+  previewImageSrc?: string;
+}
+
+interface DynamicResourceDeclaredMetadata {
+  modifyDate: string;
+  publishDate: string;
+  abstract: string;
+}
+
+export interface VariantSiteEntryMetadata extends SiteEntryDeclaredMetadata {
+  dynamicResourceMetadata?: DynamicResourceDeclaredMetadata;
 }
 
 export interface SiteEntryMetadata extends SiteEntryDeclaredMetadata {
@@ -27,12 +40,8 @@ export interface SiteEntryMetadata extends SiteEntryDeclaredMetadata {
   tags: string[];
   // publish date
   publishDate: Date;
+  // optional preview image
+  previewImageSrc?: string;
   // last modified date
   modifyDate: Date;
-}
-
-export type EntriesListResponse = SiteEntryMetadata[];
-export interface EntriesDetailResponse {
-  content: string;
-  metadata: SiteEntryMetadata;
 }

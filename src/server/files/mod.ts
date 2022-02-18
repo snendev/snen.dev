@@ -1,8 +1,7 @@
 import loadEntries from "./loadEntries.ts";
 import buildRSSFeed from "./rss.ts";
 import type {
-  EntriesDetailResponse,
-  EntriesListResponse,
+  SiteEntryMetadata,
   EntryCategory,
 } from "./types.ts";
 
@@ -14,7 +13,11 @@ function getCategoryEntries(category: EntryCategory) {
   return Object.values(entries).filter((entry) => entry.category === category);
 }
 
-export function readDirectory(feed?: string): EntriesListResponse | null {
+export function getEntryMetadata(slug: string): SiteEntryMetadata | null {
+  return entries[slug] ?? null
+}
+
+export function readDirectory(feed?: string): SiteEntryMetadata[] | null {
   switch (feed) {
     case undefined:
       return Object.values(entries);
@@ -31,10 +34,8 @@ export function readDirectory(feed?: string): EntriesListResponse | null {
   }
 }
 
-export async function readFile(slug: string): Promise<EntriesDetailResponse> {
-  const content = await Deno.readTextFile(`${ENTRIES_DIR}/${slug}.md`);
-  const metadata = entries[slug];
-  return { content, metadata };
+export async function readFile(slug: string): Promise<string> {
+  return await Deno.readTextFile(`${ENTRIES_DIR}/${slug}.md`);
 }
 
 export async function readRSSFeed(feed?: string): Promise<string | null> {

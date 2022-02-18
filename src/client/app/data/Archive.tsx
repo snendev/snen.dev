@@ -1,31 +1,29 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
-import { Link } from "../../../deps/react-router-dom.tsx";
 import type {
-  EntriesListResponse,
   SiteEntryMetadata,
 } from "../../../server/files/types.ts";
 
+import { Block } from "../theme.tsx"
+
 import readJsonAPI from "./api/readJsonAPI.ts";
+import MiniCard from './MiniCard.tsx'
 
 export default function Archive() {
-  const archive = readJsonAPI<EntriesListResponse>("entries");
+  const archive = readJsonAPI<SiteEntryMetadata[]>("feed");
   return (
-    <div>
-      {archive.map(({ title, category, slug }: SiteEntryMetadata) => (
-        <Link
-          key={slug}
-          to={`/${category}/${slug}`}
-        >
-          <h5>
-            {title}
-          </h5>
-          <span>
-            {category}
-          </span>
-        </Link>
+    <nav aria-label="Archive: Links to old posts">
+      <h3 className="text-align-center">Archive</h3>
+      {archive.map(({ title, category, subhead, slug }: SiteEntryMetadata) => (
+        <Block key={slug} additionalDepth={3}>
+          <MiniCard
+            to={`/${category}/${slug}`}
+            title={title}
+            label={subhead}
+          />
+        </Block>
       ))}
-    </div>
+    </nav>
   );
 }

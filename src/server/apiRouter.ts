@@ -1,7 +1,7 @@
 import { Router } from "../deps/oak.ts";
 import { contentType } from "../deps/media-types.ts";
 
-import { readDirectory, readFile } from "./files/mod.ts";
+import { readDirectory, getEntryMetadata } from "./files/mod.ts";
 
 const apiRouter = new Router();
 
@@ -22,7 +22,7 @@ apiRouter.get("/api/feed/:slug", (context) => {
 apiRouter.get("/api/entries/:slug", async (context) => {
   const { slug } = context.params;
 
-  const data = await readFile(slug);
+  const data = await getEntryMetadata(slug);
   context.response.type = contentType(".json");
   context.response.body = JSON.stringify(data);
 });

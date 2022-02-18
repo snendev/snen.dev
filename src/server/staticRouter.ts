@@ -1,8 +1,15 @@
-import { Router } from "../deps/oak.ts";
+import { Router, Context } from "../deps/oak.ts";
 import { contentType } from "../deps/media-types.ts";
 
 import { readRSSFeed } from "./files/mod.ts";
 import sleep from "./sleep.ts";
+
+async function streamFile(context: Context, path: string, contentTypeQuery: string): Promise<void> {
+  const fileURL = new URL(`../../${path}`, import.meta.url);
+  const response = await fetch(fileURL);
+  context.response.type = contentType(contentTypeQuery);
+  context.response.body = response.body;
+}
 
 // handle static asset requests (ts, js, sourcemaps, css, images, etc)
 const staticRouter = new Router();
@@ -17,40 +24,36 @@ staticRouter.get("/:path?/(rss|feed|index.xml)", async (context, next) => {
   context.response.body = rss;
 });
 
+// post content requests
+staticRouter.get("/entries/:slug.md", async (context) => {
+  const { slug } = context.params;
+  await streamFile(context, `entries/${slug}.md`, ".md");
+})
+
 // source code and source maps
-staticRouter.get("/:path+.(js|jsx|ts|tsx|js)(.map)?", async (context, next) => {
+staticRouter.get("/:path+.(js|jsx|ts|tsx|js)(.map)?", async (context) => {
   const { path, 0: _extension, 1: isSourcemap } = context.params;
 
-  const file = await Deno.readTextFile(
-    `./dist/${path}.js${isSourcemap ? ".map" : ""}`,
-  );
+  const filepath = `dist/${path}.js${isSourcemap ? ".map" : ""}`;
 
   // await sleep(1);
-  if (!file) return await next();
-
-  context.response.type = contentType(".js");
-  context.response.body = file;
+  await streamFile(context, filepath, ".js")
 });
 
 // css and font files
 staticRouter.get("/:path.(css|eot|svg|ttf|woff|woff2)", async (context) => {
   const { path, 0: extension } = context.params;
-  const file = await Deno.readTextFile(`./public/${path}.${extension}`);
-
-  context.response.type = contentType(".css");
-  context.response.body = file;
+  const filepath = `public/${path}.${extension}`
+  await streamFile(context, filepath, ".css");
 });
 
 // image/media files
-staticRouter.get("/:slug+.:ext", async (context, next) => {
+staticRouter.get("/:slug+.:ext", async (context) => {
   const { pathname } = context.request.url;
-  const path = pathname.slice(1);
+  const path = pathname.slice(1)
+  const filepath = `assets/${path}`
 
-  const file = await Deno.readFile(`./assets/${path}`);
-  if (!file) return await next();
-
-  context.response.type = contentType(path);
-  context.response.body = file;
+  await streamFile(context, filepath, path)
 });
 
 export default staticRouter;

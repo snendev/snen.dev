@@ -20,7 +20,7 @@ And hopefully by the time you read this, the website looks a little prettier. :)
 
 ## Thinking with Themes
 
-First, I needed to solve the engineering side of this. I already knew some techniques for building "theme-rich" UI components in React, and so I started by creating some structures around these techniques. (These can be found in the `theme.tsx` file for the source code of the website.) [TODO SNEN: LINK HERE.]() Once the theme was integrated into my components, React could decide itself what the particular shade of any given hue it should use in each case.
+First, I needed to solve the engineering side of this. I already knew some techniques for building "theme-rich" UI components in React, and so I started by creating some structures around these techniques. (These can be found in the [`theme.tsx`](/git/snen.dev/tree/main/src/client/app/theme.tsx) file in the site's source code.) Once the theme was integrated into my components, React could decide itself what the particular shade of any given hue it should use in each case.
 
 I also had to pick my colors, so I had to build some controls to tweak the theme live. These are usable on this website at the [theme-explorer](/theme-explorer), so feel free to go mess with it!
 

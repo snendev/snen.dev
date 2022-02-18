@@ -81,6 +81,10 @@ const makeSpacingCss = (depth: number, padding: number) =>
   margin-bottom: 0;
 }
 
+.inline-block-${depth} {
+  padding: 0 ${padding * 0.3}em;
+}
+
 .header-block-${depth} {
   padding: 0.5em ${padding}em;
 }

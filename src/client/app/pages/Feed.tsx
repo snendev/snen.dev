@@ -13,23 +13,23 @@ function isEntryCategory(category: string): category is EntryCategory {
   return CATEGORIES.includes(category as EntryCategory)
 }
 
-type LazyPostListType = React.LazyExoticComponent<
+type LazyEntryListType = React.LazyExoticComponent<
   ({ feed }: { feed?: EntryCategory }) => React.ReactElement
 >;
-const PostList: LazyPostListType = React.lazy(async () =>
-  await import("../data/PostList.tsx")
+const EntryList: LazyEntryListType = React.lazy(async () =>
+  await import("../data/EntryList.tsx")
 );
 
 export default function Feed() {
   const { category } = useParams()
-
+  console.log(category)
   if (category !== undefined && !isEntryCategory(category)) {
     return <Error404 />
   }
   return (
     <section>
       <React.Suspense fallback={<div>Loading...</div>}>
-        <PostList feed={category} />
+        <EntryList feed={category} />
       </React.Suspense>
     </section>
   );

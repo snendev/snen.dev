@@ -6,7 +6,7 @@ import ThemeToggle from "./ThemeToggle.tsx"
 
 export default function Navbar() {
   return (
-    <nav className="navbar">
+    <nav className="navbar" aria-label="Top-level navigator: read by category">
       <Link to="/">home</Link>
       <Link to="/about">about</Link>
       <Link to="/reading">read</Link>
