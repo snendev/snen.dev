@@ -13,7 +13,8 @@
     "slug": "snen-dot-dev",
     "subhead": "I tinker with the React 18 release candidate's new features in a framework-less Deno environment",
     "tags": [ "deno", "react", "react18", "concurrent rendering", "snen.dev" ],
-    "pathToResource": "snen-dot-dev.md"
+    "pathToResource": "snen-dot-dev.md",
+    "imports": [ "https://platform.twitter.com/widgets.js" ]
   },
   {
     "title": "Theme Explorer",

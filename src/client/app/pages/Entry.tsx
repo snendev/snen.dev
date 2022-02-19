@@ -29,7 +29,9 @@ export default function Entry() {
   return (
     <Block>
       <section>
-        <ArticleContent slug={slug} />
+        <React.Suspense fallback={<div />}>
+          <ArticleContent slug={slug} />
+        </React.Suspense>
       </section>
     </Block>
   );

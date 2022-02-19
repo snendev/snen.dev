@@ -126,6 +126,7 @@ function buildTextColorCSS(palettes: PaletteSpecification): string {
   return blackTextColor && whiteTextColor ? makeTextColorCSS(blackTextColor, whiteTextColor) : ''
 }
 
+// TODO minify this in some way
 export default function buildCSS(): string {
   const palette = parsePalette()
   const paletteCss = buildPaletteCSS(palette)

@@ -4,6 +4,8 @@ import { contentType } from "../deps/media-types.ts";
 import { readRSSFeed } from "./files/mod.ts";
 import sleep from "./sleep.ts";
 
+// TODO static compression?
+
 async function streamFile(context: Context, path: string, contentTypeQuery: string): Promise<void> {
   const fileURL = new URL(`../../${path}`, import.meta.url);
   const response = await fetch(fileURL);

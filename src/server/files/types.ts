@@ -10,6 +10,7 @@ interface SiteEntryDeclaredMetadata {
   slug: string
   pathToResource: string;
   previewImageSrc?: string;
+  imports?: string[]
 }
 
 interface DynamicResourceDeclaredMetadata {

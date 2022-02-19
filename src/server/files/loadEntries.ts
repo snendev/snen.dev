@@ -19,6 +19,7 @@ async function collectSiteEntries(
       slug,
       previewImageSrc,
       dynamicResourceMetadata,
+      imports,
     }) => {
       if (dynamicResourceMetadata !== undefined) {
         const { publishDate, modifyDate, abstract } = dynamicResourceMetadata
@@ -36,6 +37,7 @@ async function collectSiteEntries(
           modifyDate: new Date(modifyDate),
           previewImageSrc,
           pathToResource,
+          imports,
         };
       }
       const path = `${directory}/${pathToResource}`;
@@ -58,6 +60,7 @@ async function collectSiteEntries(
         publishDate: birthtime ?? new Date(),
         modifyDate: mtime ?? new Date(),
         pathToResource,
+        imports,
       };
     })
   )

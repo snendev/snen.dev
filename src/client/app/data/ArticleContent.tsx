@@ -22,6 +22,11 @@ interface ArticleContentProps {
 
 export default function ArticleContent({ slug }: ArticleContentProps) {
   const metadata = readJsonAPI<SiteEntryMetadata>("entries", slug);
+
+  React.useEffect(() => {
+    metadata.imports?.map(async (importSrc) => await import(importSrc))
+  }, [metadata])
+
   return (
     <article className="article">
       <Layer headerTitle={metadata.title}>
@@ -31,6 +36,9 @@ export default function ArticleContent({ slug }: ArticleContentProps) {
           </React.Suspense>
         </Block>
       </Layer>
+      {metadata.imports?.map((importSrc) => (
+        <script charSet="utf-8" src={importSrc} />
+      ))}
     </article>
   );
 }

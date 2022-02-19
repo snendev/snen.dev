@@ -58,6 +58,17 @@ JSX also synergizes well with the type of composition that "component"-based fra
 
 Many modern browsers also support JSX nowadays when scripts use the correct [pragmas](https://johno.com/jsx-pragma)
 
+### React's APIs are fantastic
+
+JSX is already one example of this, but there is another example I want to touch on. When [hooks](https://reactjs.org/docs/hooks-intro.html) were released, the React community was abuzz with talk and criticism. My favorite example of the type of convenience I want to highlight came from Twitter during that
+time, but what I'd like to clarify is that React APIs enable these sorts of improvements _all over the place_ in front-end code. The tweet:
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">ok so - I took dan&#39;s classes/hooks code from react conf, blacked out the &#39;unnecessary&#39; bits, then colour coded bits by &#39;concern&#39;. so much nicer. the effect is amplified in more complex components, where concerns are split and mixed across lifecycle methods. <a href="https://t.co/nPUzQcisFt">pic.twitter.com/nPUzQcisFt</a></p>&mdash; sunil pai, inc. (@threepointone) <a href="https://twitter.com/threepointone/status/1056594421079261185?ref_src=twsrc%5Etfw">October 28, 2018</a></blockquote>
+
+When programming for a user interface, classes like those on the left are very common. Interfaces have subscriptions to manage, controls to listen for -- they respond to input and perform resulting actions. Hooks make it easier to isolate the logic of each _behavior_, where a behavior might consist of some combination of inputs and outputs involving state, effects, and callback calls.
+
+Hooks solve a few particularly nice use cases, but in my experience, these are only examples of how powerful these APIs are.
+
 ### React 18 and Concurrent Rendering
 
 React 18 is coming out with several new features, but these features mostly center around a few architectural themes. These are primarily in pursuit of _concurrent rendering_ and _selective hydration_. This becomes relevant when considering two of the following previously- incompatible features:
@@ -66,6 +77,10 @@ React 18 is coming out with several new features, but these features mostly cent
 - [Suspense](https://reactjs.org/docs/concurrent-mode-suspense.html), which lets React "suspend" rendering a component when resources are not fully prepared. Previously, this was not supported when using SSR ([see the bottom of this page](https://reactjs.org/docs/react-api.html#reactsuspense)), but it has been used widely for bundle [code-splitting](https://reactjs.org/docs/code-splitting.html#reactlazy) for some time now. At first glance, it may only seem like Suspense only offers some improved API for declaring loading states. However, it also signals the evolution toward React 18's _concurrent rendering_ paradigm, since there is now a better way to declare that subtrees of an app might be _pending resolution_. In the near future, Suspense will also enable data fetching strategies that allow even more salient and predictable React development patterns. Some of this is (experimentally) implemented in this website!
 
 All of this works hand-in-hand with what React calls _concurrent rendering_. I could talk more about it, but the [GitHub discussion on the new architecture](https://github.com/reactwg/react-18/discussions/37) provides a lot of detail and has a lot of pictures to explain things, so I encourage readers to check that out instead. For those who might recall something like this, it was previously known described as [_concurrent mode_](https://reactjs.org/docs/concurrent-mode-intro.html), and there is more information on the naming [here](https://github.com/reactwg/react-18/discussions/64)).
+
+![Preview: React's new hydration model explained via pictures. Picture borrowed from GitHub @reactwg/react-18 discussion #37.](https://camo.githubusercontent.com/6cc4eeef439feb3c17d0ac09c701c0deffe170c60a039afa8c0b85d7d4b9c9ef/68747470733a2f2f717569702e636f6d2f626c6f622f5963474141416b314234322f5358524b357573725862717143534a3258396a4769673f613d77504c72596361505246624765344f4e305874504b356b4c566839384747434d774d724e5036374163786b61)
+
+(Above: A picture borrowed from the aforementioned Github discussion. Very interesting indeed...)
 
 ## Why Deno?
 
@@ -141,6 +156,12 @@ Code-splitting involves compiling a JS project into _chunks_ instead of a single
 > ```
 
 For this website, [esbuild](https://esbuild.github.io/) is used to strip the source files into the JavaScript chunks that will serve as the web bundle. I think many bundlers support code splitting nowadays, so this is not much of a surprise. However, it's a convenient synergy: remote resource requests are "split" by default, _and_ there's no need to maintain them as part of the compiled web bundle.
+
+At the end of the day it just helps guarantee that less code is shipped to the client. On snen.dev, you can check your Developer Tools network tab, and you'll see the following:
+
+![snen.dev network tab inside the browser Developer Tools. Shows file sizes 2.7kB, 835B, 25.0kB, 9.1kB, etc.](/intro-snen-dev-network-tab.png)
+
+(At time of writing, there are still improvements to make, like my un-minified `theme.css` -- yikes!)
 
 ### Deploy
 
