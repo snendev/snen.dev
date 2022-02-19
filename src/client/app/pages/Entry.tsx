@@ -5,6 +5,7 @@ import { useParams } from "../../../deps/react-router-dom.tsx"
 
 import ArticleContent from "../data/ArticleContent.tsx"
 import ItchIOShowcase from "../data/ItchIOShowcase.tsx"
+import { Block } from "../theme.tsx"
 
 export default function Entry() {
   const { category, slug } = useParams()
@@ -16,16 +17,20 @@ export default function Entry() {
   }
   if (category === "media") {
     return (
-      <section>
-        <React.Suspense fallback={<div />}>
-          <ItchIOShowcase slug={slug} />
-        </React.Suspense>
-      </section>
+      <Block>
+        <section>
+          <React.Suspense fallback={<div />}>
+            <ItchIOShowcase slug={slug} />
+          </React.Suspense>
+        </section>
+      </Block>
     )
   }
   return (
-    <section>
-      <ArticleContent slug={slug} />
-    </section>
+    <Block>
+      <section>
+        <ArticleContent slug={slug} />
+      </section>
+    </Block>
   );
 }

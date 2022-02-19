@@ -1,5 +1,13 @@
 import basePalette from  "../palette.json" assert { type: "json" }
 
+// only accepts 6-digit combos
+function buildRGBA(rgb: string, a: number) {
+  const r = parseInt(rgb.slice(0, 2), 16);
+  const g = parseInt(rgb.slice(2, 4), 16);
+  const b = parseInt(rgb.slice(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
+
 const makeLayerCss = (
   feature: ColorFeature,
   mode: 'dark' | 'light',
@@ -14,7 +22,10 @@ const makeLayerCss = (
 }
 
 .shadow-${feature}-${depth}.${mode} {
-  box-shadow: 0 0 0 1px #${color};
+  ${mode === "light"
+    ? `box-shadow: 0 0 0 1px #${color}`
+    : `box-shadow: inset 0 -4px 32px ${buildRGBA(color, 0.1)}`
+  }
 }
 
 .bg-${feature}-contrast-${depth}.${mode === 'dark' ? 'light' : 'dark'} {
@@ -26,7 +37,9 @@ const makeLayerCss = (
 }
 
 .shadow-${feature}-contrast-${depth}.${mode === 'dark' ? 'light' : 'dark'} {
-  box-shadow: 0 0 0 1px #${color};
+  ${mode === "dark"
+    ? `box-shadow: 0 0 0 1px #${color}`
+    : `box-shadow: inset 0 -4px ${32 / (depth * 0.5 + 1)}px ${buildRGBA(color, 0.1)}`}
 }
 `
 
@@ -67,7 +80,7 @@ function buildPaletteCSS(palettes: PaletteSpecification): string {
 
 const makeSpacingCss = (depth: number, padding: number) => 
 `.block-${depth} {
-  padding: ${padding}em;
+  padding: ${padding + 0.25}em ${padding}em;
 }
 
 .block-${depth} + .block-${depth} {

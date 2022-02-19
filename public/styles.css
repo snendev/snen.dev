@@ -42,8 +42,6 @@ body, div {
 .page .header {
   width: 100%;
 
-  box-shadow: inset 0px -4px 32px rgba(255, 255, 255, 0.1);
-
   display: flex;
   justify-content: space-between;
   align-items: center;

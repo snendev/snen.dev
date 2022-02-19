@@ -28,9 +28,9 @@ export function Page({children, sidebar}: PageProps) {
       root
     >
       <main className="main">
-        <Layer className="body">
+        <div className="body">
           {children}
-        </Layer>
+        </div>
         {sidebar}
       </main>
     </Layer>

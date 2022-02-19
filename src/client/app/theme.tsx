@@ -160,13 +160,14 @@ export function Layer({
   ...options
 }: LayerProps) {
   const mode = useThemeMode()
-  const layer = useLayer(options, root ? 0 : 1)
+  const additionalDepth = root ? 0 : 1;
+  const layer = useLayer(options, additionalDepth)
   const layerClassName = getLayerClassname(layer, mode)
   const headerOptions: LayerOptions = {
     backgroundColor: options.backgroundColor ?? "primary",
     showBorder: options.showBorder ?? true,
   }
-  const headerLayer = useLayer(headerOptions)
+  const headerLayer = useLayer(headerOptions, additionalDepth)
   const headerLayerClassName = getLayerClassname(headerLayer, mode)
 
   return (
@@ -176,7 +177,7 @@ export function Layer({
           className={cx(
             "layer-header",
             `header-block-${headerLayer.depth}`,
-            root && mode === 'light' ? `shadow-grey-contrast-${headerLayer.depth}` : undefined,
+            mode === "dark" ? `shadow-grey-contrast-${headerLayer.depth}` : undefined,
             headerLayerClassName,
             headerClassName,
           )}

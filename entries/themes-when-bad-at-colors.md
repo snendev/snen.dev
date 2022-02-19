@@ -45,4 +45,8 @@ Now that I knew how many (and what type) of colors I wanted, I built controls in
 
 ## Conclusion
 
-That's it! I like to build tools that help me think about problems and learn things better. Hopefully this inspires you to do the same, and if you struggle with certain design concepts like me, I hope you can build tools that help you learn too. If you want to look at the code for this project, check it out on the [github](/git/snen.dev/tree/main/src/client/app/pages/tech/themes/ThemePlayground.tsx).
+At the end of the day, it might not be perfect, but I think it's at least _legible_, which is a good place to start.
+
+That's all for this one. I like to build tools that help me think about problems and learn things better. Hopefully this inspires you to do the same, and if you struggle with certain design concepts like me, I hope you can build tools that help you learn too.
+
+If you want to look at the code for this project, check it out on the [github](/git/snen.dev/tree/main/src/client/app/pages/tech/themes/ThemePlayground.tsx).
