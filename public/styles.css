@@ -39,7 +39,7 @@ body, div {
   align-items: center;
 }
 
-.page .header {
+.header {
   width: 100%;
 
   display: flex;
@@ -47,9 +47,41 @@ body, div {
   align-items: center;
 }
 
-.page .navbar * {
+.navbar * {
   margin: 0 12px;
   font-size: 1.4em;
+}
+
+.header .theme-toggle-mobile {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .header {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .navbar * {
+    font-size: 1.2em;
+  }
+
+  .header .theme-toggle-desktop {
+    display: none;
+  }
+
+  .theme-toggle-mobile-container {
+    position: relative;
+  }
+
+  .header .theme-toggle-mobile {
+    display: revert;
+    font-size: 1em;
+    vertical-align: middle;
+    position: absolute;
+    left: 20px;
+  }
 }
 
 .button-link {
@@ -76,6 +108,17 @@ body, div {
 .main .sidebar {
   width: 25%;
   min-height: 100%;
+}
+
+@media (max-width: 900px) {
+  .main {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .main .sidebar {
+    width: 100%;
+  }
 }
 
 .main .sidebar section {

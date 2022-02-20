@@ -12,7 +12,7 @@ export default function Navbar() {
       <Link to="/reading">read</Link>
       <Link to="/tech">tech</Link>
       <Link to="/media">media</Link>
-      <ThemeToggle />
+      <ThemeToggle className="theme-toggle-desktop"/>
     </nav>
   );
 }

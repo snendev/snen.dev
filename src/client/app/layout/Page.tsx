@@ -7,6 +7,7 @@ import { Layer } from "../theme.tsx";
 
 import Navbar from "./Navbar.tsx";
 import Sidebar from "./Sidebar.tsx"
+import ThemeToggle from "./ThemeToggle.tsx"
 
 interface PageProps {
   children: React.ReactNode
@@ -19,9 +20,14 @@ export function Page({children, sidebar}: PageProps) {
       className="page"
       headerClassName="header"
       headerTitle={
-        <Link to="/" className="button-link">
-          snen.dev
-        </Link>
+        <>
+          <Link to="/" className="button-link">
+            snen.dev
+          </Link>
+          <span className="theme-toggle-mobile-container">
+            <ThemeToggle className="theme-toggle-mobile" />
+          </span>
+        </>
       }
       headerRight={<Navbar />}
       bodyClassName="main-container"
