@@ -1,5 +1,6 @@
 # snen.dev
 
+https://snen.dev
 
 ## Tech
 
@@ -25,7 +26,7 @@ In general, the layout is relatively straightforward:
     - `/app/layout` contains any components that structure the layout of basic pages
     - `/app/pages` contain components definitions for each application route
 
-## References
+## Tools/References
 
 - [figma](https://www.figma.com), where I sketched layouts to help me figure out what I wanted to build
 - [palettte](https://palettte.app/), where I experimented with colors
