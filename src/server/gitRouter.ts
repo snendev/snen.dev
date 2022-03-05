@@ -2,10 +2,25 @@ import { Router } from "../deps/oak.ts";
 
 const gitRouter = new Router();
 
-gitRouter.get("/git/(.*)", (context) => {
-  const { 0: repoPath } = context.params;
+// redirect to repo homepage
+gitRouter.get("/git/:repo", (context) => {
+  const { repo } = context.params;
 
-  context.response.redirect(`https://github.com/snendev/${repoPath}`)
+  context.response.redirect(`https://github.com/snendev/${repo}`);
+});
+
+// redirect to a specific branch page
+gitRouter.get("/git/:repo/:branch", (context) => {
+  const { repo, branch } = context.params;
+
+  context.response.redirect(`https://github.com/snendev/${repo}/tree/${branch}`);
+});
+
+// redirect to some specific file location
+gitRouter.get("/git/:repo/(.*)", (context) => {
+  const { repo, 0: codePath } = context.params;
+
+  context.response.redirect(`https://github.com/snendev/${repo}/${codePath}`);
 });
 
 // TODO automate embedding via codesandbox with a /codesandbox proxy url

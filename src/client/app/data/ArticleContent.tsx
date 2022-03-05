@@ -29,13 +29,13 @@ export default function ArticleContent({ slug }: ArticleContentProps) {
 
   return (
     <article className="article">
-      <Layer headerTitle={metadata.title}>
-        <Block>
-          <React.Suspense fallback={<div />}>
-            <Markdown slug={slug} />
-          </React.Suspense>
-        </Block>
-      </Layer>
+      <React.Suspense fallback={<div />}>
+        <Layer headerTitle={metadata.title}>
+          <Block>
+              <Markdown slug={slug} />
+          </Block>
+        </Layer>
+      </React.Suspense>
       {metadata.imports?.map((importSrc) => (
         <script charSet="utf-8" src={importSrc} />
       ))}
