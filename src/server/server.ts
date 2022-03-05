@@ -1,9 +1,9 @@
 import { Application } from "../deps/oak.ts";
 
-import render from "../client/server/render.tsx"
+import render from "../client/server/render.tsx";
 
 import apiRouter from "./apiRouter.ts";
-import gitRouter from "./gitRouter.ts"
+import gitRouter from "./gitRouter.ts";
 import staticRouter from "./staticRouter.ts";
 import sleep from "./sleep.ts";
 

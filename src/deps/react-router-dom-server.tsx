@@ -26,7 +26,7 @@
 
 /** @jsx React.createElement */
 import React from "./react.ts";
-import { Action, Location, To, createPath, parsePath } from "./history.ts";
+import { Action, createPath, Location, parsePath, To } from "./history.ts";
 import { Router } from "./react-router-dom.tsx";
 
 export interface StaticRouterProps {
@@ -42,7 +42,7 @@ export interface StaticRouterProps {
 export function StaticRouter({
   basename,
   children,
-  location: locationProp = "/"
+  location: locationProp = "/",
 }: StaticRouterProps) {
   if (typeof locationProp === "string") {
     locationProp = parsePath(locationProp);
@@ -54,7 +54,7 @@ export function StaticRouter({
     search: locationProp.search || "",
     hash: locationProp.hash || "",
     state: locationProp.state || null,
-    key: locationProp.key || "default"
+    key: locationProp.key || "default",
   };
 
   let staticNavigator = {
@@ -65,7 +65,7 @@ export function StaticRouter({
       throw new Error(
         `You cannot use navigator.push() on the server because it is a stateless ` +
           `environment. This error was probably triggered when you did a ` +
-          `\`navigate(${JSON.stringify(to)})\` somewhere in your app.`
+          `\`navigate(${JSON.stringify(to)})\` somewhere in your app.`,
       );
     },
     replace(to: To) {
@@ -73,28 +73,28 @@ export function StaticRouter({
         `You cannot use navigator.replace() on the server because it is a stateless ` +
           `environment. This error was probably triggered when you did a ` +
           `\`navigate(${JSON.stringify(to)}, { replace: true })\` somewhere ` +
-          `in your app.`
+          `in your app.`,
       );
     },
     go(delta: number) {
       throw new Error(
         `You cannot use navigator.go() on the server because it is a stateless ` +
           `environment. This error was probably triggered when you did a ` +
-          `\`navigate(${delta})\` somewhere in your app.`
+          `\`navigate(${delta})\` somewhere in your app.`,
       );
     },
     back() {
       throw new Error(
         `You cannot use navigator.back() on the server because it is a stateless ` +
-          `environment.`
+          `environment.`,
       );
     },
     forward() {
       throw new Error(
         `You cannot use navigator.forward() on the server because it is a stateless ` +
-          `environment.`
+          `environment.`,
       );
-    }
+    },
   };
 
   return (

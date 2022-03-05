@@ -2,7 +2,7 @@
 /** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
 
-import { Block, Layer } from "../theme.tsx"
+import { Block, Layer } from "../theme.tsx";
 
 interface CardProps {
   children: React.ReactNode;
@@ -25,19 +25,23 @@ export default function Card({
         headerTitle={headerTitle}
         className="card"
       >
-        {imageSrc ? (
-          <div className="card-preview-container">
-            <img src={imageSrc} className="card-preview" alt={imageAlt} />
-          </div>
-        ) : null}
+        {imageSrc
+          ? (
+            <div className="card-preview-container">
+              <img src={imageSrc} className="card-preview" alt={imageAlt} />
+            </div>
+          )
+          : null}
         <Block>
           {children}
         </Block>
-        {actionButton ? (
-          <Block>
-            {actionButton}
-          </Block>
-        ) : null}
+        {actionButton
+          ? (
+            <Block>
+              {actionButton}
+            </Block>
+          )
+          : null}
       </Layer>
     </article>
   );

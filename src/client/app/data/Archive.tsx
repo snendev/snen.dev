@@ -1,14 +1,12 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
-import type {
-  SiteEntryMetadata,
-} from "../../../server/files/types.ts";
+import type { SiteEntryMetadata } from "../../../server/files/types.ts";
 
-import { Block } from "../theme.tsx"
+import { Block } from "../theme.tsx";
 
 import readJsonAPI from "./api/readJsonAPI.ts";
-import MiniCard from './MiniCard.tsx'
+import MiniCard from "./MiniCard.tsx";
 
 export default function Archive() {
   const archive = readJsonAPI<SiteEntryMetadata[]>("feed");

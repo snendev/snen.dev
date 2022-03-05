@@ -1,7 +1,7 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
-import { Link } from "../../../deps/react-router-dom.tsx"
+import { Link } from "../../../deps/react-router-dom.tsx";
 
 export default function Error404() {
   return (

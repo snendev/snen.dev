@@ -1,7 +1,7 @@
 /** @jsx React.createElement */
 import React from "../../../deps/react.ts";
 
-import { Block, Layer } from "../theme.tsx"
+import { Block, Layer } from "../theme.tsx";
 
 import MediaLinks from "./MediaLinks.tsx";
 

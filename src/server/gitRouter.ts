@@ -13,7 +13,9 @@ gitRouter.get("/git/:repo", (context) => {
 gitRouter.get("/git/:repo/:branch", (context) => {
   const { repo, branch } = context.params;
 
-  context.response.redirect(`https://github.com/snendev/${repo}/tree/${branch}`);
+  context.response.redirect(
+    `https://github.com/snendev/${repo}/tree/${branch}`,
+  );
 });
 
 // redirect to some specific file location

@@ -19,7 +19,7 @@ export default function buildRSSFeed(items: SiteEntryMetadata[]) {
       <item>
         <title>${title}</title>
         <description>${subhead}</description>
-        ${tags.map((tag) => `<category>${tag}</category>`).join('\n')}
+        ${tags.map((tag) => `<category>${tag}</category>`).join("\n")}
         <link>${href}</link>
         <guid>${permalink}</guid>
         <pubDate>${formatDate(publishDate)}</pubDate>

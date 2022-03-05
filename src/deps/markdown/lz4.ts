@@ -24,9 +24,9 @@
 // Copyright 2020-present the denosaurs team. All rights reserved. MIT license.
 
 import init, {
-  source,
   lz4_compress,
   lz4_decompress,
+  source,
 } from "https://deno.land/x/lz4@v0.1.2/wasm.js";
 
 await init(source);

@@ -1,9 +1,6 @@
 import loadEntries from "./loadEntries.ts";
 import buildRSSFeed from "./rss.ts";
-import type {
-  SiteEntryMetadata,
-  EntryCategory,
-} from "./types.ts";
+import type { EntryCategory, SiteEntryMetadata } from "./types.ts";
 
 const ENTRIES_DIR = "./entries";
 
@@ -14,7 +11,7 @@ function getCategoryEntries(category: EntryCategory) {
 }
 
 export function getEntryMetadata(slug: string): SiteEntryMetadata | null {
-  return entries[slug] ?? null
+  return entries[slug] ?? null;
 }
 
 export function readDirectory(feed?: string): SiteEntryMetadata[] | null {
@@ -39,6 +36,6 @@ export async function readFile(slug: string): Promise<string> {
 }
 
 export async function readRSSFeed(feed?: string): Promise<string | null> {
-  const files = readDirectory(feed)
-  return files ? await buildRSSFeed(files) : null
+  const files = readDirectory(feed);
+  return files ? await buildRSSFeed(files) : null;
 }

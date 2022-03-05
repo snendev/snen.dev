@@ -3,9 +3,5 @@ export default function buildHSLString(
   saturation: number,
   lightness: number,
 ): string {
-  return `hsl(${hue}, ${
-    Math.round(saturation)
-  }%, ${
-    Math.round(lightness)
-  }%)`
+  return `hsl(${hue}, ${Math.round(saturation)}%, ${Math.round(lightness)}%)`;
 }

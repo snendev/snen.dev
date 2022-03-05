@@ -1,7 +1,7 @@
 import { parse } from "https://deno.land/std@0.120.0/flags/mod.ts";
 import * as esbuild from "https://deno.land/x/esbuild@v0.14.11/mod.js";
 
-import buildThemeCSS from "./theme.ts"
+import buildThemeCSS from "./theme.ts";
 
 const { minify, sourcemap } = parse(Deno.args);
 
@@ -38,9 +38,9 @@ console.log(`Succesfully bundled ${entryPoints.join(", ")}.`);
 
 esbuild.stop();
 
-console.log("Now generating theme-based CSS...")
+console.log("Now generating theme-based CSS...");
 
-const paletteCss = buildThemeCSS()
-await Deno.writeTextFile("public/theme.css", paletteCss)
+const paletteCss = buildThemeCSS();
+await Deno.writeTextFile("public/theme.css", paletteCss);
 
-console.log("Done!")
+console.log("Done!");

@@ -26,21 +26,25 @@
 
 /** @jsx React.createElement */
 import type { BrowserHistory, HashHistory, History } from "./history.ts";
-import { createBrowserHistory, createHashHistory, createPath } from "./history.ts";
-import React from"./react.ts";
 import {
+  createBrowserHistory,
+  createHashHistory,
+  createPath,
+} from "./history.ts";
+import React from "./react.ts";
+import {
+  createRoutesFromChildren,
+  generatePath,
+  matchPath,
+  matchRoutes,
   MemoryRouter,
   Navigate,
   Outlet,
+  renderMatches,
+  resolvePath,
   Route,
   Router,
   Routes,
-  createRoutesFromChildren,
-  generatePath,
-  matchRoutes,
-  matchPath,
-  resolvePath,
-  renderMatches,
   useHref,
   useInRouterContext,
   useLocation,
@@ -48,10 +52,10 @@ import {
   useNavigate,
   useNavigationType,
   useOutlet,
+  useOutletContext,
   useParams,
   useResolvedPath,
   useRoutes,
-  useOutletContext
 } from "./react-router.ts";
 import type { To } from "./react-router.ts";
 
@@ -78,18 +82,18 @@ function warning(cond: boolean, message: string): void {
 
 // Note: Keep in sync with react-router exports!
 export {
+  createRoutesFromChildren,
+  generatePath,
+  matchPath,
+  matchRoutes,
   MemoryRouter,
   Navigate,
   Outlet,
+  renderMatches,
+  resolvePath,
   Route,
   Router,
   Routes,
-  createRoutesFromChildren,
-  generatePath,
-  matchRoutes,
-  matchPath,
-  renderMatches,
-  resolvePath,
   useHref,
   useInRouterContext,
   useLocation,
@@ -97,33 +101,33 @@ export {
   useNavigate,
   useNavigationType,
   useOutlet,
+  useOutletContext,
   useParams,
   useResolvedPath,
   useRoutes,
-  useOutletContext
 };
 
 export type {
+  IndexRouteProps,
+  LayoutRouteProps,
   Location,
-  Path,
-  To,
-  NavigationType,
   MemoryRouterProps,
   NavigateFunction,
   NavigateOptions,
   NavigateProps,
+  NavigationType,
   Navigator,
   OutletProps,
   Params,
+  Path,
   PathMatch,
+  PathRouteProps,
   RouteMatch,
   RouteObject,
   RouteProps,
-  PathRouteProps,
-  LayoutRouteProps,
-  IndexRouteProps,
   RouterProps,
-  RoutesProps
+  RoutesProps,
+  To,
 } from "./react-router.ts";
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -141,9 +145,9 @@ export type {
 
 /** @internal */
 export {
-  UNSAFE_NavigationContext,
   UNSAFE_LocationContext,
-  UNSAFE_RouteContext
+  UNSAFE_NavigationContext,
+  UNSAFE_RouteContext,
 } from "./react-router.ts";
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -162,7 +166,7 @@ export interface BrowserRouterProps {
 export function BrowserRouter({
   basename,
   children,
-  window
+  window,
 }: BrowserRouterProps) {
   let historyRef = React.useRef<BrowserHistory>();
   if (historyRef.current == null) {
@@ -172,7 +176,7 @@ export function BrowserRouter({
   let history = historyRef.current;
   let [state, setState] = React.useState({
     action: history.action,
-    location: history.location
+    location: history.location,
   });
 
   React.useLayoutEffect(() => history.listen(setState), [history]);
@@ -207,7 +211,7 @@ export function HashRouter({ basename, children, window }: HashRouterProps) {
   let history = historyRef.current;
   let [state, setState] = React.useState({
     action: history.action,
-    location: history.location
+    location: history.location,
   });
 
   React.useLayoutEffect(() => history.listen(setState), [history]);
@@ -238,7 +242,7 @@ export interface HistoryRouterProps {
 function HistoryRouter({ basename, children, history }: HistoryRouterProps) {
   const [state, setState] = React.useState({
     action: history.action,
-    location: history.location
+    location: history.location,
   });
 
   React.useLayoutEffect(() => history.listen(setState), [history]);
@@ -274,12 +278,12 @@ export interface LinkProps
 export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
   function LinkWithRef(
     { onClick, reloadDocument, replace = false, state, target, to, ...rest },
-    ref
+    ref,
   ) {
     let href = useHref(to);
     let internalOnClick = useLinkClickHandler(to, { replace, state, target });
     function handleClick(
-      event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+      event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     ) {
       if (onClick) onClick(event);
       if (!event.defaultPrevented && !reloadDocument) {
@@ -297,7 +301,7 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
         target={target}
       />
     );
-  }
+  },
 );
 
 export interface NavLinkProps
@@ -328,7 +332,7 @@ export const NavLink = React.forwardRef<HTMLAnchorElement, NavLinkProps>(
       children,
       ...rest
     },
-    ref
+    ref,
   ) {
     let location = useLocation();
     let path = useResolvedPath(to);
@@ -340,8 +344,7 @@ export const NavLink = React.forwardRef<HTMLAnchorElement, NavLinkProps>(
       toPathname = toPathname.toLowerCase();
     }
 
-    let isActive =
-      locationPathname === toPathname ||
+    let isActive = locationPathname === toPathname ||
       (!end &&
         locationPathname.startsWith(toPathname) &&
         locationPathname.charAt(toPathname.length) === "/");
@@ -362,8 +365,9 @@ export const NavLink = React.forwardRef<HTMLAnchorElement, NavLinkProps>(
         .join(" ");
     }
 
-    let style =
-      typeof styleProp === "function" ? styleProp({ isActive }) : styleProp;
+    let style = typeof styleProp === "function"
+      ? styleProp({ isActive })
+      : styleProp;
 
     return (
       <Link
@@ -377,7 +381,7 @@ export const NavLink = React.forwardRef<HTMLAnchorElement, NavLinkProps>(
         {typeof children === "function" ? children({ isActive }) : children}
       </Link>
     );
-  }
+  },
 );
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -394,12 +398,12 @@ export function useLinkClickHandler<E extends Element = HTMLAnchorElement>(
   {
     target,
     replace: replaceProp,
-    state
+    state,
   }: {
     target?: React.HTMLAttributeAnchorTarget;
     replace?: boolean;
     state?: any;
-  } = {}
+  } = {},
 ): (event: React.MouseEvent<E, MouseEvent>) => void {
   let navigate = useNavigate();
   let location = useLocation();
@@ -416,13 +420,13 @@ export function useLinkClickHandler<E extends Element = HTMLAnchorElement>(
 
         // If the URL hasn't changed, a regular <a> will do a replace instead of
         // a push, so do the same here.
-        let replace =
-          !!replaceProp || createPath(location) === createPath(path);
+        let replace = !!replaceProp ||
+          createPath(location) === createPath(path);
 
         navigate(to, { replace, state });
       }
     },
-    [location, navigate, path, replaceProp, state, target, to]
+    [location, navigate, path, replaceProp, state, target, to],
   );
 }
 
@@ -440,7 +444,7 @@ export function useSearchParams(defaultInit?: URLSearchParamsInit) {
       `If you're unsure how to load polyfills, we recommend you check out ` +
       `https://polyfill.io/v3/ which provides some recommendations about how ` +
       `to load polyfills only for users that need them, instead of for every ` +
-      `user.`
+      `user.`,
   );
 
   let defaultSearchParamsRef = React.useRef(createSearchParams(defaultInit));
@@ -451,7 +455,7 @@ export function useSearchParams(defaultInit?: URLSearchParamsInit) {
 
     for (let key of defaultSearchParamsRef.current.keys()) {
       if (!searchParams.has(key)) {
-        defaultSearchParamsRef.current.getAll(key).forEach(value => {
+        defaultSearchParamsRef.current.getAll(key).forEach((value) => {
           searchParams.append(key, value);
         });
       }
@@ -464,11 +468,11 @@ export function useSearchParams(defaultInit?: URLSearchParamsInit) {
   let setSearchParams = React.useCallback(
     (
       nextInit: URLSearchParamsInit,
-      navigateOptions?: { replace?: boolean; state?: any }
+      navigateOptions?: { replace?: boolean; state?: any },
     ) => {
       navigate("?" + createSearchParams(nextInit), navigateOptions);
     },
-    [navigate]
+    [navigate],
   );
 
   return [searchParams, setSearchParams] as const;
@@ -504,18 +508,18 @@ export type URLSearchParamsInit =
  *   });
  */
 export function createSearchParams(
-  init: URLSearchParamsInit = ""
+  init: URLSearchParamsInit = "",
 ): URLSearchParams {
   return new URLSearchParams(
     typeof init === "string" ||
-    Array.isArray(init) ||
-    init instanceof URLSearchParams
+      Array.isArray(init) ||
+      init instanceof URLSearchParams
       ? init
       : Object.keys(init).reduce((memo, key) => {
-          let value = init[key];
-          return memo.concat(
-            Array.isArray(value) ? value.map(v => [key, v]) : [[key, value]]
-          );
-        }, [] as ParamKeyValuePair[])
+        let value = init[key];
+        return memo.concat(
+          Array.isArray(value) ? value.map((v) => [key, v]) : [[key, value]],
+        );
+      }, [] as ParamKeyValuePair[]),
   );
 }

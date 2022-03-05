@@ -24,7 +24,7 @@ export default async function renderServer(href: string) {
             <App />
           </ReactStaticRouter>
         </Html>
-      </React.StrictMode>
+      </React.StrictMode>,
     );
-  return nodeStream
+  return nodeStream;
 }

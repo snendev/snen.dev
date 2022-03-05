@@ -1,20 +1,20 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
-import { Link, Outlet } from "../../../deps/react-router-dom.tsx"
+import { Link, Outlet } from "../../../deps/react-router-dom.tsx";
 
 import { Layer } from "../theme.tsx";
 
 import Navbar from "./Navbar.tsx";
-import Sidebar from "./Sidebar.tsx"
-import ThemeToggle from "./ThemeToggle.tsx"
+import Sidebar from "./Sidebar.tsx";
+import ThemeToggle from "./ThemeToggle.tsx";
 
 interface PageProps {
-  children: React.ReactNode
-  sidebar?: React.ReactNode
+  children: React.ReactNode;
+  sidebar?: React.ReactNode;
 }
 
-export function Page({children, sidebar}: PageProps) {
+export function Page({ children, sidebar }: PageProps) {
   return (
     <Layer
       className="page"
@@ -48,5 +48,5 @@ export default function ParentRoutePage() {
     <Page sidebar={<Sidebar />}>
       <Outlet />
     </Page>
-  )
+  );
 }

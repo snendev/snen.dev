@@ -6,17 +6,19 @@ import type {
   SiteEntryMetadata,
 } from "../../../server/files/types.ts";
 
-import { Block } from "../theme.tsx"
+import { Block } from "../theme.tsx";
 
 import readJsonAPI from "./api/readJsonAPI.ts";
-import GenericEntryCard from "./GenericEntryCard.tsx"
+import GenericEntryCard from "./GenericEntryCard.tsx";
 
 interface EntryListProps {
-  feed?: EntryCategory
+  feed?: EntryCategory;
 }
 
 export default function EntryList({ feed }: EntryListProps) {
-  const data: SiteEntryMetadata[] =  feed ? readJsonAPI("feed", feed) : readJsonAPI("feed");
+  const data: SiteEntryMetadata[] = feed
+    ? readJsonAPI("feed", feed)
+    : readJsonAPI("feed");
   return (
     <div>
       {data.map(({ category, slug }) => (

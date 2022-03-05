@@ -1,27 +1,27 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
-import { Link } from "../../../deps/react-router-dom.tsx"
+import { Link } from "../../../deps/react-router-dom.tsx";
 import type {
   EntryCategory,
   SiteEntryMetadata,
 } from "../../../server/files/types.ts";
 
-import { Button } from "../theme.tsx"
+import { Button } from "../theme.tsx";
 
 import readJsonAPI from "./api/readJsonAPI.ts";
-import Card from "./Card.tsx"
+import Card from "./Card.tsx";
 
 type LazyComponent = React.LazyExoticComponent<
-  (props: { slug: string; limitSections?: number}) => React.ReactElement
+  (props: { slug: string; limitSections?: number }) => React.ReactElement
 >;
 const Markdown: LazyComponent = React.lazy(async () =>
   await import("./Markdown.tsx")
 );
 
 interface ReadingCardProps {
-  metadata: SiteEntryMetadata
-  to: string
+  metadata: SiteEntryMetadata;
+  to: string;
 }
 
 function ReadingCard({ metadata, to }: ReadingCardProps) {
@@ -49,21 +49,23 @@ function ReadingCard({ metadata, to }: ReadingCardProps) {
       <React.Suspense fallback={<div />}>
         <Markdown
           slug={metadata.slug}
-          limitSections={isExpanded ? 8 :  3}
+          limitSections={isExpanded ? 8 : 3}
         />
       </React.Suspense>
-      {isExpanded ? (
-        <span>
-          <Link to={to}>Read the full post</Link>
-        </span>
-      ) : null}
+      {isExpanded
+        ? (
+          <span>
+            <Link to={to}>Read the full post</Link>
+          </span>
+        )
+        : null}
     </Card>
   );
 }
 
 interface ShowcaseCardProps {
-  metadata: SiteEntryMetadata
-  to: string
+  metadata: SiteEntryMetadata;
+  to: string;
 }
 
 function ShowcaseCard({
@@ -88,11 +90,13 @@ function ShowcaseCard({
 }
 
 interface GenericEntryCardProps {
-  category: EntryCategory
-  slug: string
+  category: EntryCategory;
+  slug: string;
 }
 
-export default function GenericEntryCard({ category, slug }: GenericEntryCardProps) {
+export default function GenericEntryCard(
+  { category, slug }: GenericEntryCardProps,
+) {
   const metadata = readJsonAPI<SiteEntryMetadata>("entries", slug);
   const fullPostHref = `/${category}/${slug}`;
 
@@ -104,19 +108,19 @@ export default function GenericEntryCard({ category, slug }: GenericEntryCardPro
           to={fullPostHref}
           metadata={metadata}
         />
-      )
+      );
     }
-    case "media": 
+    case "media":
     case "tech": {
       return (
         <ShowcaseCard
           to={fullPostHref}
           metadata={metadata}
         />
-      )
+      );
     }
     default: {
-      throw new Error(`Unrecognized category: ${category} - ${slug}`)
+      throw new Error(`Unrecognized category: ${category} - ${slug}`);
     }
   }
 }

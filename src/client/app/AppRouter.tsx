@@ -1,7 +1,7 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from "../../deps/react.ts";
-import { Routes, Route } from "../../deps/react-router-dom.tsx"
+import { Route, Routes } from "../../deps/react-router-dom.tsx";
 
 import DefaultPage from "./layout/Page.tsx";
 import Entry from "./pages/Entry.tsx";
@@ -19,12 +19,11 @@ export default function AppRouter() {
     <Routes>
       <Route path="/" element={<DefaultPage />}>
         <Route index element={<Feed />} />
-        <Route path="tech/theme-explorer"
+        <Route
+          path="tech/theme-explorer"
           element={
             <React.Suspense
-              fallback={
-                <span>Loading...</span>
-              }
+              fallback={<span>Loading...</span>}
             >
               <ThemePlayground />
             </React.Suspense>
@@ -36,5 +35,5 @@ export default function AppRouter() {
         </Route>
       </Route>
     </Routes>
-  )
+  );
 }

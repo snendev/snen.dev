@@ -26,10 +26,7 @@ import { Token } from "https://deno.land/x/rusty_markdown@v0.4.1/event.ts";
 export type { Token };
 
 // @deno-types="https://deno.land/x/rusty_markdown@v0.4.1/wasm/deno_rusty_markdown.d.ts"
-import {
-  html as html_,
-  tokens as tokens_,
-} from "./markdown/wasm.js";
+import { html as html_, tokens as tokens_ } from "./markdown/wasm.js";
 
 /**
  * Option object containing flags for enabling extra features that are not part

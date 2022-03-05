@@ -1,25 +1,25 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from "../../../../../deps/react.ts";
-import { HuePicker } from "../../../../../deps/react-color.ts"
+import { HuePicker } from "../../../../../deps/react-color.ts";
 
-import { Color, Layer, Block } from "../../../theme.tsx"
+import { Block, Color, Layer } from "../../../theme.tsx";
 
-import buildHSLString from "./buildHSLString.tsx"
-import useStylesheetHandle from "./useStylesheetHandle.tsx"
-import TestLayer from "./TestLayer.tsx"
+import buildHSLString from "./buildHSLString.tsx";
+import useStylesheetHandle from "./useStylesheetHandle.tsx";
+import TestLayer from "./TestLayer.tsx";
 
 interface ColorLevel {
-  saturation: number
-  lightness: number
+  saturation: number;
+  lightness: number;
 }
 interface HSLColor extends ColorLevel {
-  hue: number
+  hue: number;
 }
 
 interface LevelPickerProps {
-  value: number
-  onChange: (value: number) => void
+  value: number;
+  onChange: (value: number) => void;
 }
 
 function LevelPicker({
@@ -36,16 +36,15 @@ function LevelPicker({
       />
       <label>{Math.round(value)}</label>
     </div>
-  )
+  );
 }
-
 
 const COLOR_KEYS_ORDER: Color[] = [
   "primary",
   "accent",
   "surface",
   "warning",
-]
+];
 
 export default function ThemePlayground() {
   const {
@@ -56,7 +55,7 @@ export default function ThemePlayground() {
     updateContrastLightnesses,
     updateGreys,
     updateContrastGreys,
-  } = useStylesheetHandle()
+  } = useStylesheetHandle();
 
   const {
     hues,
@@ -65,40 +64,40 @@ export default function ThemePlayground() {
     contrastLightnesses,
     greys,
     contrastGreys,
-  } = palette
+  } = palette;
   const colorLevels = saturations.map((saturation, index) => ({
     saturation,
     lightness: lightnesses[index],
-  }))
+  }));
   const colorGrid: (HSLColor & { color: Color })[][] = COLOR_KEYS_ORDER
     .map((color) => {
-      const hue = hues[color as Color]
-      return colorLevels.map(({saturation, lightness}) => ({
+      const hue = hues[color as Color];
+      return colorLevels.map(({ saturation, lightness }) => ({
         color: color as Color,
         hue,
         saturation,
         lightness,
-      }))
-    })
+      }));
+    });
 
   const sidebar = (
     <div>
       <Block className="flex-row-evenly">
         <Layer>
           {COLOR_KEYS_ORDER.map((color) => {
-            const hue = hues[color]
+            const hue = hues[color];
             return (
               <React.Fragment key={color}>
                 <label>{color} - {Math.round(hue)}</label>
                 <HuePicker
                   width="100px"
-                  color={{h: hue, s: 0, l: 0}}
+                  color={{ h: hue, s: 0, l: 0 }}
                   onChangeComplete={({ hsl }: any) => {
-                    updateHues(color, hsl.h)
+                    updateHues(color, hsl.h);
                   }}
                 />
               </React.Fragment>
-            )
+            );
           })}
         </Layer>
         <Layer>
@@ -106,7 +105,7 @@ export default function ThemePlayground() {
             <LevelPicker
               value={saturation}
               onChange={(value) => {
-                updateSaturations(depth, value)
+                updateSaturations(depth, value);
               }}
             />
           ))}
@@ -119,7 +118,7 @@ export default function ThemePlayground() {
             <LevelPicker
               value={lightness}
               onChange={(value) => {
-                updateLightnesses(depth, value)
+                updateLightnesses(depth, value);
               }}
             />
           ))}
@@ -130,7 +129,7 @@ export default function ThemePlayground() {
             <LevelPicker
               value={contrastLightness}
               onChange={(value) => {
-                updateContrastLightnesses(depth, value)
+                updateContrastLightnesses(depth, value);
               }}
             />
           ))}
@@ -143,7 +142,7 @@ export default function ThemePlayground() {
             <LevelPicker
               value={grey}
               onChange={(value) => {
-                updateGreys(depth, value)
+                updateGreys(depth, value);
               }}
             />
           ))}
@@ -154,14 +153,14 @@ export default function ThemePlayground() {
             <LevelPicker
               value={grey}
               onChange={(value) => {
-                updateContrastGreys(depth, value)
+                updateContrastGreys(depth, value);
               }}
             />
           ))}
         </Layer>
       </Block>
     </div>
-  )
+  );
   return (
     <div className="flex-row-evenly">
       {sidebar}
@@ -177,14 +176,18 @@ export default function ThemePlayground() {
                       <div
                         key={`${hslColor.saturation}-${hslColor.lightness}`}
                         style={{
-                          backgroundColor: buildHSLString(hslColor.hue, hslColor.saturation, hslColor.lightness),
+                          backgroundColor: buildHSLString(
+                            hslColor.hue,
+                            hslColor.saturation,
+                            hslColor.lightness,
+                          ),
                           width: 20,
                           height: 20,
                           borderRadius: 10,
                           margin: 4,
                         }}
                       />
-                    ))} 
+                    ))}
                   </Block>
                 </div>
               ))}

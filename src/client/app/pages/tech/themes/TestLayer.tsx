@@ -2,15 +2,15 @@
 /** @jsxFrag React.Fragment */
 import React from "../../../../../deps/react.ts";
 
-import { Layer, Button, Block, TextArea, useLayer } from "../../../theme.tsx"
+import { Block, Button, Layer, TextArea, useLayer } from "../../../theme.tsx";
 
 interface TestLayerProps {
-  children?: React.ReactNode
+  children?: React.ReactNode;
 }
 
 export default function TestLayer({ children }: TestLayerProps) {
-  const layer = useLayer()
-  const { depth } = layer
+  const layer = useLayer();
+  const { depth } = layer;
   return (
     <Layer headerTitle={`Depth: ${depth}`}>
       <div>
@@ -18,7 +18,9 @@ export default function TestLayer({ children }: TestLayerProps) {
           <div>
             <Button
               backgroundColor="primary"
-              onClick={() => { console.log('pressed primary button') }}
+              onClick={() => {
+                console.log("pressed primary button");
+              }}
             >
               Primary button
             </Button>
@@ -26,7 +28,9 @@ export default function TestLayer({ children }: TestLayerProps) {
           <div>
             <Button
               backgroundColor="accent"
-              onClick={() => { console.log('pressed accent button') }}
+              onClick={() => {
+                console.log("pressed accent button");
+              }}
             >
               Accent button
             </Button>
@@ -34,7 +38,9 @@ export default function TestLayer({ children }: TestLayerProps) {
           <div>
             <Button
               backgroundColor="surface"
-              onClick={() => { console.log('pressed surface button') }}
+              onClick={() => {
+                console.log("pressed surface button");
+              }}
             >
               Surface button
             </Button>
@@ -42,7 +48,9 @@ export default function TestLayer({ children }: TestLayerProps) {
           <div>
             <Button
               backgroundColor="warning"
-              onClick={() => { console.log('pressed warning button') }}
+              onClick={() => {
+                console.log("pressed warning button");
+              }}
             >
               Warning button
             </Button>
@@ -56,5 +64,5 @@ export default function TestLayer({ children }: TestLayerProps) {
         </Block>
       </div>
     </Layer>
-  )
+  );
 }

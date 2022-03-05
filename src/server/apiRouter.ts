@@ -1,7 +1,7 @@
 import { Router } from "../deps/oak.ts";
 import { contentType } from "../deps/media-types.ts";
 
-import { readDirectory, getEntryMetadata } from "./files/mod.ts";
+import { getEntryMetadata, readDirectory } from "./files/mod.ts";
 
 const apiRouter = new Router();
 

@@ -1,7 +1,7 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
-import type { SiteEntryMetadata } from "../../../server/files/types.ts"
+import type { SiteEntryMetadata } from "../../../server/files/types.ts";
 
 import { Block, Layer } from "../theme.tsx";
 
@@ -9,8 +9,8 @@ import readJsonAPI from "./api/readJsonAPI.ts";
 
 interface ItchIOPreviewProps {
   title: string;
-  previewTitle: string
-  previewImageSrc?: string,
+  previewTitle: string;
+  previewImageSrc?: string;
   gameURL: string;
 }
 
@@ -26,15 +26,17 @@ function ItchIOPreview({
         headerTitle={previewImageSrc ? undefined : title}
         className="card"
       >
-        {previewImageSrc ? (
-          <a href={gameURL}>
-            <img
-              src={previewImageSrc}
-              alt={previewTitle}
-              className="width-100"
-            />
-          </a>
-        ) : null}
+        {previewImageSrc
+          ? (
+            <a href={gameURL}>
+              <img
+                src={previewImageSrc}
+                alt={previewTitle}
+                className="width-100"
+              />
+            </a>
+          )
+          : null}
         <Block>
           <h4>{previewTitle}</h4>
           <a href={gameURL}>
@@ -47,7 +49,7 @@ function ItchIOPreview({
 }
 
 interface ItchIOShowcaseProps {
-  slug: string
+  slug: string;
 }
 
 export default function ItchIOShowcase({

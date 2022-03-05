@@ -1,16 +1,16 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from "../../../deps/react.ts";
-import { useParams } from "../../../deps/react-router-dom.tsx"
-import type { EntryCategory } from "../../../server/files/types.ts"
+import { useParams } from "../../../deps/react-router-dom.tsx";
+import type { EntryCategory } from "../../../server/files/types.ts";
 
-import { Layer } from "../theme.tsx"
+import { Layer } from "../theme.tsx";
 
-import Error404 from "./Error404.tsx"
+import Error404 from "./Error404.tsx";
 
-const CATEGORIES: EntryCategory[] = ["about", "reading", "tech", "media"]
+const CATEGORIES: EntryCategory[] = ["about", "reading", "tech", "media"];
 function isEntryCategory(category: string): category is EntryCategory {
-  return CATEGORIES.includes(category as EntryCategory)
+  return CATEGORIES.includes(category as EntryCategory);
 }
 
 type LazyEntryListType = React.LazyExoticComponent<
@@ -21,10 +21,10 @@ const EntryList: LazyEntryListType = React.lazy(async () =>
 );
 
 export default function Feed() {
-  const { category } = useParams()
-  console.log(category)
+  const { category } = useParams();
+  console.log(category);
   if (category !== undefined && !isEntryCategory(category)) {
-    return <Error404 />
+    return <Error404 />;
   }
   return (
     <section>

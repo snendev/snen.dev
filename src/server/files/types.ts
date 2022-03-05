@@ -7,10 +7,10 @@ interface SiteEntryDeclaredMetadata {
   // secondary headline for the entry
   subhead: string;
   tags: string[];
-  slug: string
+  slug: string;
   pathToResource: string;
   previewImageSrc?: string;
-  imports?: string[]
+  imports?: string[];
 }
 
 interface DynamicResourceDeclaredMetadata {

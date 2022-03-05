@@ -1,8 +1,8 @@
 /** @jsx React.createElement */
 import React from "../../../deps/react.ts";
-import { Link } from "../../../deps/react-router-dom.tsx"
+import { Link } from "../../../deps/react-router-dom.tsx";
 
-import ThemeToggle from "./ThemeToggle.tsx"
+import ThemeToggle from "./ThemeToggle.tsx";
 
 export default function Navbar() {
   return (
@@ -12,7 +12,7 @@ export default function Navbar() {
       <Link to="/reading">read</Link>
       <Link to="/tech">tech</Link>
       <Link to="/media">media</Link>
-      <ThemeToggle className="theme-toggle-desktop"/>
+      <ThemeToggle className="theme-toggle-desktop" />
     </nav>
   );
 }

@@ -1,23 +1,23 @@
 /** @jsx React.createElement */
 import React from "../../../deps/react.ts";
 
-import { useThemeMode } from "../theme.tsx"
-import cx from "../classnames.ts"
+import { useThemeMode } from "../theme.tsx";
+import cx from "../classnames.ts";
 
 interface MediaLinkProps {
-  children: React.ReactNode
-  href: string
+  children: React.ReactNode;
+  href: string;
 }
 
 function MediaLink({ children, href }: MediaLinkProps): JSX.Element {
-  const mode = useThemeMode()
+  const mode = useThemeMode();
   return (
     <div className="block-5">
       <a href={href} target="_blank" className={cx("media-link", mode)}>
         {children}
       </a>
     </div>
-  )
+  );
 }
 
 export default function Navbar() {
@@ -25,7 +25,15 @@ export default function Navbar() {
     <section>
       <address>
         <MediaLink href="https://twitter.com/snendev">
-          <span className={cx("icon", "twitter-icon", "fab", "fa-brands", "fa-twitter")} />
+          <span
+            className={cx(
+              "icon",
+              "twitter-icon",
+              "fab",
+              "fa-brands",
+              "fa-twitter",
+            )}
+          />
           <span className="twitter-handle-text">@snendev</span>
         </MediaLink>
         <MediaLink href="https://github.com/snendev">
@@ -38,7 +46,9 @@ export default function Navbar() {
           <span>me@snen.dev</span>
         </MediaLink>
         <MediaLink href="/feed">
-          <span className={cx("icon", "icon-padding", "fa", "fa-solid", "fa-rss")} />
+          <span
+            className={cx("icon", "icon-padding", "fa", "fa-solid", "fa-rss")}
+          />
           <span>RSS</span>
         </MediaLink>
       </address>
