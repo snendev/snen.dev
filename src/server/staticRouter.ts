@@ -1,65 +1,57 @@
-import { Context, Router } from "../deps/oak.ts";
-import { contentType } from "../deps/media-types.ts";
-
-import { readRSSFeed } from "./files/mod.ts";
-import sleep from "./sleep.ts";
-
-// TODO static compression?
-
-async function streamFile(
-  context: Context,
-  path: string,
-  contentTypeQuery: string,
-): Promise<void> {
-  const fileURL = new URL(`../../${path}`, import.meta.url);
-  const response = await fetch(fileURL);
-  context.response.type = contentType(contentTypeQuery);
-  context.response.body = response.body;
-}
+import { Router } from "../deps/oak.ts";
 
 // handle static asset requests (ts, js, sourcemaps, css, images, etc)
 const staticRouter = new Router();
 
 // rss feed
-staticRouter.get("/:path?/(rss|feed|index.xml)", async (context, next) => {
+staticRouter.get("/:path?/(rss|feed|index.xml)", (context) => {
   const { path } = context.params;
-  const rss = await readRSSFeed(path);
-  if (!rss) return await next();
-
-  context.response.type = contentType(".xml");
-  context.response.body = rss;
+  context.response.redirect(`/${path ?? "index"}.xml`);
 });
 
-// post content requests
-staticRouter.get("/entries/:slug.md", async (context) => {
+staticRouter.get(
+  "/assets/(.+)",
+  async (context, next) => {
+    const { 0: path } = context.params;
+    try {
+      await context.send({
+        root: `${Deno.cwd()}/assets`,
+        path,
+      });
+    } catch (_error) {
+      next();
+    }
+  },
+);
+
+staticRouter.get("/entries/:slug.md", async (context, next) => {
   const { slug } = context.params;
-  await streamFile(context, `entries/${slug}.md`, ".md");
-});
+  try {
+    await context.send({
+      root: `${Deno.cwd()}/dist`,
+      path: `${slug}.md`,
+    })
+  } catch (_error) {
+    next();
+  }
+})
 
-// source code and source maps
-staticRouter.get("/:path+.(js|jsx|ts|tsx|js)(.map)?", async (context) => {
-  const { path, 0: _extension, 1: isSourcemap } = context.params;
-
-  const filepath = `dist/${path}.js${isSourcemap ? ".map" : ""}`;
-
-  // await sleep(1);
-  await streamFile(context, filepath, ".js");
-});
-
-// css and font files
-staticRouter.get("/:path.(css|eot|svg|ttf|woff|woff2)", async (context) => {
-  const { path, 0: extension } = context.params;
-  const filepath = `public/${path}.${extension}`;
-  await streamFile(context, filepath, ".css");
-});
-
-// image/media files
-staticRouter.get("/:slug+.:ext", async (context) => {
-  const { pathname } = context.request.url;
-  const path = pathname.slice(1);
-  const filepath = `assets/${path}`;
-
-  await streamFile(context, filepath, path);
-});
+// css|eot|svg|ttf|woff|woff2|xml|md
+// any requests that match a file in `/dist` should be served statically
+staticRouter.get(
+  "/(.+)",
+  async (context, next) => {
+    const { 0: path } = context.params;
+    try {
+      console.log(path)
+      await context.send({
+        root: `${Deno.cwd()}/dist`,
+        path,
+      });
+    } catch (_error) {
+      next();
+    }
+  },
+);
 
 export default staticRouter;

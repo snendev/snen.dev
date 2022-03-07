@@ -14,7 +14,7 @@ Eventually, I reasoned that it would try to build something to help me "debug" m
 
 At time of writing, that currently looks something like this:
 
-![A development screenshot of the theme explorer.](/theme-explorer-dev-photo.png)
+![A development screenshot of the theme explorer.](/assets/theme-explorer-dev-photo.png)
 
 And hopefully by the time you read this, the website looks a little prettier. :)
 

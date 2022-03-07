@@ -1,7 +1,10 @@
 import { parse } from "https://deno.land/std@0.120.0/flags/mod.ts";
 import * as esbuild from "https://deno.land/x/esbuild@v0.14.11/mod.js";
 
-import buildThemeCSS from "./theme.ts";
+import compressStaticFiles from "./compress.ts"
+import buildRSS from "./rss.ts"
+import buildThemeCSS from "./theme.ts"
+import walkDirectory from "./walkDirectory.ts"
 
 const { minify, sourcemap } = parse(Deno.args);
 
@@ -41,6 +44,24 @@ esbuild.stop();
 console.log("Now generating theme-based CSS...");
 
 const paletteCss = buildThemeCSS();
-await Deno.writeTextFile("public/theme.css", paletteCss);
+await Deno.writeTextFile("dist/theme.css", paletteCss);
 
-console.log("Done!");
+console.log("Building RSS files...")
+
+await buildRSS();
+
+console.log("Copying public files into dist...")
+
+async function copyFile(path: string, name: string) {
+  const distPath = ["dist", ...path.split("/").slice(1)].join("/");
+  await Deno.copyFile(`${path}/${name}`, `${distPath}/${name}`);
+}
+
+walkDirectory("public", copyFile)
+walkDirectory("entries", copyFile)
+
+console.log("Compressing static resources...")
+
+await compressStaticFiles("dist");
+
+console.log("Done!")

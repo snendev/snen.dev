@@ -1,12 +1,8 @@
-import entries from "../../../entries/entries.json" assert { type: "json" };
+import entries from "../../../entries/entries.json" assert {type: "json"}
 
-import {
-  EntryCategory,
-  SiteEntryMetadata,
-  VariantSiteEntryMetadata,
-} from "./types.ts";
+import { EntryCategory, SiteEntryMetadata, VariantSiteEntryMetadata } from "./types.ts";
 
-const siteEntries = entries as VariantSiteEntryMetadata[];
+const siteEntries = entries as VariantSiteEntryMetadata[]
 
 const REPO_LINK = Deno.env.get("REPO_LINK");
 
@@ -26,7 +22,7 @@ async function collectSiteEntries(
       imports,
     }) => {
       if (dynamicResourceMetadata !== undefined) {
-        const { publishDate, modifyDate, abstract } = dynamicResourceMetadata;
+        const { publishDate, modifyDate, abstract } = dynamicResourceMetadata
         const href = `https://snen.dev/${slug}`;
         return {
           category: category as EntryCategory,
@@ -66,11 +62,11 @@ async function collectSiteEntries(
         pathToResource,
         imports,
       };
-    }),
-  );
+    })
+  )
 }
 
-export default async function loadEntries(
+export default async function getMetadata(
   directory: string,
 ): Promise<Record<string, SiteEntryMetadata>> {
   const collection = await collectSiteEntries(directory);

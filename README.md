@@ -14,8 +14,8 @@ These should serve as a decent entrypoint.
 
 In general, the layout is relatively straightforward:
 
-- `/assets` contains public assets like images and video files
-- `/public` contains public resources like css
+- `/assets` contains bigger resources like images and video files
+- `/public` contains developer-defined css
 - `/entries` contains posts for content I've written or made
 - `/build` contains build scripts, which ideally are few
 - `/src` contains all the application code
@@ -25,6 +25,8 @@ In general, the layout is relatively straightforward:
     - `/app/data` contains any components or code that have to do with data requests
     - `/app/layout` contains any components that structure the layout of basic pages
     - `/app/pages` contain components definitions for each application route
+
+All of `public`, `entries`, and the compiled result of `src` are copied into `/dist` at build time. 
 
 ## Tools/References
 

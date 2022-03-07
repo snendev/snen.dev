@@ -49,8 +49,8 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   React.useLayoutEffect(() => {
     if (mode !== null) return;
-    // @ts-ignore Need to find a way to SSR + use <reference lib="dom">
     const isLightMode =
+      // @ts-ignore Need to find a way to SSR + use <reference lib="dom">
       window.matchMedia("(prefers-color-scheme: light)").matches;
     onChange(isLightMode ? "light" : "dark");
   }, [mode]);

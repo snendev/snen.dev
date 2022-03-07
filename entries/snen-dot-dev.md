@@ -159,7 +159,7 @@ For this website, [esbuild](https://esbuild.github.io/) is used to strip the sou
 
 At the end of the day it just helps guarantee that less code is shipped to the client. On snen.dev, you can check your Developer Tools network tab, and you'll see the following:
 
-![snen.dev network tab inside the browser Developer Tools. Shows file sizes 2.7kB, 835B, 25.0kB, 9.1kB, etc.](/intro-snen-dev-network-tab.png)
+![snen.dev network tab inside the browser Developer Tools. Shows file sizes 2.7kB, 835B, 25.0kB, 9.1kB, etc.](/assets/intro-snen-dev-network-tab.png)
 
 (At time of writing, there are still improvements to make, like my un-minified `theme.css` -- yikes!)
 

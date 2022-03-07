@@ -1,10 +1,12 @@
-import loadEntries from "./loadEntries.ts";
-import buildRSSFeed from "./rss.ts";
-import type { EntryCategory, SiteEntryMetadata } from "./types.ts";
+import getMetadata from "./getMetadata.ts";
+import type {
+  SiteEntryMetadata,
+  EntryCategory,
+} from "./types.ts";
 
 const ENTRIES_DIR = "./entries";
 
-const entries = await loadEntries(ENTRIES_DIR);
+const entries = await getMetadata(ENTRIES_DIR);
 
 function getCategoryEntries(category: EntryCategory) {
   return Object.values(entries).filter((entry) => entry.category === category);
@@ -29,13 +31,4 @@ export function readDirectory(feed?: string): SiteEntryMetadata[] | null {
     default:
       return null;
   }
-}
-
-export async function readFile(slug: string): Promise<string> {
-  return await Deno.readTextFile(`${ENTRIES_DIR}/${slug}.md`);
-}
-
-export async function readRSSFeed(feed?: string): Promise<string | null> {
-  const files = readDirectory(feed);
-  return files ? await buildRSSFeed(files) : null;
 }

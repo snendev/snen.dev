@@ -22,7 +22,7 @@
     "slug": "theme-explorer",
     "subhead": "Update the page's stylesheet live using simple hue, saturation, and lightness controls.",
     "tags": [ "themes", "design", "color", "debug tools" ],
-    "previewImageSrc": "/theme-explorer-dev-photo.png",
+    "previewImageSrc": "/assets/theme-explorer-dev-photo.png",
     "pathToResource": "/tech/theme-explorer",
     "dynamicResourceMetadata": {
       "publishDate": "16 February 2022",
@@ -45,7 +45,7 @@
     "subhead": "A silly, hacky game I made for a hackathon.",
     "tags": [ "games", "godot", "hackathon" ],
     "pathToResource": "https://snenmin.itch.io/bingo-poppidoppolous-pinball-golf-paradise",
-    "previewImageSrc": "/bingo-poppidopolous.png",
+    "previewImageSrc": "/assets/bingo-poppidopolous.png",
     "dynamicResourceMetadata": {
       "publishDate": "17 October 2021",
       "modifyDate": "22 October 2021",
