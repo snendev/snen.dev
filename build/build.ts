@@ -1,12 +1,13 @@
 import { parse } from "https://deno.land/std@0.120.0/flags/mod.ts";
 import * as esbuild from "https://deno.land/x/esbuild@v0.14.11/mod.js";
+import { Language as MinifyLanguage, minify } from "https://deno.land/x/minifier/mod.ts";
 
 import compressStaticFiles from "./compress.ts"
 import buildRSS from "./rss.ts"
 import buildThemeCSS from "./theme.ts"
 import walkDirectory from "./walkDirectory.ts"
 
-const { minify, sourcemap } = parse(Deno.args);
+const { minify: shouldMinify, sourcemap } = parse(Deno.args);
 
 const entryPoints = [
   "src/client/App.tsx",
@@ -27,7 +28,7 @@ const config: esbuild.BuildOptions = {
   bundle: true,
   splitting: true,
   target: "esnext",
-  minify: !!minify,
+  minify: !!shouldMinify,
   sourcemap: !!sourcemap,
   jsx: "transform" as const,
   jsxFactory: "React.createElement",
@@ -44,7 +45,10 @@ esbuild.stop();
 console.log("Now generating theme-based CSS...");
 
 const paletteCss = buildThemeCSS();
-await Deno.writeTextFile("dist/theme.css", paletteCss);
+await Deno.writeTextFile(
+  "dist/theme.css",
+  minify(MinifyLanguage.CSS, paletteCss)
+);
 
 console.log("Building RSS files...")
 
@@ -52,13 +56,20 @@ await buildRSS();
 
 console.log("Copying public files into dist...")
 
-async function copyFile(path: string, name: string) {
+async function copyEntryFile(path: string, name: string) {
   const distPath = ["dist", ...path.split("/").slice(1)].join("/");
   await Deno.copyFile(`${path}/${name}`, `${distPath}/${name}`);
 }
 
-walkDirectory("public", copyFile)
-walkDirectory("entries", copyFile)
+async function copyCSSFile(path: string, name: string) {
+  const distPath = ["dist", ...path.split("/").slice(1)].join("/");
+  const contents = await Deno.readTextFile(`${path}/${name}`);
+  const minifiedText = minify(MinifyLanguage.CSS, contents);
+  await Deno.writeTextFile(`${distPath}/${name}`, minifiedText);
+}
+
+walkDirectory("public", copyCSSFile)
+walkDirectory("entries", copyEntryFile)
 
 console.log("Compressing static resources...")
 

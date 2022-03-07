@@ -161,8 +161,6 @@ At the end of the day it just helps guarantee that less code is shipped to the c
 
 ![snen.dev network tab inside the browser Developer Tools. Shows file sizes 2.7kB, 835B, 25.0kB, 9.1kB, etc.](/assets/intro-snen-dev-network-tab.png)
 
-(At time of writing, there are still improvements to make, like my un-minified `theme.css` -- yikes!)
-
 ### Deploy
 
 Finally, [Deno Deploy](https://deno.com/deploy) makes deploying this site easier than ever. By connecting my repository, I can redeploy every time I push a new commit. There are plenty of services that do that, but Deno Deploy even provides [playgrounds](https://deno.com/deploy/docs/playgrounds) where you can test your deployment ahead of time. Also, at time of writing, Deno Deploy just released a new suite of features that enable developers to [build assets in CI](https://deno.com/blog/deploy-static-files) and improve how static files are handled. Since I'm already using Deno, Deploy is definitely the way to go.
