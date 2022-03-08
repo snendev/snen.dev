@@ -4,8 +4,6 @@ import { EntryCategory, SiteEntryMetadata, VariantSiteEntryMetadata } from "./ty
 
 const siteEntries = entries as VariantSiteEntryMetadata[]
 
-const REPO_LINK = Deno.env.get("REPO_LINK");
-
 async function collectSiteEntries(
   directory: string,
 ): Promise<SiteEntryMetadata[]> {
@@ -46,7 +44,7 @@ async function collectSiteEntries(
       // try to get the first "section" of text
       const abstract = source.split("#")[1].trim();
       const href = `https://snen.dev/${slug}`;
-      const permalink = `${REPO_LINK}/tree/main/entries/${slug}`;
+      const permalink = `https://snen.dev/git/snen.dev/tree/main/entries/${pathToResource}`;
       return {
         category: category as EntryCategory,
         title,
