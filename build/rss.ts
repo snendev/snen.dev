@@ -1,4 +1,4 @@
-import { SiteEntryMetadata, EntryCategory } from "../src/server/files/types.ts";
+import type { SiteEntryMetadata, EntryCategory } from "../src/server/files/types.ts";
 import { readDirectory } from "../src/server/files/mod.ts"
 
 // replace `GMT` suffix with `+0000` since it matches other feeds
