@@ -16,7 +16,7 @@ Current projects include Betabuds, Psychic Chess, Tomecraft, this website. Look 
 
 ## snen.dev
 
-This website was made using the React 18 release candidate and aims to leverage concurrent rendering to its fullest. It is built and served using Deno, meaning it works without a framework. Learn more about why and how I did that [here](/reading/snen-dot-dev.md).
+This website was made using the React 18 release candidate and aims to leverage concurrent rendering to its fullest. It is built and served using Deno, meaning it works without a framework. Learn more about why and how I did that [here](/reading/snen-dot-dev).
 
 ## Media
 
