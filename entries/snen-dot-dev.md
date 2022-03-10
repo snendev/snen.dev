@@ -154,7 +154,7 @@ Code-splitting involves compiling a JS project into _chunks_ instead of a single
 > )
 > ```
 >
-> <iframe title="codesandbox" src="https://codesandbox.io/embed/github/snendev/snen.dev/tree/main?autoresize=1&view=editor&codemirror=1&fontsize=12&module=/src/client/app/AppRouter.tsx" style="width: 100%; min-height: 600px; margin-top: 30px;"></iframe>
+> <iframe title="codesandbox" src="/codesandbox-embed/snen.dev/src/client/app/AppRouter.tsx" style="width: 100%; min-height: 600px; margin-top: 30px;"></iframe>
 
 For this website, [esbuild](https://esbuild.github.io/) is used to strip the source files into the JavaScript chunks that will serve as the web bundle. I think many bundlers support code splitting nowadays, so this is not much of a surprise. However, it's a convenient synergy: remote resource requests are "split" by default, _and_ there's no need to maintain them as part of the compiled web bundle.
 
@@ -174,4 +174,4 @@ And, most importantly, I have fun developing with it.
 
 ## What if I want to know more?
 
-I'm hoping to release a guide as React 18 stabilizes, but there's a lot to test and experiment with. In particular, I want to do some performance testing and verify whether all the new React features are working properly. For the time being, feel free to check out the [source code on github](https://github.com/snendev/snen.dev).
+I'm hoping to release a guide as React 18 stabilizes, but there's a lot to test and experiment with. In particular, I want to do some performance testing and verify whether all the new React features are working properly. For the time being, feel free to check out the [source code on github](/git).

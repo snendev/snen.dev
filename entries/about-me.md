@@ -8,7 +8,7 @@ If you are looking to contact me for a business opportunity, please reach out to
 
 ## Projects
 
-I usually maintain a few simultaneous projects, and I like to write about my experiences here. Feel free to dig through my archive, check my automated RSS feed [here on this website](/feed), or read the source code for this site and its documentation on [GitHub](https://github.com/snendev/snen.dev).
+I usually maintain a few simultaneous projects, and I like to write about my experiences here. Feel free to dig through my archive, check my automated RSS feed [here on this website](/feed), or read the source code for this site and its documentation on [GitHub](/git).
 
 Projects may take the form of websites, mobile apps, games, or whatever I might be interested in at the time. My list of ongoing projects often includes at least one game since, for me, game development is a fun way to express creative energy. This process is still new to me, but in time I aim to build technology that makes an impact.
 
