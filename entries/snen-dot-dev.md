@@ -60,8 +60,7 @@ Many modern browsers also support JSX nowadays when scripts use the correct [pra
 
 ### React's APIs are fantastic
 
-JSX is already one example of this, but there is another example I want to touch on. When [hooks](https://reactjs.org/docs/hooks-intro.html) were released, the React community was abuzz with talk and criticism. My favorite example of the type of convenience I want to highlight came from Twitter during that
-time, but what I'd like to clarify is that React APIs enable these sorts of improvements _all over the place_ in front-end code. The tweet:
+JSX is already one example of this, but there is another example I want to touch on. When [hooks](https://reactjs.org/docs/hooks-intro.html) were released, the React community was abuzz with talk and criticism. My favorite example of the type of convenience I want to highlight came from Twitter during that time, but what I'd like to clarify is that React APIs enable these sorts of improvements _all over the place_ in front-end code. The tweet:
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">ok so - I took dan&#39;s classes/hooks code from react conf, blacked out the &#39;unnecessary&#39; bits, then colour coded bits by &#39;concern&#39;. so much nicer. the effect is amplified in more complex components, where concerns are split and mixed across lifecycle methods. <a href="https://t.co/nPUzQcisFt">pic.twitter.com/nPUzQcisFt</a></p>&mdash; sunil pai, inc. (@threepointone) <a href="https://twitter.com/threepointone/status/1056594421079261185?ref_src=twsrc%5Etfw">October 28, 2018</a></blockquote>
 
@@ -156,7 +155,6 @@ Code-splitting involves compiling a JS project into _chunks_ instead of a single
 > ```
 >
 > <iframe title="codesandbox" src="https://codesandbox.io/embed/github/snendev/snen.dev/tree/main?autoresize=1&view=editor&codemirror=1&fontsize=12&module=/src/client/app/AppRouter.tsx" style="width: 100%; min-height: 600px; margin-top: 30px;"></iframe>
-
 
 For this website, [esbuild](https://esbuild.github.io/) is used to strip the source files into the JavaScript chunks that will serve as the web bundle. I think many bundlers support code splitting nowadays, so this is not much of a surprise. However, it's a convenient synergy: remote resource requests are "split" by default, _and_ there's no need to maintain them as part of the compiled web bundle.
 
