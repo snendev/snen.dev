@@ -77,7 +77,7 @@ React 18 is coming out with several new features, but these features mostly cent
 
 All of this works hand-in-hand with what React calls _concurrent rendering_. I could talk more about it, but the [GitHub discussion on the new architecture](https://github.com/reactwg/react-18/discussions/37) provides a lot of detail and has a lot of pictures to explain things, so I encourage readers to check that out instead. For those who might recall something like this, it was previously known described as [_concurrent mode_](https://reactjs.org/docs/concurrent-mode-intro.html), and there is more information on the naming [here](https://github.com/reactwg/react-18/discussions/64)).
 
-![Preview: React's new hydration model explained via pictures. Picture borrowed from GitHub @reactwg/react-18 discussion #37.](https://camo.githubusercontent.com/6cc4eeef439feb3c17d0ac09c701c0deffe170c60a039afa8c0b85d7d4b9c9ef/68747470733a2f2f717569702e636f6d2f626c6f622f5963474141416b314234322f5358524b357573725862717143534a3258396a4769673f613d77504c72596361505246624765344f4e305874504b356b4c566839384747434d774d724e5036374163786b61)
+[![Preview: React's new hydration model explained via pictures. Picture borrowed from GitHub @reactwg/react-18 discussion #37.](https://camo.githubusercontent.com/6cc4eeef439feb3c17d0ac09c701c0deffe170c60a039afa8c0b85d7d4b9c9ef/68747470733a2f2f717569702e636f6d2f626c6f622f5963474141416b314234322f5358524b357573725862717143534a3258396a4769673f613d77504c72596361505246624765344f4e305874504b356b4c566839384747434d774d724e5036374163786b61)](https://github.com/reactwg/react-18/discussions/37)
 
 (Above: A picture borrowed from the aforementioned Github discussion. Very interesting indeed...)
 
