@@ -10,7 +10,8 @@ jobs:
       contents: read # Needed to clone the repository
 
     env:
-      GIT_REF: ${{ github.ref_name }}
+      GIT_SHA: ${{ github.sha }}
+
     steps:
       - name: Clone repository
         uses: actions/checkout@v2

@@ -25,16 +25,14 @@ gitRouter.get("/git/:repo/(.*)", (context) => {
   context.response.redirect(`https://github.com/snendev/${repo}/${codePath}`);
 });
 
-const GIT_REF = Deno.env.get("GIT_REF") ?? "main";
+// TODO (unsupported?) pass SHA through github action
+const GIT_SHA = Deno.env.get("GIT_SHA") ?? "main";
 
 gitRouter.get("/codesandbox-embed/:repo/(.*)", (context) => {
   const { repo, 0: codePath } = context.params;
   context.response.redirect(
-    `https://codesandbox.io/embed/github/snendev/${repo}/tree/${GIT_REF}?autoresize=1&view=editor&codemirror=1&fontsize=12&module=/${codePath}`
+    `https://codesandbox.io/embed/github/snendev/${repo}/tree/${GIT_SHA}?autoresize=1&view=editor&codemirror=1&fontsize=12&module=/${codePath}`
   )
 })
-
-// TODO automate embedding via codesandbox with a /codesandbox proxy url
-// return an HTMLNode with the iframe targeting codesandbox.io/embed
 
 export default gitRouter;
