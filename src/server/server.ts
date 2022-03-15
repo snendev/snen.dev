@@ -55,4 +55,4 @@ app.use(async (context) => {
 });
 
 console.log("Listening...");
-app.listen(":8080");
+app.listen(`:${Deno.env.get("PORT") ?? "8080"}`);
