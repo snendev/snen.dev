@@ -46,7 +46,7 @@ app.use(staticRouter.allowedMethods());
 
 // handle everything else as an app route
 app.use(async (context) => {
-  const nodeStream = await render(context.request.url.href);
+  const nodeStream = await render(context.request.url);
   const stream = Deno.env.get("REACT_SSR_DEBUG")
     ? attachLogger(nodeStream)
     : nodeStream;

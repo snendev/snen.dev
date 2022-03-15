@@ -15,7 +15,7 @@ declare global {
   }
 }
 
-export default async function renderServer(href: string) {
+export default async function renderServer(href: URL) {
   const nodeStream = await ReactDOMServer
     .renderToReadableStream(
       <React.StrictMode>
