@@ -10,7 +10,6 @@ import walkDirectory from "./walkDirectory.ts"
 const { minify: shouldMinify, sourcemap } = parse(Deno.args);
 
 const entryPoints = [
-  "src/client/App.tsx",
   "src/client/entrypoint.tsx",
 ];
 for await (const entry of Deno.readDir("src/client/app/data")) {
