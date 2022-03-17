@@ -1,9 +1,18 @@
 :root.dark {
   color-scheme: dark;
+
+}
+
+:root.dark a {
+  color: #9999ff;
+}
+
+:root.dark a:visited {
+  color: #ffadff;
 }
 
 :root.light {
-  color-scheme: light;  
+  color-scheme: light;
 }
 
 * {

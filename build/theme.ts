@@ -1,4 +1,4 @@
-import basePalette from "../palette.json" assert { type: "json" };
+import basePalette from "./palette.json" assert { type: "json" };
 
 // only accepts 6-digit combos
 function buildRGBA(rgb: string, a: number) {
