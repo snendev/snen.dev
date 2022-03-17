@@ -20,6 +20,10 @@ export default function MiniCard({
   return (
     <Link to={to} className={cx("mini-card", "button-link")}>
       <Layer className="card">
+        <Layer>
+          <Layer backgroundColor="accent-contrast" className="earmark">
+          </Layer>
+        </Layer>
         <Block additionalDepth={1}>
           <h4>{title}</h4>
           <p>{label}</p>
