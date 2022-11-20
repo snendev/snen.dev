@@ -1,6 +1,8 @@
 # snen.dev
 
-https://snen.dev
+DEPRECATED
+
+Old version of https://snen.dev
 
 ## Tech
 
