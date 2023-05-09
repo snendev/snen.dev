@@ -13,7 +13,7 @@ export default function Page({ children }: PageProps) {
         <div className="container flex justify-between items-center">
           <h2 className="text-3xl">snen.dev</h2>
           <nav>
-            <a href="https://github.com/snendev/website">
+            <a href="https://github.com/snendev/snen.dev-site">
               <GithubIcon size={36} />
             </a>
           </nav>

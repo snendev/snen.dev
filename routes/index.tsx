@@ -14,11 +14,13 @@ export default function Home() {
             Welcome to snen.dev, Inc.
           </h3>
           <p className="my-3">
-            We are an NYC-based team of professional software developers
-            providing consulting and development services. We specialize in
-            front-end projects using a variety of technologies, including but
-            not limited to React, React Native, NextJS, MUI, Expo, TypeScript,
-            Deno, and TailwindCSS.
+            We are an NYC-based team of professional software developers. Led by
+            Sean Sullivan, a full-stack engineer who has worked on a number of
+            high-profile projects with various clients, we providing consulting
+            and development services with a specialization in front-end code. We
+            have experience with a wide set of technologies, including but not
+            limited to React, NextJS, MUI, React Native, Expo, TypeScript, Deno,
+            TailwindCSS, and much more.
           </p>
           <p className="my-3">
             For backend or full-stack projects, our proficiencies also include
