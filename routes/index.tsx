@@ -16,7 +16,7 @@ export default function Home() {
           <p className="my-3">
             We are an NYC-based team of professional software developers. Led by
             Sean Sullivan, a full-stack engineer who has worked on a number of
-            high-profile projects with various clients, we providing consulting
+            high-profile projects with various clients, we provide consulting
             and development services with a specialization in front-end code. We
             have experience with a wide set of technologies, including but not
             limited to React, NextJS, MUI, React Native, Expo, TypeScript, Deno,
