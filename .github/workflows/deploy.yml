@@ -1,0 +1,44 @@
+name: Deploy snen.dev
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+    
+
+jobs:
+  deploy:
+    name: Build client and server and deploy to Deno.
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # Needed to clone the repository
+      id-token: write # Needed for auth with Deno Deploy
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+
+      - name: Install rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets:
+            wasm32-unknown-unknown
+
+      - name: Install wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+      - name: Install Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Build client
+        run: deno task build:client
+  
+      - name: Build server
+        run: deno task build:server
+
+      - name: Deno Deploy
+        uses: denoland/deployctl@v1
+        with:
+          project: snendev
+          entrypoint: run.ts

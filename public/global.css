@@ -1,0 +1,299 @@
+html {
+    height: 100vh;
+    width: 100vw;
+
+    background: #2A3E4A;
+}
+
+@media screen and (max-width: 640px) {
+    html {
+        font-size: 12px;
+    }
+}
+
+body {
+    font-family: sans-serif;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.desktop-only {
+    display: block;
+}
+
+.mobile-only {
+    display: none;
+}
+
+@media screen and (max-width: 600px) {
+    .mobile-only {
+        display: block;
+    }
+    
+    .desktop-only {
+        display: none;
+    }
+}
+
+h1, h2, h3, h4, h5, p {
+    color: #e5e5e5;
+}
+
+h1 {
+    font-size: 6em;
+}
+
+h2 {
+    font-size: 3em;
+}
+
+h3 {
+    font-size: 2em;
+}
+
+h4 {
+    font-size: 1.5em;
+}
+
+hr {
+    width: 100%;
+    margin: 40px 0 30px;
+}
+
+a {
+    cursor: pointer;
+    color: #b7824a;
+}
+
+a:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+a:visited {
+    color: #99a870;
+}
+
+.no-underline {
+    text-decoration: none;
+}
+
+.hidden {
+    display: hidden;
+}
+
+.linear-gradient {
+    background: linear-gradient(to bottom, #00253D, #153243 35%, #203847 60%, #203847 92%, #2A3E4A);
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.content {
+    max-width: 1024px;
+}
+
+@media screen and (max-width: 1536px) {
+    .content {
+        max-width: 1024px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .content {
+        max-width: 768px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .content {
+        max-width: 640px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .content {
+        max-width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+.main {
+    padding-top: 6%;
+    padding-bottom: 150px;
+    background: linear-gradient(to bottom, #00253D, #153243 23%, #203847 32%, #203847 92%, #2A3E4A);
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.maxwidth-800 {
+    max-width: 800px;
+}
+
+@media screen and (max-width: 1024px) {
+    .maxwidth-800 {
+        max-width: 100%;
+    }
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    height: 120px;
+    width: 100%;
+}
+
+.navbar {
+    height: 100%;
+    width: 100%;
+    margin-top: -4px;
+    border-top: 4px solid #07071C;
+    border-bottom: 4px solid #07071C;
+
+    background: #00253D;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.icon-link {
+    padding: 12px;
+    border-radius: 64px;
+    background: #9f9f9f;
+}
+
+.offset-anchor {
+    position: relative;
+    top: -150px;
+}
+
+@media screen and (max-width: 600px) {
+    .nav {
+        justify-content: center;
+        height: 90px;
+    }
+}
+
+.nav-item {
+    width: 80px;
+    height: 80px;
+}
+
+.icon {
+    width: 64px;
+}
+
+.adaptive-icon {
+    width: 64px;
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        gap: 16px;
+    }
+
+    .nav-item {
+        width: 64px;
+        height: 64px;
+    }
+
+    .adaptive-icon {
+        width: 48px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .navbar {
+        gap: 12px;
+    }
+
+    .nav-item {
+        width: 48px;
+        height: 48px;
+    }
+
+    .adaptive-icon {
+        width: 36px;
+    }
+}
+
+.text {
+    width: 80%;
+}
+
+.subtle {
+    opacity: 0.7;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.justify-between-column {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.split-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.vmargin {
+    margin: 20px 0 30px;
+}
+
+@media screen and (max-width: 600px) {
+    .split-body {
+        flex-direction: column;
+        justify-self: flex-start;
+        align-self: flex-start;
+    }
+}
+
+.card-grid {
+    max-width: 100%;
+    display: flex;
+    flex-flow: row-wrap;
+    justify-content: flex-start;
+}
+
+.card {
+    width: 400px;
+    margin: 12px;
+    border-bottom: 2px solid #07071C;
+    padding: 8px;
+}
+
+@media screen and (max-width: 600px) {
+    .card {
+        width: 100%;
+    }
+}

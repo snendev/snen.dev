@@ -1,14 +1,7 @@
-# snen.dev, Inc. public site
+# snen.dev
 
-A simple front-end to direct people to my email :)
+Hi, I'm Sean, but my friends call me Snen. I make software and games. This is the code for my website.
 
-### Dev
+## Tech Stack
 
-This site is made with [fresh](https://fresh.deno.dev/) and deployed with
-[Deno Deploy](https://deno.com/deploy).
-
-Start the project:
-
-```
-deno task start
-```
+This page is built using [leptos](https://leptos.dev/) using the axum starter template.
