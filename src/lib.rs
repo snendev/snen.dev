@@ -25,6 +25,18 @@ pub fn App() -> impl IntoView {
                 </Routes>
             </main>
         </Router>
+        <Footer />
+    }
+}
+
+#[component]
+fn Footer() -> impl IntoView {
+    view! {
+        <footer class="footer">
+            <h4>
+                snen.dev, Inc
+            </h4>
+        </footer>
     }
 }
 

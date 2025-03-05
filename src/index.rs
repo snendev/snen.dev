@@ -23,6 +23,46 @@ pub(super) fn IndexPage() -> impl IntoView {
         <hr class="content width-100" />
 
         <section class="content">
+            <LocalAnchor name="itch".to_string() />
+            <a href="https://snendev.itch.io/" target="_blank" class="row no-underline">
+                <crate::icons::ItchIcon class="icon".to_string() />
+                <h2>Itch.IO</h2>
+            </a>
+            <h3 class="maxwidth-800">
+                "Many of my games are on "
+                <a href="https://snendev.itch.io/">itch.io</a>
+                ". Check them out!"
+            </h3>
+            <h4 class="maxwidth-800">
+                "I also have some games hosted on "
+                <a href="https://lab.snen.dev">"my \"lab\""</a>
+                ", so feel free to take a look there as well."
+            </h4>
+            <h4 class="maxwidth-800">
+                "This section will be updated more soon!"
+            </h4>
+        </section>
+
+        <hr class="content width-100" />
+
+        <section class="content">
+            <LocalAnchor name="github".to_string() />
+            <a href="https://github.com/snendev" target="_blank" class="row no-underline">
+                <crate::icons::GithubIcon class="icon".to_string() />
+                <h2>GitHub</h2>
+            </a>
+            <div
+                class="github-card mobile-only"
+                data-github="snendev"
+                data-width="350"
+                data-height="130"
+                data-theme="default"
+            />
+        </section>
+
+        <hr class="content width-100" />
+
+        <section class="content">
             <LocalAnchor name="bsky".to_string() />
             <a href="https://bsky.app/profile/snen.dev" target="_blank" class="row no-underline">
                 <crate::icons::BSkyIcon class="icon".to_string() />
@@ -64,46 +104,6 @@ pub(super) fn IndexPage() -> impl IntoView {
                     src="https://mastofeed.com/apiv2/feed?userurl=https%3A%2F%2Fmastodon.online%2Fusers%2Fsnendev&theme=dark&size=100&header=true&replies=false&boosts=false"
                 />
             </div>
-        </section>
-
-        <hr class="content width-100" />
-
-        <section class="content">
-            <LocalAnchor name="itch".to_string() />
-            <a href="https://snendev.itch.io/" target="_blank" class="row no-underline">
-                <crate::icons::ItchIcon class="icon".to_string() />
-                <h2>Itch.IO</h2>
-            </a>
-            <h3 class="maxwidth-800">
-                "Many of my games are on "
-                <a href="https://snendev.itch.io/">itch.io</a>
-                ". Check them out!"
-            </h3>
-            <h4 class="maxwidth-800">
-                "I also have some games hosted on "
-                <a href="https://lab.snen.dev">"my \"lab\""</a>
-                ", so feel free to take a look there as well."
-            </h4>
-            <h4 class="maxwidth-800">
-                "This section will be updated more soon!"
-            </h4>
-        </section>
-
-        <hr class="content width-100" />
-
-        <section class="content">
-            <LocalAnchor name="github".to_string() />
-            <a href="https://github.com/snendev" target="_blank" class="row no-underline">
-                <crate::icons::GithubIcon class="icon".to_string() />
-                <h2>GitHub</h2>
-            </a>
-            <div
-                class="github-card mobile-only"
-                data-github="snendev"
-                data-width="350"
-                data-height="130"
-                data-theme="default"
-            />
         </section>
 
         <hr class="content width-100" />

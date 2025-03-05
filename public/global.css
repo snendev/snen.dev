@@ -127,7 +127,7 @@ a:visited {
 
 .main {
     padding-top: 6%;
-    padding-bottom: 150px;
+    padding-bottom: 50px;
     background: linear-gradient(to bottom, #00253D, #153243 23%, #203847 32%, #203847 92%, #2A3E4A);
 }
 
@@ -296,4 +296,11 @@ a:visited {
     .card {
         width: 100%;
     }
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 24px;
 }
